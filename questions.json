@@ -1,0 +1,18 @@
+[
+  {
+    "question": "Je n'ai ni bouche ni voix, pourtant je réponds toujours quand on m'appelle. Qui suis-je ?",
+    "answers": ["l'écho", "echo", "l écho"]
+  },
+  {
+    "question": "Quel mot de 5 lettres perd une lettre à chaque fois qu'on le prononce, mais reste toujours prononçable ? (indice : ça se dit)",
+    "answers": ["quarante"]
+  },
+  {
+    "question": "Plus on en enlève, plus il devient grand. Qu'est-ce que c'est ?",
+    "answers": ["un trou"]
+  },
+  {
+    "question": "Quel est le seul nombre qui, en français, contient toutes ses lettres dans l'ordre alphabétique ?",
+    "answers": ["quarante"]
+  }
+]
