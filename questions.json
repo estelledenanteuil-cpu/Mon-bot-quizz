@@ -1,18 +1,3784 @@
 [
   {
-    "question": "Je n'ai ni bouche ni voix, pourtant je réponds toujours quand on m'appelle. Qui suis-je ?",
-    "answers": ["l'écho", "echo", "l écho"]
+    "question": "Quelle est la capitale du Japon ?",
+    "answers": [
+      "tokyo"
+    ]
   },
   {
-    "question": "Quel mot de 5 lettres perd une lettre à chaque fois qu'on le prononce, mais reste toujours prononçable ? (indice : ça se dit)",
-    "answers": ["quarante"]
+    "question": "Quel est le plus grand océan du monde ?",
+    "answers": [
+      "l'océan pacifique",
+      "océan pacifique",
+      "pacifique"
+    ]
   },
   {
-    "question": "Plus on en enlève, plus il devient grand. Qu'est-ce que c'est ?",
-    "answers": ["un trou"]
+    "question": "Quelle chaîne de montagnes sépare la France et l'Espagne ?",
+    "answers": [
+      "les pyrénées",
+      "pyrénées",
+      "pyrenees"
+    ]
   },
   {
-    "question": "Quel est le seul nombre qui, en français, contient toutes ses lettres dans l'ordre alphabétique ?",
-    "answers": ["quarante"]
+    "question": "Quel pays a une feuille d'érable sur son drapeau ?",
+    "answers": [
+      "le canada",
+      "canada"
+    ]
+  },
+  {
+    "question": "Dans quelle ville se trouve le Colisée ?",
+    "answers": [
+      "rome"
+    ]
+  },
+  {
+    "question": "Sur quel continent se trouve le désert du Sahara ?",
+    "answers": [
+      "l'afrique",
+      "afrique"
+    ]
+  },
+  {
+    "question": "Quelle est la monnaie du Royaume-Uni ?",
+    "answers": [
+      "la livre sterling",
+      "livre sterling",
+      "la livre",
+      "livre"
+    ]
+  },
+  {
+    "question": "Quelle est la capitale de l'Australie ?",
+    "answers": [
+      "canberra"
+    ]
+  },
+  {
+    "question": "Quelle mer sépare principalement l'Europe de l'Afrique ?",
+    "answers": [
+      "la mer méditerranée",
+      "mer méditerranée",
+      "la méditerranée",
+      "méditerranée",
+      "mediterranee"
+    ]
+  },
+  {
+    "question": "Quel est le plus grand pays du monde par sa superficie ?",
+    "answers": [
+      "la russie",
+      "russie"
+    ]
+  },
+  {
+    "question": "Sur quel continent se trouve la cordillère des Andes ?",
+    "answers": [
+      "l'amérique du sud",
+      "amérique du sud",
+      "amerique du sud"
+    ]
+  },
+  {
+    "question": "Dans quel pays se trouve Marrakech ?",
+    "answers": [
+      "le maroc",
+      "maroc"
+    ]
+  },
+  {
+    "question": "Quelle est la capitale du Brésil ?",
+    "answers": [
+      "brasilia",
+      "brasília"
+    ]
+  },
+  {
+    "question": "Quel pays insulaire se trouve juste au sud-est de l'Inde ?",
+    "answers": [
+      "le sri lanka",
+      "sri lanka"
+    ]
+  },
+  {
+    "question": "Quel grand fleuve traverse l'Égypte ?",
+    "answers": [
+      "le nil",
+      "nil"
+    ]
+  },
+  {
+    "question": "Dans quel pays se trouve le Machu Picchu ?",
+    "answers": [
+      "le pérou",
+      "pérou",
+      "perou"
+    ]
+  },
+  {
+    "question": "Quelle est la capitale du Canada ?",
+    "answers": [
+      "ottawa"
+    ]
+  },
+  {
+    "question": "Quelle mer borde la côte est de l'Italie ?",
+    "answers": [
+      "la mer adriatique",
+      "mer adriatique",
+      "l'adriatique",
+      "adriatique"
+    ]
+  },
+  {
+    "question": "Dans quel pays se trouve la ville de Dubrovnik ?",
+    "answers": [
+      "la croatie",
+      "croatie"
+    ]
+  },
+  {
+    "question": "Sur quel continent se trouve la Nouvelle-Zélande ?",
+    "answers": [
+      "l'océanie",
+      "océanie",
+      "oceanie"
+    ]
+  },
+  {
+    "question": "Quel détroit sépare l'Espagne du Maroc ?",
+    "answers": [
+      "le détroit de gibraltar",
+      "détroit de gibraltar",
+      "gibraltar"
+    ]
+  },
+  {
+    "question": "Quelle est la capitale de l'Argentine ?",
+    "answers": [
+      "buenos aires"
+    ]
+  },
+  {
+    "question": "Quel est le plus grand désert chaud du monde ?",
+    "answers": [
+      "le sahara",
+      "sahara"
+    ]
+  },
+  {
+    "question": "Dans quel pays se trouve Amsterdam ?",
+    "answers": [
+      "les pays-bas",
+      "pays-bas",
+      "pays bas"
+    ]
+  },
+  {
+    "question": "Quel océan borde la côte ouest de la France métropolitaine ?",
+    "answers": [
+      "l'océan atlantique",
+      "océan atlantique",
+      "l'atlantique",
+      "atlantique"
+    ]
+  },
+  {
+    "question": "Quel fleuve traverse Paris ?",
+    "answers": [
+      "la seine",
+      "seine"
+    ]
+  },
+  {
+    "question": "Quelle est la capitale de la région Occitanie ?",
+    "answers": [
+      "toulouse"
+    ]
+  },
+  {
+    "question": "Dans quelle ville le Rhône et la Saône se rejoignent-ils ?",
+    "answers": [
+      "lyon"
+    ]
+  },
+  {
+    "question": "Dans quel département se trouve Versailles ?",
+    "answers": [
+      "les yvelines",
+      "yvelines",
+      "78"
+    ]
+  },
+  {
+    "question": "Quelle île française est surnommée l'Île de Beauté ?",
+    "answers": [
+      "la corse",
+      "corse"
+    ]
+  },
+  {
+    "question": "Quel fleuve traverse Nantes ?",
+    "answers": [
+      "la loire",
+      "loire"
+    ]
+  },
+  {
+    "question": "Quelle est la capitale de la Bretagne ?",
+    "answers": [
+      "rennes"
+    ]
+  },
+  {
+    "question": "Quelle ville française est surnommée la Ville rose ?",
+    "answers": [
+      "toulouse"
+    ]
+  },
+  {
+    "question": "Dans quel département se trouve la dune du Pilat ?",
+    "answers": [
+      "la gironde",
+      "gironde",
+      "33"
+    ]
+  },
+  {
+    "question": "Dans quel département se trouve le château de Chambord ?",
+    "answers": [
+      "le loir-et-cher",
+      "loir-et-cher",
+      "loir et cher",
+      "41"
+    ]
+  },
+  {
+    "question": "Dans quel département se trouve le Mont-Saint-Michel ?",
+    "answers": [
+      "la manche",
+      "manche",
+      "50"
+    ]
+  },
+  {
+    "question": "Quelle est la préfecture de la Gironde ?",
+    "answers": [
+      "bordeaux"
+    ]
+  },
+  {
+    "question": "Quel est le plus long fleuve entièrement situé en France ?",
+    "answers": [
+      "la loire",
+      "loire"
+    ]
+  },
+  {
+    "question": "Quelle mer borde Nice ?",
+    "answers": [
+      "la mer méditerranée",
+      "mer méditerranée",
+      "la méditerranée",
+      "méditerranée",
+      "mediterranee"
+    ]
+  },
+  {
+    "question": "Dans quelle ville française siège le Parlement européen ?",
+    "answers": [
+      "strasbourg"
+    ]
+  },
+  {
+    "question": "Dans quelle région historique trouve-t-on la chaîne des Puys ?",
+    "answers": [
+      "l'auvergne",
+      "auvergne"
+    ]
+  },
+  {
+    "question": "Quelle est la capitale de la Nouvelle-Aquitaine ?",
+    "answers": [
+      "bordeaux"
+    ]
+  },
+  {
+    "question": "Quelle grande ville française est célèbre pour son Vieux-Port ?",
+    "answers": [
+      "marseille"
+    ]
+  },
+  {
+    "question": "Quel cours d'eau passe sous le pont du Gard ?",
+    "answers": [
+      "le gardon",
+      "gardon",
+      "le gard"
+    ]
+  },
+  {
+    "question": "Quelle région naturelle française est célèbre pour sa vaste forêt de pins ?",
+    "answers": [
+      "les landes",
+      "landes"
+    ]
+  },
+  {
+    "question": "Dans quel département se trouve Cannes ?",
+    "answers": [
+      "les alpes-maritimes",
+      "alpes-maritimes",
+      "alpes maritimes",
+      "06"
+    ]
+  },
+  {
+    "question": "De quel pays Lille est-elle proche de la frontière ?",
+    "answers": [
+      "la belgique",
+      "belgique"
+    ]
+  },
+  {
+    "question": "Quel est le plus haut sommet des Alpes et de France ?",
+    "answers": [
+      "le mont blanc",
+      "mont blanc",
+      "mont-blanc"
+    ]
+  },
+  {
+    "question": "Dans quel département se trouve l'île de Noirmoutier ?",
+    "answers": [
+      "la vendée",
+      "vendée",
+      "vendee",
+      "85"
+    ]
+  },
+  {
+    "question": "Quelle ville de Guyane française est située près du centre spatial de Kourou ?",
+    "answers": [
+      "kourou"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on l'écriture de l'Égypte antique composée de signes figuratifs ?",
+    "answers": [
+      "les hiéroglyphes",
+      "hiéroglyphes",
+      "hieroglyphes"
+    ]
+  },
+  {
+    "question": "Selon la légende, qui a fondé Rome avec son frère Rémus ?",
+    "answers": [
+      "romulus"
+    ]
+  },
+  {
+    "question": "Quelle cité grecque est considérée comme le berceau de la démocratie ?",
+    "answers": [
+      "athènes",
+      "athenes"
+    ]
+  },
+  {
+    "question": "Qui fut le premier empereur romain ?",
+    "answers": [
+      "auguste",
+      "octave auguste",
+      "octavien"
+    ]
+  },
+  {
+    "question": "Quel volcan a enseveli Pompéi en l'an 79 ?",
+    "answers": [
+      "le vésuve",
+      "vésuve",
+      "vesuve"
+    ]
+  },
+  {
+    "question": "De quel royaume antique Cléopâtre était-elle la reine ?",
+    "answers": [
+      "l'égypte",
+      "égypte",
+      "egypte"
+    ]
+  },
+  {
+    "question": "Quel chef gaulois s'est opposé à Jules César à Alésia ?",
+    "answers": [
+      "vercingétorix",
+      "vercingetorix"
+    ]
+  },
+  {
+    "question": "Quelles deux puissances se sont affrontées pendant les guerres puniques ?",
+    "answers": [
+      "rome et carthage",
+      "carthage et rome"
+    ]
+  },
+  {
+    "question": "À quelle déesse grecque le Parthénon était-il consacré ?",
+    "answers": [
+      "athéna",
+      "athena"
+    ]
+  },
+  {
+    "question": "Dans quel pays actuel sont nés les Jeux olympiques antiques ?",
+    "answers": [
+      "la grèce",
+      "grèce",
+      "grece"
+    ]
+  },
+  {
+    "question": "Entre quels deux fleuves se situait la Mésopotamie ?",
+    "answers": [
+      "le tigre et l'euphrate",
+      "tigre et euphrate",
+      "l'euphrate et le tigre",
+      "euphrate et tigre"
+    ]
+  },
+  {
+    "question": "Quel roi babylonien a donné son nom à l'un des plus anciens codes de lois ?",
+    "answers": [
+      "hammurabi",
+      "hammourabi"
+    ]
+  },
+  {
+    "question": "Quel pharaon est célèbre pour sa tombe découverte presque intacte en 1922 ?",
+    "answers": [
+      "toutânkhamon",
+      "toutankhamon"
+    ]
+  },
+  {
+    "question": "Quel fleuve Jules César a-t-il franchi en prononçant, selon la tradition, « Le sort en est jeté » ?",
+    "answers": [
+      "le rubicon",
+      "rubicon"
+    ]
+  },
+  {
+    "question": "Quel était le dieu romain de la guerre ?",
+    "answers": [
+      "mars"
+    ]
+  },
+  {
+    "question": "Quel était le dieu grec de la mer ?",
+    "answers": [
+      "poséidon",
+      "poseidon"
+    ]
+  },
+  {
+    "question": "Dans quel amphithéâtre romain se déroulaient notamment des combats de gladiateurs ?",
+    "answers": [
+      "le colisée",
+      "colisée",
+      "colisee"
+    ]
+  },
+  {
+    "question": "De quel royaume antique Alexandre le Grand était-il originaire ?",
+    "answers": [
+      "la macédoine",
+      "macédoine",
+      "macedoine"
+    ]
+  },
+  {
+    "question": "Sur quel plateau égyptien se trouvent les pyramides de Khéops, Khéphren et Mykérinos ?",
+    "answers": [
+      "gizeh",
+      "le plateau de gizeh",
+      "plateau de gizeh",
+      "giza"
+    ]
+  },
+  {
+    "question": "Quel peuple de Mésopotamie est associé aux premières formes d'écriture cunéiforme ?",
+    "answers": [
+      "les sumériens",
+      "sumériens",
+      "sumeriens"
+    ]
+  },
+  {
+    "question": "Quelle épopée attribuée à Homère raconte une partie de la guerre de Troie ?",
+    "answers": [
+      "l'iliade",
+      "iliade"
+    ]
+  },
+  {
+    "question": "Quel général carthaginois a traversé les Alpes avec des éléphants ?",
+    "answers": [
+      "hannibal",
+      "hannibal barca"
+    ]
+  },
+  {
+    "question": "Quel gladiateur a dirigé une grande révolte d'esclaves contre Rome ?",
+    "answers": [
+      "spartacus"
+    ]
+  },
+  {
+    "question": "Comment s'appelait l'assemblée politique majeure de la République romaine ?",
+    "answers": [
+      "le sénat",
+      "sénat",
+      "senat",
+      "le sénat romain",
+      "sénat romain"
+    ]
+  },
+  {
+    "question": "Quel empereur a fait du christianisme la religion officielle de l'Empire romain en 380 ?",
+    "answers": [
+      "théodose ier",
+      "théodose 1er",
+      "théodose premier",
+      "theodose ier",
+      "theodose 1er"
+    ]
+  },
+  {
+    "question": "En quelle année Christophe Colomb atteint-il l'Amérique ?",
+    "answers": [
+      "1492"
+    ]
+  },
+  {
+    "question": "Quel inventeur allemand est associé à l'imprimerie à caractères mobiles en Europe ?",
+    "answers": [
+      "johannes gutenberg",
+      "gutenberg"
+    ]
+  },
+  {
+    "question": "En quelle année débute la Révolution française ?",
+    "answers": [
+      "1789"
+    ]
+  },
+  {
+    "question": "Quel roi de France a été guillotiné pendant la Révolution française ?",
+    "answers": [
+      "louis xvi",
+      "louis 16"
+    ]
+  },
+  {
+    "question": "En quelle année Napoléon Ier est-il sacré empereur ?",
+    "answers": [
+      "1804"
+    ]
+  },
+  {
+    "question": "Quelle bataille de 1815 marque la défaite finale de Napoléon Ier ?",
+    "answers": [
+      "waterloo",
+      "la bataille de waterloo"
+    ]
+  },
+  {
+    "question": "En quelle année la Première Guerre mondiale prend-elle fin ?",
+    "answers": [
+      "1918"
+    ]
+  },
+  {
+    "question": "En quelle année débute la Seconde Guerre mondiale en Europe ?",
+    "answers": [
+      "1939"
+    ]
+  },
+  {
+    "question": "À quelle date a eu lieu le débarquement allié en Normandie ?",
+    "answers": [
+      "6 juin 1944",
+      "le 6 juin 1944"
+    ]
+  },
+  {
+    "question": "En quelle année le mur de Berlin est-il tombé ?",
+    "answers": [
+      "1989"
+    ]
+  },
+  {
+    "question": "Qui fut le premier humain à marcher sur la Lune ?",
+    "answers": [
+      "neil armstrong",
+      "armstrong"
+    ]
+  },
+  {
+    "question": "En quelle année l'esclavage a-t-il été définitivement aboli dans les colonies françaises ?",
+    "answers": [
+      "1848"
+    ]
+  },
+  {
+    "question": "Quel texte fondamental a été adopté en France le 26 août 1789 ?",
+    "answers": [
+      "la déclaration des droits de l'homme et du citoyen",
+      "déclaration des droits de l'homme et du citoyen",
+      "ddhc"
+    ]
+  },
+  {
+    "question": "Quelle héroïne française a contribué à libérer Orléans en 1429 ?",
+    "answers": [
+      "jeanne d'arc",
+      "jeanne darc"
+    ]
+  },
+  {
+    "question": "Quel roi de France était surnommé le Roi-Soleil ?",
+    "answers": [
+      "louis xiv",
+      "louis 14"
+    ]
+  },
+  {
+    "question": "Dans quel pays la Renaissance européenne a-t-elle commencé ?",
+    "answers": [
+      "l'italie",
+      "italie"
+    ]
+  },
+  {
+    "question": "Quel religieux allemand a lancé la Réforme protestante en 1517 ?",
+    "answers": [
+      "martin luther",
+      "luther"
+    ]
+  },
+  {
+    "question": "En quelle année les États-Unis ont-ils déclaré leur indépendance ?",
+    "answers": [
+      "1776"
+    ]
+  },
+  {
+    "question": "Quel ingénieur écossais a largement amélioré la machine à vapeur au XVIIIe siècle ?",
+    "answers": [
+      "james watt",
+      "watt"
+    ]
+  },
+  {
+    "question": "En quelle année les Françaises ont-elles obtenu le droit de vote ?",
+    "answers": [
+      "1944"
+    ]
+  },
+  {
+    "question": "Qui a fondé la Ve République française et en est devenu le premier président ?",
+    "answers": [
+      "charles de gaulle",
+      "de gaulle",
+      "le général de gaulle",
+      "général de gaulle"
+    ]
+  },
+  {
+    "question": "Quel traité signé en 1957 a créé la Communauté économique européenne ?",
+    "answers": [
+      "le traité de rome",
+      "traité de rome"
+    ]
+  },
+  {
+    "question": "Quel dirigeant sud-africain est devenu président en 1994 après avoir combattu l'apartheid ?",
+    "answers": [
+      "nelson mandela",
+      "mandela"
+    ]
+  },
+  {
+    "question": "En quelle année l'Union soviétique a-t-elle été dissoute ?",
+    "answers": [
+      "1991"
+    ]
+  },
+  {
+    "question": "Quel paquebot a coulé lors de son voyage inaugural en 1912 ?",
+    "answers": [
+      "le titanic",
+      "titanic"
+    ]
+  },
+  {
+    "question": "Quelle est la formule chimique de l'eau ?",
+    "answers": [
+      "h2o",
+      "h₂o"
+    ]
+  },
+  {
+    "question": "Quelle est la formule chimique du dioxyde de carbone ?",
+    "answers": [
+      "co2",
+      "co₂"
+    ]
+  },
+  {
+    "question": "Quel gaz de formule O2 est indispensable à la respiration humaine ?",
+    "answers": [
+      "le dioxygène",
+      "dioxygène",
+      "oxygène",
+      "oxygene",
+      "o2",
+      "o₂"
+    ]
+  },
+  {
+    "question": "Quelle est approximativement la vitesse de la lumière dans le vide en kilomètres par seconde ?",
+    "answers": [
+      "300 000 km/s",
+      "300000 km/s",
+      "300 000 kilomètres par seconde",
+      "300000 kilomètres par seconde"
+    ]
+  },
+  {
+    "question": "Quelle est l'unité de mesure d'une force ?",
+    "answers": [
+      "le newton",
+      "newton",
+      "n"
+    ]
+  },
+  {
+    "question": "Quel est le numéro atomique du carbone ?",
+    "answers": [
+      "6",
+      "six"
+    ]
+  },
+  {
+    "question": "Quel est le symbole chimique de l'or ?",
+    "answers": [
+      "au"
+    ]
+  },
+  {
+    "question": "Quel est le pH d'une solution neutre à température ambiante ?",
+    "answers": [
+      "7",
+      "sept"
+    ]
+  },
+  {
+    "question": "À quelle température l'eau pure bout-elle au niveau de la mer ?",
+    "answers": [
+      "100 °c",
+      "100°c",
+      "100 degrés celsius",
+      "100 degrés",
+      "100"
+    ]
+  },
+  {
+    "question": "Quelle température correspond approximativement au zéro absolu en degrés Celsius ?",
+    "answers": [
+      "-273,15 °c",
+      "-273,15°c",
+      "-273 °c",
+      "-273°c",
+      "moins 273 degrés celsius"
+    ]
+  },
+  {
+    "question": "Quel est le matériau naturel le plus dur ?",
+    "answers": [
+      "le diamant",
+      "diamant"
+    ]
+  },
+  {
+    "question": "Quel métal est liquide à température ambiante ?",
+    "answers": [
+      "le mercure",
+      "mercure"
+    ]
+  },
+  {
+    "question": "Quel gaz constitue environ 78 % de l'atmosphère terrestre ?",
+    "answers": [
+      "le diazote",
+      "diazote",
+      "l'azote",
+      "azote"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on la force qui attire les objets vers le sol ?",
+    "answers": [
+      "la gravité",
+      "gravité",
+      "gravite",
+      "la pesanteur",
+      "pesanteur"
+    ]
+  },
+  {
+    "question": "Le son peut-il se propager dans le vide ?",
+    "answers": [
+      "non"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on une particule de lumière ?",
+    "answers": [
+      "un photon",
+      "photon"
+    ]
+  },
+  {
+    "question": "Quelle est l'unité de mesure de l'intensité électrique ?",
+    "answers": [
+      "l'ampère",
+      "ampère",
+      "ampere",
+      "a"
+    ]
+  },
+  {
+    "question": "Quelle est l'unité de mesure de la tension électrique ?",
+    "answers": [
+      "le volt",
+      "volt",
+      "v"
+    ]
+  },
+  {
+    "question": "Quelle est l'unité de mesure de la résistance électrique ?",
+    "answers": [
+      "l'ohm",
+      "ohm",
+      "Ω"
+    ]
+  },
+  {
+    "question": "Quel composé chimique courant porte la formule NaCl ?",
+    "answers": [
+      "le chlorure de sodium",
+      "chlorure de sodium",
+      "le sel",
+      "sel",
+      "sel de table"
+    ]
+  },
+  {
+    "question": "Quelle charge électrique possède un électron ?",
+    "answers": [
+      "négative",
+      "negative",
+      "une charge négative",
+      "charge négative"
+    ]
+  },
+  {
+    "question": "Quelles particules composent principalement le noyau d'un atome ?",
+    "answers": [
+      "les protons et les neutrons",
+      "protons et neutrons",
+      "neutrons et protons"
+    ]
+  },
+  {
+    "question": "Quel scientifique a créé le tableau périodique des éléments ?",
+    "answers": [
+      "dmitri mendeleïev",
+      "mendeleïev",
+      "dmitri mendeleiev",
+      "mendeleiev"
+    ]
+  },
+  {
+    "question": "Quelle est l'unité de mesure de l'énergie dans le Système international ?",
+    "answers": [
+      "le joule",
+      "joule",
+      "j"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on le passage direct de l'état solide à l'état gazeux ?",
+    "answers": [
+      "la sublimation",
+      "sublimation"
+    ]
+  },
+  {
+    "question": "Quel est le plus grand organe du corps humain ?",
+    "answers": [
+      "la peau",
+      "peau"
+    ]
+  },
+  {
+    "question": "Combien d'os compte normalement le squelette d'un adulte ?",
+    "answers": [
+      "206",
+      "deux cent six"
+    ]
+  },
+  {
+    "question": "Quel organe propulse le sang dans le corps ?",
+    "answers": [
+      "le cœur",
+      "cœur",
+      "coeur"
+    ]
+  },
+  {
+    "question": "Quelles cellules du sang transportent principalement l'oxygène ?",
+    "answers": [
+      "les globules rouges",
+      "globules rouges",
+      "les hématies",
+      "hématies",
+      "hematies"
+    ]
+  },
+  {
+    "question": "Que signifie le sigle ADN ?",
+    "answers": [
+      "acide désoxyribonucléique",
+      "acide desoxyribonucleique"
+    ]
+  },
+  {
+    "question": "Quel organite cellulaire est souvent surnommé la centrale énergétique de la cellule ?",
+    "answers": [
+      "la mitochondrie",
+      "mitochondrie",
+      "les mitochondries",
+      "mitochondries"
+    ]
+  },
+  {
+    "question": "Quel groupe sanguin est considéré comme donneur universel de globules rouges ?",
+    "answers": [
+      "o négatif",
+      "o-",
+      "o negatif"
+    ]
+  },
+  {
+    "question": "Quel est le plus grand organe interne du corps humain ?",
+    "answers": [
+      "le foie",
+      "foie"
+    ]
+  },
+  {
+    "question": "Quels organes filtrent le sang et produisent l'urine ?",
+    "answers": [
+      "les reins",
+      "reins"
+    ]
+  },
+  {
+    "question": "Combien de chromosomes possède normalement une cellule humaine non sexuelle ?",
+    "answers": [
+      "46",
+      "quarante-six",
+      "quarante six"
+    ]
+  },
+  {
+    "question": "Dans quelle partie du corps la digestion commence-t-elle ?",
+    "answers": [
+      "la bouche",
+      "bouche"
+    ]
+  },
+  {
+    "question": "Quelle partie colorée de l'œil entoure la pupille ?",
+    "answers": [
+      "l'iris",
+      "iris"
+    ]
+  },
+  {
+    "question": "Quel est le plus petit os du corps humain ?",
+    "answers": [
+      "l'étrier",
+      "étrier",
+      "etrier",
+      "le stapès",
+      "stapès",
+      "stapes"
+    ]
+  },
+  {
+    "question": "Quelle hormone aide à faire baisser le taux de sucre dans le sang ?",
+    "answers": [
+      "l'insuline",
+      "insuline"
+    ]
+  },
+  {
+    "question": "Quelle vitamine la peau produit-elle notamment grâce à l'exposition au soleil ?",
+    "answers": [
+      "la vitamine d",
+      "vitamine d",
+      "d"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on le tissu qui relie un muscle à un os ?",
+    "answers": [
+      "un tendon",
+      "tendon",
+      "le tendon"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on le tissu qui relie généralement un os à un autre os ?",
+    "answers": [
+      "un ligament",
+      "ligament",
+      "le ligament"
+    ]
+  },
+  {
+    "question": "Combien de cavités possède le cœur humain ?",
+    "answers": [
+      "4",
+      "quatre"
+    ]
+  },
+  {
+    "question": "Dans quelles petites structures pulmonaires ont lieu les échanges gazeux ?",
+    "answers": [
+      "les alvéoles",
+      "alvéoles",
+      "alveoles",
+      "les alvéoles pulmonaires",
+      "alvéoles pulmonaires"
+    ]
+  },
+  {
+    "question": "Quelle enzyme de la salive commence la digestion de l'amidon ?",
+    "answers": [
+      "l'amylase",
+      "amylase",
+      "l'amylase salivaire",
+      "amylase salivaire"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on les cellules sanguines qui participent aux défenses immunitaires ?",
+    "answers": [
+      "les globules blancs",
+      "globules blancs",
+      "les leucocytes",
+      "leucocytes"
+    ]
+  },
+  {
+    "question": "Quelle est la température corporelle humaine moyenne souvent donnée comme référence ?",
+    "answers": [
+      "37 °c",
+      "37°c",
+      "37 degrés",
+      "37"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on une cellule spécialisée dans la transmission des messages nerveux ?",
+    "answers": [
+      "un neurone",
+      "neurone",
+      "le neurone"
+    ]
+  },
+  {
+    "question": "Quel organe produit l'insuline ?",
+    "answers": [
+      "le pancréas",
+      "pancréas",
+      "pancreas"
+    ]
+  },
+  {
+    "question": "Quel pigment donne principalement sa couleur à la peau, aux cheveux et aux yeux ?",
+    "answers": [
+      "la mélanine",
+      "mélanine",
+      "melanine"
+    ]
+  },
+  {
+    "question": "Quel est le plus grand animal vivant sur Terre ?",
+    "answers": [
+      "la baleine bleue",
+      "baleine bleue",
+      "le rorqual bleu",
+      "rorqual bleu"
+    ]
+  },
+  {
+    "question": "Quel est l'animal terrestre le plus rapide ?",
+    "answers": [
+      "le guépard",
+      "guépard",
+      "guepard"
+    ]
+  },
+  {
+    "question": "Quel mammifère australien pond des œufs et possède un bec ?",
+    "answers": [
+      "l'ornithorynque",
+      "ornithorynque"
+    ]
+  },
+  {
+    "question": "Dans quel hémisphère vivent naturellement les manchots ?",
+    "answers": [
+      "l'hémisphère sud",
+      "hémisphère sud",
+      "hemisphere sud",
+      "le sud"
+    ]
+  },
+  {
+    "question": "À quelle classe d'animaux appartient la grenouille ?",
+    "answers": [
+      "les amphibiens",
+      "amphibiens",
+      "un amphibien",
+      "amphibien"
+    ]
+  },
+  {
+    "question": "Combien de pattes possède une araignée ?",
+    "answers": [
+      "8",
+      "huit"
+    ]
+  },
+  {
+    "question": "Combien de cœurs possède une pieuvre ?",
+    "answers": [
+      "3",
+      "trois"
+    ]
+  },
+  {
+    "question": "Combien de vertèbres cervicales possède généralement une girafe ?",
+    "answers": [
+      "7",
+      "sept"
+    ]
+  },
+  {
+    "question": "Quel système les chauves-souris utilisent-elles pour se repérer grâce aux sons ?",
+    "answers": [
+      "l'écholocation",
+      "écholocation",
+      "echolocation"
+    ]
+  },
+  {
+    "question": "Quel aliment sucré les abeilles produisent-elles à partir du nectar ?",
+    "answers": [
+      "le miel",
+      "miel"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on un groupe de loups ?",
+    "answers": [
+      "une meute",
+      "meute"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on le petit du mouton ?",
+    "answers": [
+      "un agneau",
+      "agneau",
+      "l'agneau"
+    ]
+  },
+  {
+    "question": "Quel animal est l'un des principaux symboles de l'Australie ?",
+    "answers": [
+      "le kangourou",
+      "kangourou"
+    ]
+  },
+  {
+    "question": "Quel reptile est célèbre pour sa capacité à changer de couleur ?",
+    "answers": [
+      "le caméléon",
+      "caméléon",
+      "cameleon"
+    ]
+  },
+  {
+    "question": "Quel est le plus grand félin vivant ?",
+    "answers": [
+      "le tigre",
+      "tigre"
+    ]
+  },
+  {
+    "question": "Quel animal africain porte des rayures noires et blanches ?",
+    "answers": [
+      "le zèbre",
+      "zèbre",
+      "zebre"
+    ]
+  },
+  {
+    "question": "Avec quels organes la plupart des poissons respirent-ils ?",
+    "answers": [
+      "les branchies",
+      "branchies"
+    ]
+  },
+  {
+    "question": "Quel oiseau est capable de voler en marche arrière ?",
+    "answers": [
+      "le colibri",
+      "colibri",
+      "l'oiseau-mouche",
+      "oiseau-mouche"
+    ]
+  },
+  {
+    "question": "Quel mammifère terrestre connaît la plus longue gestation ?",
+    "answers": [
+      "l'éléphant",
+      "éléphant",
+      "elephant"
+    ]
+  },
+  {
+    "question": "En quoi se transforme une chenille après sa métamorphose ?",
+    "answers": [
+      "un papillon",
+      "papillon",
+      "le papillon"
+    ]
+  },
+  {
+    "question": "Combien de bosses possède un dromadaire ?",
+    "answers": [
+      "1",
+      "une"
+    ]
+  },
+  {
+    "question": "De quelle plante le panda géant se nourrit-il principalement ?",
+    "answers": [
+      "le bambou",
+      "bambou"
+    ]
+  },
+  {
+    "question": "À quelle classe d'animaux appartient le crocodile ?",
+    "answers": [
+      "les reptiles",
+      "reptiles",
+      "un reptile",
+      "reptile"
+    ]
+  },
+  {
+    "question": "Quel arbre produit des glands ?",
+    "answers": [
+      "le chêne",
+      "chêne",
+      "chene"
+    ]
+  },
+  {
+    "question": "Quel pigment vert permet aux plantes de capter l'énergie lumineuse ?",
+    "answers": [
+      "la chlorophylle",
+      "chlorophylle"
+    ]
+  },
+  {
+    "question": "Quelle étoile se trouve au centre du Système solaire ?",
+    "answers": [
+      "le soleil",
+      "soleil"
+    ]
+  },
+  {
+    "question": "Quel est le satellite naturel de la Terre ?",
+    "answers": [
+      "la lune",
+      "lune"
+    ]
+  },
+  {
+    "question": "Combien de planètes compte le Système solaire ?",
+    "answers": [
+      "8",
+      "huit"
+    ]
+  },
+  {
+    "question": "Quelle est la plus grande planète du Système solaire ?",
+    "answers": [
+      "jupiter"
+    ]
+  },
+  {
+    "question": "Quelle planète est surnommée la planète rouge ?",
+    "answers": [
+      "mars"
+    ]
+  },
+  {
+    "question": "Quelle planète est célèbre pour ses anneaux très visibles ?",
+    "answers": [
+      "saturne"
+    ]
+  },
+  {
+    "question": "Quelle planète est la plus proche du Soleil ?",
+    "answers": [
+      "mercure"
+    ]
+  },
+  {
+    "question": "Quelle est la planète la plus chaude du Système solaire ?",
+    "answers": [
+      "vénus",
+      "venus"
+    ]
+  },
+  {
+    "question": "Comment s'appelle la galaxie dans laquelle se trouve le Système solaire ?",
+    "answers": [
+      "la voie lactée",
+      "voie lactée",
+      "voie lactee"
+    ]
+  },
+  {
+    "question": "Qui fut la première femme à voyager dans l'espace ?",
+    "answers": [
+      "valentina terechkova",
+      "terechkova",
+      "valentina tereshkova",
+      "tereshkova"
+    ]
+  },
+  {
+    "question": "Quel fut le premier satellite artificiel placé en orbite autour de la Terre ?",
+    "answers": [
+      "spoutnik 1",
+      "spoutnik i",
+      "spoutnik",
+      "sputnik 1",
+      "sputnik"
+    ]
+  },
+  {
+    "question": "Quelle mission a permis aux premiers humains de marcher sur la Lune ?",
+    "answers": [
+      "apollo 11",
+      "apollo xi"
+    ]
+  },
+  {
+    "question": "Comment Pluton est-elle classée depuis 2006 ?",
+    "answers": [
+      "une planète naine",
+      "planète naine",
+      "une planete naine",
+      "planete naine"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on la traînée lumineuse visible derrière une comète près du Soleil ?",
+    "answers": [
+      "la queue",
+      "queue",
+      "la chevelure",
+      "chevelure"
+    ]
+  },
+  {
+    "question": "Une année-lumière mesure-t-elle une durée ou une distance ?",
+    "answers": [
+      "une distance",
+      "distance"
+    ]
+  },
+  {
+    "question": "Quelle est l'étoile la plus proche du Soleil ?",
+    "answers": [
+      "proxima du centaure",
+      "proxima centauri",
+      "proxima"
+    ]
+  },
+  {
+    "question": "Sur quelle planète observe-t-on la Grande Tache rouge ?",
+    "answers": [
+      "jupiter"
+    ]
+  },
+  {
+    "question": "Sur quelle planète se trouve Olympus Mons, le plus grand volcan connu du Système solaire ?",
+    "answers": [
+      "mars"
+    ]
+  },
+  {
+    "question": "Quel télescope spatial lancé en 1990 porte le nom d'un astronome américain ?",
+    "answers": [
+      "hubble",
+      "le télescope hubble",
+      "télescope spatial hubble"
+    ]
+  },
+  {
+    "question": "Que signifie le sigle ISS en français ?",
+    "answers": [
+      "station spatiale internationale",
+      "la station spatiale internationale"
+    ]
+  },
+  {
+    "question": "Quelle planète tourne presque couchée sur son orbite ?",
+    "answers": [
+      "uranus"
+    ]
+  },
+  {
+    "question": "Quelle est la planète la plus éloignée du Soleil dans le Système solaire ?",
+    "answers": [
+      "neptune"
+    ]
+  },
+  {
+    "question": "La gravité sur la Lune vaut environ quelle fraction de celle de la Terre ?",
+    "answers": [
+      "un sixième",
+      "1/6",
+      "un sixieme"
+    ]
+  },
+  {
+    "question": "Quelle grande galaxie spirale est la plus proche de la Voie lactée ?",
+    "answers": [
+      "andromède",
+      "andromede",
+      "la galaxie d'andromède",
+      "galaxie d'andromède"
+    ]
+  },
+  {
+    "question": "Quelle réaction fournit l'énergie du Soleil ?",
+    "answers": [
+      "la fusion nucléaire",
+      "fusion nucléaire",
+      "la fusion nucleaire",
+      "fusion nucleaire"
+    ]
+  },
+  {
+    "question": "Quelle est la somme des angles d'un triangle ?",
+    "answers": [
+      "180 degrés",
+      "180°",
+      "180"
+    ]
+  },
+  {
+    "question": "Quelle valeur arrondie à deux décimales donne-t-on souvent au nombre pi ?",
+    "answers": [
+      "3,14",
+      "3.14"
+    ]
+  },
+  {
+    "question": "Combien font 9 au carré ?",
+    "answers": [
+      "81",
+      "quatre-vingt-un",
+      "quatre vingt un"
+    ]
+  },
+  {
+    "question": "Quel est le plus petit nombre premier supérieur à 10 ?",
+    "answers": [
+      "11",
+      "onze"
+    ]
+  },
+  {
+    "question": "Quelle lettre représente le nombre 50 en chiffres romains ?",
+    "answers": [
+      "l"
+    ]
+  },
+  {
+    "question": "Combien de côtés possède un hexagone ?",
+    "answers": [
+      "6",
+      "six"
+    ]
+  },
+  {
+    "question": "Combien de mètres y a-t-il dans un kilomètre ?",
+    "answers": [
+      "1000",
+      "mille"
+    ]
+  },
+  {
+    "question": "Combien représentent les trois quarts de 100 ?",
+    "answers": [
+      "75",
+      "soixante-quinze",
+      "soixante quinze"
+    ]
+  },
+  {
+    "question": "Quelle est la racine carrée de 144 ?",
+    "answers": [
+      "12",
+      "douze"
+    ]
+  },
+  {
+    "question": "Quel est le périmètre d'un carré dont chaque côté mesure 5 cm ?",
+    "answers": [
+      "20 cm",
+      "20",
+      "vingt centimètres",
+      "vingt"
+    ]
+  },
+  {
+    "question": "Quelle est l'aire d'un rectangle de 8 cm sur 3 cm ?",
+    "answers": [
+      "24 cm²",
+      "24 cm2",
+      "24",
+      "vingt-quatre centimètres carrés"
+    ]
+  },
+  {
+    "question": "Combien d'années compte une décennie ?",
+    "answers": [
+      "10",
+      "dix"
+    ]
+  },
+  {
+    "question": "Combien d'années compte un siècle ?",
+    "answers": [
+      "100",
+      "cent"
+    ]
+  },
+  {
+    "question": "Combien font 2 puissance 10 ?",
+    "answers": [
+      "1024",
+      "mille vingt-quatre",
+      "mille vingt quatre"
+    ]
+  },
+  {
+    "question": "Sur combien de chiffres repose le système binaire ?",
+    "answers": [
+      "2",
+      "deux"
+    ]
+  },
+  {
+    "question": "Quel est le seul nombre premier pair ?",
+    "answers": [
+      "2",
+      "deux"
+    ]
+  },
+  {
+    "question": "Quel théorème relie les longueurs des côtés d'un triangle rectangle ?",
+    "answers": [
+      "le théorème de pythagore",
+      "théorème de pythagore",
+      "pythagore"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on un triangle qui possède deux côtés de même longueur ?",
+    "answers": [
+      "un triangle isocèle",
+      "triangle isocèle",
+      "isocèle",
+      "isocele"
+    ]
+  },
+  {
+    "question": "À combien de rayons correspond le diamètre d'un cercle ?",
+    "answers": [
+      "2",
+      "deux",
+      "deux rayons",
+      "2 rayons"
+    ]
+  },
+  {
+    "question": "À quelle fraction correspondent 25 % ?",
+    "answers": [
+      "un quart",
+      "1/4",
+      "un quatrième",
+      "un quart de l'unité"
+    ]
+  },
+  {
+    "question": "Combien font 7 multiplié par 8 ?",
+    "answers": [
+      "56",
+      "cinquante-six",
+      "cinquante six"
+    ]
+  },
+  {
+    "question": "Combien font 15 % de 200 ?",
+    "answers": [
+      "30",
+      "trente"
+    ]
+  },
+  {
+    "question": "Combien de degrés mesure un tour complet ?",
+    "answers": [
+      "360 degrés",
+      "360°",
+      "360"
+    ]
+  },
+  {
+    "question": "Combien de faces possède un cube ?",
+    "answers": [
+      "6",
+      "six"
+    ]
+  },
+  {
+    "question": "À quelle fraction irréductible correspond le nombre décimal 0,5 ?",
+    "answers": [
+      "1/2",
+      "un demi",
+      "une moitié"
+    ]
+  },
+  {
+    "question": "Qui a écrit Le Petit Prince ?",
+    "answers": [
+      "antoine de saint-exupéry",
+      "saint-exupéry",
+      "antoine de saint exupéry",
+      "saint exupery"
+    ]
+  },
+  {
+    "question": "Qui a écrit Les Misérables ?",
+    "answers": [
+      "victor hugo",
+      "hugo"
+    ]
+  },
+  {
+    "question": "Qui a écrit Madame Bovary ?",
+    "answers": [
+      "gustave flaubert",
+      "flaubert"
+    ]
+  },
+  {
+    "question": "Qui a écrit L'Étranger ?",
+    "answers": [
+      "albert camus",
+      "camus"
+    ]
+  },
+  {
+    "question": "Qui a écrit Germinal ?",
+    "answers": [
+      "émile zola",
+      "emile zola",
+      "zola"
+    ]
+  },
+  {
+    "question": "Quel était le véritable nom de Molière ?",
+    "answers": [
+      "jean-baptiste poquelin",
+      "jean baptiste poquelin",
+      "poquelin"
+    ]
+  },
+  {
+    "question": "À quel poète grec attribue-t-on L'Odyssée ?",
+    "answers": [
+      "homère",
+      "homere"
+    ]
+  },
+  {
+    "question": "Qui a écrit Roméo et Juliette ?",
+    "answers": [
+      "william shakespeare",
+      "shakespeare"
+    ]
+  },
+  {
+    "question": "Qui a écrit le roman 1984 ?",
+    "answers": [
+      "george orwell",
+      "orwell"
+    ]
+  },
+  {
+    "question": "Qui a créé le personnage de Harry Potter ?",
+    "answers": [
+      "j. k. rowling",
+      "jk rowling",
+      "j.k. rowling",
+      "joanne rowling",
+      "rowling"
+    ]
+  },
+  {
+    "question": "Qui a écrit Don Quichotte ?",
+    "answers": [
+      "miguel de cervantes",
+      "cervantes"
+    ]
+  },
+  {
+    "question": "Qui a écrit Les Trois Mousquetaires ?",
+    "answers": [
+      "alexandre dumas",
+      "dumas"
+    ]
+  },
+  {
+    "question": "Quel écrivain français a créé le gentleman-cambrioleur Arsène Lupin ?",
+    "answers": [
+      "maurice leblanc",
+      "leblanc"
+    ]
+  },
+  {
+    "question": "Qui a écrit Le Tour du monde en quatre-vingts jours ?",
+    "answers": [
+      "jules verne",
+      "verne"
+    ]
+  },
+  {
+    "question": "Qui a écrit le recueil Les Fleurs du mal ?",
+    "answers": [
+      "charles baudelaire",
+      "baudelaire"
+    ]
+  },
+  {
+    "question": "Quel auteur est célèbre pour ses Fables mettant souvent en scène des animaux ?",
+    "answers": [
+      "jean de la fontaine",
+      "la fontaine",
+      "jean de lafontaine"
+    ]
+  },
+  {
+    "question": "Qui a écrit Cyrano de Bergerac ?",
+    "answers": [
+      "edmond rostand",
+      "rostand"
+    ]
+  },
+  {
+    "question": "Qui a écrit Candide ?",
+    "answers": [
+      "voltaire"
+    ]
+  },
+  {
+    "question": "Qui a écrit Le Nom de la rose ?",
+    "answers": [
+      "umberto eco",
+      "eco"
+    ]
+  },
+  {
+    "question": "Qui a écrit Orgueil et Préjugés ?",
+    "answers": [
+      "jane austen",
+      "austen"
+    ]
+  },
+  {
+    "question": "Quel poète italien a écrit La Divine Comédie ?",
+    "answers": [
+      "dante alighieri",
+      "dante"
+    ]
+  },
+  {
+    "question": "Qui a écrit La Métamorphose ?",
+    "answers": [
+      "franz kafka",
+      "kafka"
+    ]
+  },
+  {
+    "question": "Qui a écrit Le Seigneur des anneaux ?",
+    "answers": [
+      "j. r. r. tolkien",
+      "jrr tolkien",
+      "j.r.r. tolkien",
+      "tolkien"
+    ]
+  },
+  {
+    "question": "Qui a écrit Le Comte de Monte-Cristo ?",
+    "answers": [
+      "alexandre dumas",
+      "dumas"
+    ]
+  },
+  {
+    "question": "Qui a écrit Notre-Dame de Paris ?",
+    "answers": [
+      "victor hugo",
+      "hugo"
+    ]
+  },
+  {
+    "question": "Qui a peint La Joconde ?",
+    "answers": [
+      "léonard de vinci",
+      "leonard de vinci",
+      "de vinci"
+    ]
+  },
+  {
+    "question": "Dans quel musée peut-on voir La Joconde ?",
+    "answers": [
+      "le louvre",
+      "musée du louvre",
+      "le musée du louvre",
+      "louvre"
+    ]
+  },
+  {
+    "question": "Qui a peint La Nuit étoilée ?",
+    "answers": [
+      "vincent van gogh",
+      "van gogh"
+    ]
+  },
+  {
+    "question": "Quel peintre espagnol a réalisé Guernica ?",
+    "answers": [
+      "pablo picasso",
+      "picasso"
+    ]
+  },
+  {
+    "question": "Quel sculpteur français a créé Le Penseur ?",
+    "answers": [
+      "auguste rodin",
+      "rodin"
+    ]
+  },
+  {
+    "question": "Quel tableau de Claude Monet a donné son nom à l'impressionnisme ?",
+    "answers": [
+      "impression, soleil levant",
+      "impression soleil levant"
+    ]
+  },
+  {
+    "question": "Quel artiste a peint le plafond de la chapelle Sixtine ?",
+    "answers": [
+      "michel-ange",
+      "michel ange",
+      "michelangelo"
+    ]
+  },
+  {
+    "question": "Qui a peint La Jeune Fille à la perle ?",
+    "answers": [
+      "johannes vermeer",
+      "vermeer"
+    ]
+  },
+  {
+    "question": "À quel mouvement artistique Salvador Dalí est-il associé ?",
+    "answers": [
+      "le surréalisme",
+      "surréalisme",
+      "surrealisme"
+    ]
+  },
+  {
+    "question": "Quel peintre italien a réalisé La Naissance de Vénus ?",
+    "answers": [
+      "sandro botticelli",
+      "botticelli"
+    ]
+  },
+  {
+    "question": "Qui a peint Le Cri ?",
+    "answers": [
+      "edvard munch",
+      "munch"
+    ]
+  },
+  {
+    "question": "Quel architecte a conçu la pyramide du Louvre ?",
+    "answers": [
+      "ieoh ming pei",
+      "i. m. pei",
+      "im pei",
+      "pei"
+    ]
+  },
+  {
+    "question": "À quel style architectural appartient principalement la cathédrale Notre-Dame de Paris ?",
+    "answers": [
+      "le gothique",
+      "gothique",
+      "style gothique"
+    ]
+  },
+  {
+    "question": "Quel type de bâtiment antique est le Colisée de Rome ?",
+    "answers": [
+      "un amphithéâtre",
+      "amphithéâtre",
+      "amphitheatre",
+      "un amphithéâtre romain"
+    ]
+  },
+  {
+    "question": "Quel architecte catalan a conçu la Sagrada Família ?",
+    "answers": [
+      "antoni gaudí",
+      "antoni gaudi",
+      "gaudí",
+      "gaudi"
+    ]
+  },
+  {
+    "question": "Dans quel pays se trouve le Taj Mahal ?",
+    "answers": [
+      "l'inde",
+      "inde"
+    ]
+  },
+  {
+    "question": "Quel sculpteur français a conçu la Statue de la Liberté ?",
+    "answers": [
+      "frédéric auguste bartholdi",
+      "frédéric bartholdi",
+      "frederic bartholdi",
+      "bartholdi"
+    ]
+  },
+  {
+    "question": "Quel ingénieur a donné son nom à la tour Eiffel ?",
+    "answers": [
+      "gustave eiffel",
+      "eiffel"
+    ]
+  },
+  {
+    "question": "Dans quelle ville espagnole se trouve l'Alhambra ?",
+    "answers": [
+      "grenade",
+      "granada"
+    ]
+  },
+  {
+    "question": "Dans quelle ville se trouve le Parthénon ?",
+    "answers": [
+      "athènes",
+      "athenes"
+    ]
+  },
+  {
+    "question": "Dans quel pays se trouve l'opéra de Sydney ?",
+    "answers": [
+      "l'australie",
+      "australie"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on une image décorative composée de morceaux de verre coloré ?",
+    "answers": [
+      "un vitrail",
+      "vitrail",
+      "le vitrail"
+    ]
+  },
+  {
+    "question": "Sur quel support encore humide réalise-t-on traditionnellement une fresque ?",
+    "answers": [
+      "un enduit",
+      "l'enduit",
+      "du plâtre humide",
+      "un mur enduit",
+      "un enduit frais"
+    ]
+  },
+  {
+    "question": "Combien de panneaux comporte un triptyque ?",
+    "answers": [
+      "3",
+      "trois"
+    ]
+  },
+  {
+    "question": "Quelles sont les trois couleurs primaires en peinture traditionnelle ?",
+    "answers": [
+      "rouge bleu jaune",
+      "rouge, bleu et jaune",
+      "le rouge le bleu et le jaune",
+      "rouge bleu et jaune"
+    ]
+  },
+  {
+    "question": "Quel compositeur a écrit Les Quatre Saisons ?",
+    "answers": [
+      "antonio vivaldi",
+      "vivaldi"
+    ]
+  },
+  {
+    "question": "Quel compositeur a écrit la Neuvième Symphonie et son Hymne à la joie ?",
+    "answers": [
+      "ludwig van beethoven",
+      "beethoven"
+    ]
+  },
+  {
+    "question": "Quel compositeur a écrit l'opéra La Flûte enchantée ?",
+    "answers": [
+      "wolfgang amadeus mozart",
+      "mozart"
+    ]
+  },
+  {
+    "question": "Quel compositeur français a écrit le Boléro ?",
+    "answers": [
+      "maurice ravel",
+      "ravel"
+    ]
+  },
+  {
+    "question": "Quel compositeur a créé l'opéra Carmen ?",
+    "answers": [
+      "georges bizet",
+      "bizet"
+    ]
+  },
+  {
+    "question": "Quelle chanteuse française a rendu célèbre La Vie en rose ?",
+    "answers": [
+      "édith piaf",
+      "edith piaf",
+      "piaf"
+    ]
+  },
+  {
+    "question": "Quel chanteur belge a interprété Ne me quitte pas ?",
+    "answers": [
+      "jacques brel",
+      "brel"
+    ]
+  },
+  {
+    "question": "Quel chanteur français interprète Les Lacs du Connemara ?",
+    "answers": [
+      "michel sardou",
+      "sardou"
+    ]
+  },
+  {
+    "question": "Quel chanteur français a écrit Mistral gagnant ?",
+    "answers": [
+      "renaud",
+      "renaud séchan",
+      "renaud sechan"
+    ]
+  },
+  {
+    "question": "Quelle chanteuse française interprète Résiste ?",
+    "answers": [
+      "france gall",
+      "gall"
+    ]
+  },
+  {
+    "question": "Quel instrument possède généralement 88 touches ?",
+    "answers": [
+      "le piano",
+      "piano"
+    ]
+  },
+  {
+    "question": "Quelle clé musicale est aussi appelée clé de sol ?",
+    "answers": [
+      "la clé de sol",
+      "clé de sol",
+      "cle de sol"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on la personne qui dirige un orchestre ?",
+    "answers": [
+      "le chef d'orchestre",
+      "chef d'orchestre",
+      "la cheffe d'orchestre",
+      "cheffe d'orchestre"
+    ]
+  },
+  {
+    "question": "À quelle famille d'instruments appartient le violon ?",
+    "answers": [
+      "les cordes",
+      "cordes",
+      "les instruments à cordes",
+      "instruments à cordes"
+    ]
+  },
+  {
+    "question": "Quel inventeur belge a donné son nom au saxophone ?",
+    "answers": [
+      "adolphe sax",
+      "sax"
+    ]
+  },
+  {
+    "question": "Quel chanteur était le leader du groupe Queen ?",
+    "answers": [
+      "freddie mercury",
+      "mercury"
+    ]
+  },
+  {
+    "question": "De quelle ville anglaise les Beatles sont-ils originaires ?",
+    "answers": [
+      "liverpool"
+    ]
+  },
+  {
+    "question": "Quel artiste est surnommé le Roi de la pop ?",
+    "answers": [
+      "michael jackson",
+      "jackson"
+    ]
+  },
+  {
+    "question": "Quel chanteur jamaïcain est une icône mondiale du reggae ?",
+    "answers": [
+      "bob marley",
+      "marley"
+    ]
+  },
+  {
+    "question": "Quel duo français casqué a sorti l'album Random Access Memories ?",
+    "answers": [
+      "daft punk"
+    ]
+  },
+  {
+    "question": "De quel pays le groupe ABBA est-il originaire ?",
+    "answers": [
+      "la suède",
+      "suède",
+      "suede"
+    ]
+  },
+  {
+    "question": "Dans quel groupe Beyoncé a-t-elle chanté avant sa carrière solo ?",
+    "answers": [
+      "destiny's child",
+      "destinys child"
+    ]
+  },
+  {
+    "question": "De quel pays le chanteur Stromae est-il originaire ?",
+    "answers": [
+      "la belgique",
+      "belgique"
+    ]
+  },
+  {
+    "question": "De quelle province canadienne Céline Dion est-elle originaire ?",
+    "answers": [
+      "le québec",
+      "québec",
+      "quebec"
+    ]
+  },
+  {
+    "question": "Quel était le nom de naissance d'Édith Piaf ?",
+    "answers": [
+      "édith giovanna gassion",
+      "edith giovanna gassion",
+      "édith gassion",
+      "edith gassion"
+    ]
+  },
+  {
+    "question": "Quels frères français sont des pionniers du cinématographe ?",
+    "answers": [
+      "les frères lumière",
+      "frères lumière",
+      "les freres lumiere",
+      "auguste et louis lumière",
+      "louis et auguste lumière"
+    ]
+  },
+  {
+    "question": "Qui a réalisé le film Titanic sorti en 1997 ?",
+    "answers": [
+      "james cameron",
+      "cameron"
+    ]
+  },
+  {
+    "question": "Qui a créé la saga Star Wars ?",
+    "answers": [
+      "george lucas",
+      "lucas"
+    ]
+  },
+  {
+    "question": "Qui a réalisé la trilogie cinématographique Le Seigneur des anneaux ?",
+    "answers": [
+      "peter jackson",
+      "jackson"
+    ]
+  },
+  {
+    "question": "Quelle actrice joue Amélie Poulain dans Le Fabuleux Destin d'Amélie Poulain ?",
+    "answers": [
+      "audrey tautou",
+      "tautou"
+    ]
+  },
+  {
+    "question": "Quels acteurs incarnent les deux personnages principaux du film Intouchables ?",
+    "answers": [
+      "omar sy et françois cluzet",
+      "françois cluzet et omar sy",
+      "omar sy et francois cluzet",
+      "francois cluzet et omar sy"
+    ]
+  },
+  {
+    "question": "Comment s'appelle l'école de sorcellerie de Harry Potter ?",
+    "answers": [
+      "poudlard",
+      "hogwarts"
+    ]
+  },
+  {
+    "question": "Comment s'appelle le lion héros du Roi Lion ?",
+    "answers": [
+      "simba"
+    ]
+  },
+  {
+    "question": "Comment s'appelle le cow-boy de Toy Story ?",
+    "answers": [
+      "woody"
+    ]
+  },
+  {
+    "question": "Comment s'appellent les deux sœurs héroïnes de La Reine des neiges ?",
+    "answers": [
+      "anna et elsa",
+      "elsa et anna"
+    ]
+  },
+  {
+    "question": "Quelle créature verte est le héros du film d'animation Shrek ?",
+    "answers": [
+      "un ogre",
+      "ogre",
+      "un ogre vert"
+    ]
+  },
+  {
+    "question": "Qui a réalisé Jurassic Park ?",
+    "answers": [
+      "steven spielberg",
+      "spielberg"
+    ]
+  },
+  {
+    "question": "Comment s'appelle le héros principal de Matrix interprété par Keanu Reeves ?",
+    "answers": [
+      "neo",
+      "néo",
+      "thomas anderson"
+    ]
+  },
+  {
+    "question": "Qui a réalisé Le Parrain ?",
+    "answers": [
+      "francis ford coppola",
+      "coppola"
+    ]
+  },
+  {
+    "question": "Quelle récompense suprême est remise au Festival de Cannes ?",
+    "answers": [
+      "la palme d'or",
+      "palme d'or",
+      "palme dor"
+    ]
+  },
+  {
+    "question": "Dans quelle ville américaine se déroule traditionnellement la cérémonie des Oscars ?",
+    "answers": [
+      "los angeles",
+      "hollywood"
+    ]
+  },
+  {
+    "question": "Quel est le matricule de l'agent James Bond ?",
+    "answers": [
+      "007",
+      "zéro zéro sept",
+      "zero zero sept"
+    ]
+  },
+  {
+    "question": "Quel personnage au chapeau melon et à la canne est incarné par Charlie Chaplin ?",
+    "answers": [
+      "charlot",
+      "the tramp",
+      "le vagabond"
+    ]
+  },
+  {
+    "question": "Quel véhicule sert de machine à voyager dans le temps dans Retour vers le futur ?",
+    "answers": [
+      "une delorean",
+      "la delorean",
+      "delorean",
+      "de lorean"
+    ]
+  },
+  {
+    "question": "Comment s'appelle la planète où se déroule principalement Avatar ?",
+    "answers": [
+      "pandora"
+    ]
+  },
+  {
+    "question": "Quel réalisateur japonais a créé Le Voyage de Chihiro ?",
+    "answers": [
+      "hayao miyazaki",
+      "miyazaki"
+    ]
+  },
+  {
+    "question": "Comment s'appelle le café fréquenté par les personnages de Friends ?",
+    "answers": [
+      "central perk",
+      "le central perk"
+    ]
+  },
+  {
+    "question": "Comment s'appelle le continent principal de Game of Thrones ?",
+    "answers": [
+      "westeros"
+    ]
+  },
+  {
+    "question": "Dans quelle ville fictive se déroule Stranger Things ?",
+    "answers": [
+      "hawkins"
+    ]
+  },
+  {
+    "question": "Quel studio d'animation a créé Mon voisin Totoro ?",
+    "answers": [
+      "studio ghibli",
+      "ghibli",
+      "le studio ghibli"
+    ]
+  },
+  {
+    "question": "Combien de joueurs une équipe de football aligne-t-elle sur le terrain au coup d'envoi ?",
+    "answers": [
+      "11",
+      "onze"
+    ]
+  },
+  {
+    "question": "Combien de joueurs une équipe de rugby à XV aligne-t-elle sur le terrain ?",
+    "answers": [
+      "15",
+      "quinze"
+    ]
+  },
+  {
+    "question": "Combien de joueurs d'une même équipe sont sur le terrain au basket-ball ?",
+    "answers": [
+      "5",
+      "cinq"
+    ]
+  },
+  {
+    "question": "Combien de tournois composent le Grand Chelem de tennis ?",
+    "answers": [
+      "4",
+      "quatre"
+    ]
+  },
+  {
+    "question": "Dans quel sport dispute-t-on le Tour de France ?",
+    "answers": [
+      "le cyclisme",
+      "cyclisme",
+      "le vélo",
+      "vélo"
+    ]
+  },
+  {
+    "question": "Combien d'anneaux comporte le symbole olympique ?",
+    "answers": [
+      "5",
+      "cinq"
+    ]
+  },
+  {
+    "question": "Quelle est la distance officielle d'un marathon ?",
+    "answers": [
+      "42,195 km",
+      "42.195 km",
+      "42 kilomètres et 195 mètres",
+      "42 km 195"
+    ]
+  },
+  {
+    "question": "Dans quel pays le judo a-t-il été créé ?",
+    "answers": [
+      "le japon",
+      "japon"
+    ]
+  },
+  {
+    "question": "Sur quelle surface joue-t-on traditionnellement le tournoi de Wimbledon ?",
+    "answers": [
+      "le gazon",
+      "gazon",
+      "l'herbe",
+      "herbe"
+    ]
+  },
+  {
+    "question": "Quelle couleur porte le leader du Tour de France ?",
+    "answers": [
+      "jaune",
+      "le jaune",
+      "maillot jaune"
+    ]
+  },
+  {
+    "question": "Dans quelle zone le gardien de football peut-il prendre le ballon à la main ?",
+    "answers": [
+      "la surface de réparation",
+      "surface de réparation",
+      "la surface",
+      "dans sa surface de réparation"
+    ]
+  },
+  {
+    "question": "Combien de joueurs d'une équipe de handball sont simultanément sur le terrain, gardien compris ?",
+    "answers": [
+      "7",
+      "sept"
+    ]
+  },
+  {
+    "question": "Combien de joueurs d'une équipe de volley-ball sont sur le terrain ?",
+    "answers": [
+      "6",
+      "six"
+    ]
+  },
+  {
+    "question": "Quel drapeau annonce la fin d'une course automobile ?",
+    "answers": [
+      "le drapeau à damier",
+      "drapeau à damier",
+      "le drapeau damier"
+    ]
+  },
+  {
+    "question": "Combien d'épreuves compte un décathlon ?",
+    "answers": [
+      "10",
+      "dix"
+    ]
+  },
+  {
+    "question": "Quels deux sports combine le biathlon ?",
+    "answers": [
+      "ski de fond et tir à la carabine",
+      "ski et tir",
+      "ski de fond et tir"
+    ]
+  },
+  {
+    "question": "Combien d'armes différentes existe-t-il en escrime sportive ?",
+    "answers": [
+      "3",
+      "trois"
+    ]
+  },
+  {
+    "question": "Au golf, comment appelle-t-on un score d'un coup sous le par sur un trou ?",
+    "answers": [
+      "un birdie",
+      "birdie",
+      "le birdie"
+    ]
+  },
+  {
+    "question": "Au baseball, comment appelle-t-on un coup qui permet au batteur de faire le tour des bases ?",
+    "answers": [
+      "un home run",
+      "home run",
+      "un coup de circuit",
+      "coup de circuit"
+    ]
+  },
+  {
+    "question": "Quel agrès masculin de gymnastique est constitué de deux cercles suspendus ?",
+    "answers": [
+      "les anneaux",
+      "anneaux"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on la petite boule servant de cible à la pétanque ?",
+    "answers": [
+      "le cochonnet",
+      "cochonnet",
+      "le but",
+      "but",
+      "le bouchon",
+      "bouchon"
+    ]
+  },
+  {
+    "question": "Sur quelle surface se joue Roland-Garros ?",
+    "answers": [
+      "la terre battue",
+      "terre battue"
+    ]
+  },
+  {
+    "question": "Dans quel sport s'affrontent les clubs lors de la Ligue des champions de l'UEFA ?",
+    "answers": [
+      "le football",
+      "football",
+      "foot"
+    ]
+  },
+  {
+    "question": "Combien de nages composent le quatre nages en natation ?",
+    "answers": [
+      "4",
+      "quatre"
+    ]
+  },
+  {
+    "question": "Quelle pièce des échecs se déplace en forme de L ?",
+    "answers": [
+      "le cavalier",
+      "cavalier"
+    ]
+  },
+  {
+    "question": "De quel pays les sushis sont-ils originaires ?",
+    "answers": [
+      "le japon",
+      "japon"
+    ]
+  },
+  {
+    "question": "De quel pays la paella est-elle originaire ?",
+    "answers": [
+      "l'espagne",
+      "espagne"
+    ]
+  },
+  {
+    "question": "Quel fruit constitue la base du guacamole ?",
+    "answers": [
+      "l'avocat",
+      "avocat"
+    ]
+  },
+  {
+    "question": "Quelle légumineuse constitue généralement la base du houmous ?",
+    "answers": [
+      "le pois chiche",
+      "pois chiche",
+      "les pois chiches",
+      "pois chiches"
+    ]
+  },
+  {
+    "question": "De quelle région française la ratatouille est-elle originaire ?",
+    "answers": [
+      "la provence",
+      "provence"
+    ]
+  },
+  {
+    "question": "De quel pays le tiramisu est-il originaire ?",
+    "answers": [
+      "l'italie",
+      "italie"
+    ]
+  },
+  {
+    "question": "De quel pays la feta est-elle une spécialité ?",
+    "answers": [
+      "la grèce",
+      "grèce",
+      "grece"
+    ]
+  },
+  {
+    "question": "Quel pays est particulièrement célèbre pour son sirop d'érable ?",
+    "answers": [
+      "le canada",
+      "canada"
+    ]
+  },
+  {
+    "question": "Quelle céréale sert à fabriquer la semoule du couscous traditionnel ?",
+    "answers": [
+      "le blé dur",
+      "blé dur",
+      "ble dur"
+    ]
+  },
+  {
+    "question": "Quel type de pâte feuilletée et levée utilise-t-on pour faire des croissants ?",
+    "answers": [
+      "la pâte levée feuilletée",
+      "pâte levée feuilletée",
+      "pate levee feuilletee"
+    ]
+  },
+  {
+    "question": "Dans quelle région française produit-on le champagne ?",
+    "answers": [
+      "la champagne",
+      "champagne"
+    ]
+  },
+  {
+    "question": "Quel lait est traditionnellement utilisé pour la mozzarella di bufala ?",
+    "answers": [
+      "le lait de bufflonne",
+      "lait de bufflonne",
+      "bufflonne"
+    ]
+  },
+  {
+    "question": "Quelle herbe aromatique est l'ingrédient principal du pesto génois ?",
+    "answers": [
+      "le basilic",
+      "basilic"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on la soupe froide espagnole à base de tomate ?",
+    "answers": [
+      "le gaspacho",
+      "gaspacho",
+      "gazpacho"
+    ]
+  },
+  {
+    "question": "Quel légume fermenté est la base de la choucroute ?",
+    "answers": [
+      "le chou",
+      "chou",
+      "le chou blanc",
+      "chou blanc"
+    ]
+  },
+  {
+    "question": "Quel plat savoyard consiste à tremper du pain dans du fromage fondu ?",
+    "answers": [
+      "la fondue savoyarde",
+      "fondue savoyarde",
+      "la fondue",
+      "fondue"
+    ]
+  },
+  {
+    "question": "Quel aliment français long et croustillant est un symbole de la boulangerie ?",
+    "answers": [
+      "la baguette",
+      "baguette",
+      "la baguette de pain"
+    ]
+  },
+  {
+    "question": "À partir de quelle plante fabrique-t-on le tofu ?",
+    "answers": [
+      "le soja",
+      "soja"
+    ]
+  },
+  {
+    "question": "À quelle famille de plantes appartient la vanille ?",
+    "answers": [
+      "les orchidées",
+      "orchidées",
+      "orchidees",
+      "la famille des orchidées"
+    ]
+  },
+  {
+    "question": "Quelle partie de la fleur de crocus fournit le safran ?",
+    "answers": [
+      "les stigmates",
+      "stigmates",
+      "le stigmate",
+      "stigmate"
+    ]
+  },
+  {
+    "question": "À partir de quelles fèves fabrique-t-on le chocolat ?",
+    "answers": [
+      "les fèves de cacao",
+      "fèves de cacao",
+      "feves de cacao",
+      "le cacao",
+      "cacao"
+    ]
+  },
+  {
+    "question": "Quelle céréale est à la base du risotto ?",
+    "answers": [
+      "le riz",
+      "riz"
+    ]
+  },
+  {
+    "question": "Quelle préparation du Moyen-Orient est souvent faite de pois chiches frits en boulettes ?",
+    "answers": [
+      "les falafels",
+      "falafels",
+      "le falafel",
+      "falafel"
+    ]
+  },
+  {
+    "question": "De quel pays le kimchi est-il une spécialité ?",
+    "answers": [
+      "la corée",
+      "corée",
+      "coree",
+      "la corée du sud",
+      "corée du sud"
+    ]
+  },
+  {
+    "question": "Quelle fine couche recouvre le dessus d'une crème brûlée ?",
+    "answers": [
+      "du sucre caramélisé",
+      "sucre caramélisé",
+      "du caramel",
+      "caramel"
+    ]
+  },
+  {
+    "question": "Quel inventeur est généralement associé au brevet du téléphone en 1876 ?",
+    "answers": [
+      "alexander graham bell",
+      "graham bell",
+      "bell"
+    ]
+  },
+  {
+    "question": "Qui a inventé le World Wide Web ?",
+    "answers": [
+      "tim berners-lee",
+      "tim berners lee",
+      "berners-lee"
+    ]
+  },
+  {
+    "question": "Comment s'appelait l'un des premiers ordinateurs électroniques généralistes, dévoilé en 1946 ?",
+    "answers": [
+      "eniac",
+      "l'eniac"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on la plus petite unité d'information numérique ?",
+    "answers": [
+      "le bit",
+      "bit",
+      "un bit"
+    ]
+  },
+  {
+    "question": "Que signifie le sigle CPU en informatique ?",
+    "answers": [
+      "central processing unit",
+      "unité centrale de traitement",
+      "unite centrale de traitement",
+      "processeur"
+    ]
+  },
+  {
+    "question": "Quel type de mémoire informatique temporaire est désigné par le sigle RAM ?",
+    "answers": [
+      "la mémoire vive",
+      "mémoire vive",
+      "memoire vive",
+      "random access memory"
+    ]
+  },
+  {
+    "question": "Que signifie le sigle URL ?",
+    "answers": [
+      "uniform resource locator",
+      "localisateur uniforme de ressource"
+    ]
+  },
+  {
+    "question": "Quel protocole est indiqué par les lettres HTTP au début de nombreuses adresses web ?",
+    "answers": [
+      "hypertext transfer protocol",
+      "protocole de transfert hypertexte"
+    ]
+  },
+  {
+    "question": "Que signifie le sigle USB ?",
+    "answers": [
+      "universal serial bus"
+    ]
+  },
+  {
+    "question": "Quel système de satellites permet de déterminer une position sur Terre ?",
+    "answers": [
+      "le gps",
+      "gps",
+      "global positioning system"
+    ]
+  },
+  {
+    "question": "De quel roi scandinave la technologie Bluetooth tire-t-elle son nom ?",
+    "answers": [
+      "harald à la dent bleue",
+      "harald bluetooth",
+      "harald ier",
+      "harald 1er"
+    ]
+  },
+  {
+    "question": "Quel symbole sépare généralement le nom d'utilisateur et le domaine dans une adresse e-mail ?",
+    "answers": [
+      "@",
+      "arobase",
+      "l'arobase"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on la disposition de clavier commençant par les lettres Q, W, E, R, T et Y ?",
+    "answers": [
+      "qwerty",
+      "le clavier qwerty"
+    ]
+  },
+  {
+    "question": "Quel code de communication utilise des points et des traits ?",
+    "answers": [
+      "le code morse",
+      "code morse",
+      "morse"
+    ]
+  },
+  {
+    "question": "Quel inventeur américain est souvent associé au développement de l'ampoule électrique pratique ?",
+    "answers": [
+      "thomas edison",
+      "thomas alva edison",
+      "edison"
+    ]
+  },
+  {
+    "question": "Quels frères ont réalisé le premier vol motorisé contrôlé en 1903 ?",
+    "answers": [
+      "les frères wright",
+      "frères wright",
+      "orville et wilbur wright",
+      "wilbur et orville wright"
+    ]
+  },
+  {
+    "question": "Quel savant italien a donné son nom à l'unité volt et a inventé la pile électrique ?",
+    "answers": [
+      "alessandro volta",
+      "volta"
+    ]
+  },
+  {
+    "question": "Quel scientifique français a donné son nom à la pasteurisation ?",
+    "answers": [
+      "louis pasteur",
+      "pasteur"
+    ]
+  },
+  {
+    "question": "Qui a découvert la pénicilline en 1928 ?",
+    "answers": [
+      "alexander fleming",
+      "fleming"
+    ]
+  },
+  {
+    "question": "Quel scientifique français a découvert la radioactivité naturelle de l'uranium ?",
+    "answers": [
+      "henri becquerel",
+      "becquerel"
+    ]
+  },
+  {
+    "question": "Quel est l'indicatif téléphonique international de la France ?",
+    "answers": [
+      "+33",
+      "33",
+      "0033"
+    ]
+  },
+  {
+    "question": "Que signifient les trois lettres WWW ?",
+    "answers": [
+      "world wide web",
+      "le world wide web"
+    ]
+  },
+  {
+    "question": "Quelle entreprise développe le système d'exploitation mobile Android ?",
+    "answers": [
+      "google"
+    ]
+  },
+  {
+    "question": "Quelle entreprise a lancé le premier iPhone ?",
+    "answers": [
+      "apple"
+    ]
+  },
+  {
+    "question": "Dans quel pays le QR code a-t-il été inventé ?",
+    "answers": [
+      "le japon",
+      "japon"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on deux mots qui ont un sens proche ?",
+    "answers": [
+      "des synonymes",
+      "synonymes",
+      "des mots synonymes"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on deux mots de sens contraire ?",
+    "answers": [
+      "des antonymes",
+      "antonymes",
+      "des mots antonymes"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on un mot ou une phrase qui se lit dans les deux sens ?",
+    "answers": [
+      "un palindrome",
+      "palindrome"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on une phrase contenant toutes les lettres de l'alphabet ?",
+    "answers": [
+      "un pangramme",
+      "pangramme"
+    ]
+  },
+  {
+    "question": "Quelle est la nature grammaticale du mot « rapidement » ?",
+    "answers": [
+      "un adverbe",
+      "adverbe"
+    ]
+  },
+  {
+    "question": "Quel est l'infinitif du verbe « nous mangeons » ?",
+    "answers": [
+      "manger"
+    ]
+  },
+  {
+    "question": "Quel type de mot sert généralement à qualifier un nom ?",
+    "answers": [
+      "un adjectif",
+      "adjectif",
+      "un adjectif qualificatif"
+    ]
+  },
+  {
+    "question": "Combien de lettres compte l'alphabet français ?",
+    "answers": [
+      "26",
+      "vingt-six",
+      "vingt six"
+    ]
+  },
+  {
+    "question": "Quelles sont les six voyelles de l'alphabet français, en incluant Y ?",
+    "answers": [
+      "a e i o u y",
+      "a, e, i, o, u et y",
+      "aeiouy"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on le signe placé sous le C dans le mot « français » ?",
+    "answers": [
+      "la cédille",
+      "cédille",
+      "cedille"
+    ]
+  },
+  {
+    "question": "Quel accent porte la lettre È ?",
+    "answers": [
+      "un accent grave",
+      "accent grave",
+      "l'accent grave"
+    ]
+  },
+  {
+    "question": "Quel est le pluriel du mot « cheval » ?",
+    "answers": [
+      "chevaux",
+      "des chevaux"
+    ]
+  },
+  {
+    "question": "Quel est le féminin du mot « acteur » ?",
+    "answers": [
+      "actrice",
+      "une actrice"
+    ]
+  },
+  {
+    "question": "Quel est le pluriel du mot « journal » ?",
+    "answers": [
+      "journaux",
+      "des journaux"
+    ]
+  },
+  {
+    "question": "Quel est le pluriel du mot « hibou » ?",
+    "answers": [
+      "hiboux",
+      "des hiboux"
+    ]
+  },
+  {
+    "question": "Quel est le pluriel du mot « bijou » ?",
+    "answers": [
+      "bijoux",
+      "des bijoux"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on une figure de style utilisant un outil comparatif comme « comme » ?",
+    "answers": [
+      "une comparaison",
+      "comparaison"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on une exagération volontaire dans une phrase ?",
+    "answers": [
+      "une hyperbole",
+      "hyperbole"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on la répétition d'un même son consonantique ?",
+    "answers": [
+      "une allitération",
+      "allitération",
+      "alliteration"
+    ]
+  },
+  {
+    "question": "Quelle figure de style attribue des caractéristiques humaines à un objet ou à un animal ?",
+    "answers": [
+      "la personnification",
+      "personnification",
+      "une personnification"
+    ]
+  },
+  {
+    "question": "Combien de vers comporte traditionnellement un haïku japonais ?",
+    "answers": [
+      "3",
+      "trois"
+    ]
+  },
+  {
+    "question": "Combien de syllabes compte un alexandrin classique ?",
+    "answers": [
+      "12",
+      "douze"
+    ]
+  },
+  {
+    "question": "Combien de vers compte un sonnet classique ?",
+    "answers": [
+      "14",
+      "quatorze"
+    ]
+  },
+  {
+    "question": "À quelle personne grammaticale correspond le pronom « je » ?",
+    "answers": [
+      "la première personne du singulier",
+      "première personne du singulier",
+      "1re personne du singulier"
+    ]
+  },
+  {
+    "question": "Que signifie la racine grecque « bio » ?",
+    "answers": [
+      "la vie",
+      "vie"
+    ]
+  },
+  {
+    "question": "Qui est le roi des dieux dans la mythologie grecque ?",
+    "answers": [
+      "zeus"
+    ]
+  },
+  {
+    "question": "Quelle déesse grecque est l'épouse de Zeus ?",
+    "answers": [
+      "héra",
+      "hera"
+    ]
+  },
+  {
+    "question": "Quelle déesse grecque représente la sagesse et la stratégie guerrière ?",
+    "answers": [
+      "athéna",
+      "athena"
+    ]
+  },
+  {
+    "question": "Quel dieu grec est le messager des dieux ?",
+    "answers": [
+      "hermès",
+      "hermes"
+    ]
+  },
+  {
+    "question": "Quel dieu grec règne sur le monde souterrain ?",
+    "answers": [
+      "hadès",
+      "hades"
+    ]
+  },
+  {
+    "question": "Quelle déesse grecque représente l'amour et la beauté ?",
+    "answers": [
+      "aphrodite"
+    ]
+  },
+  {
+    "question": "Comment s'appelle le marteau du dieu nordique Thor ?",
+    "answers": [
+      "mjöllnir",
+      "mjolnir",
+      "mjölnir"
+    ]
+  },
+  {
+    "question": "Quel dieu nordique est souvent représenté avec un seul œil ?",
+    "answers": [
+      "odin"
+    ]
+  },
+  {
+    "question": "Quel dieu nordique est célèbre pour ses ruses et ses métamorphoses ?",
+    "answers": [
+      "loki"
+    ]
+  },
+  {
+    "question": "Quel dieu égyptien représente le Soleil ?",
+    "answers": [
+      "rê",
+      "ré",
+      "ra"
+    ]
+  },
+  {
+    "question": "Quel dieu égyptien à tête de chacal est associé aux rites funéraires ?",
+    "answers": [
+      "anubis"
+    ]
+  },
+  {
+    "question": "Quel dieu égyptien est le mari d'Isis et le père d'Horus ?",
+    "answers": [
+      "osiris"
+    ]
+  },
+  {
+    "question": "Quel dieu hindou possède une tête d'éléphant ?",
+    "answers": [
+      "ganesh",
+      "ganesha"
+    ]
+  },
+  {
+    "question": "Quel nom portait le Bouddha historique avant son éveil ?",
+    "answers": [
+      "siddhartha gautama",
+      "siddharta gautama",
+      "gautama bouddha"
+    ]
+  },
+  {
+    "question": "Quel est le livre sacré de l'islam ?",
+    "answers": [
+      "le coran",
+      "coran"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on l'ensemble des cinq premiers livres de la Bible hébraïque ?",
+    "answers": [
+      "la torah",
+      "torah",
+      "le pentateuque",
+      "pentateuque"
+    ]
+  },
+  {
+    "question": "Quel est le livre sacré du christianisme ?",
+    "answers": [
+      "la bible",
+      "bible"
+    ]
+  },
+  {
+    "question": "Pendant quel mois du calendrier musulman les fidèles jeûnent-ils du lever au coucher du soleil ?",
+    "answers": [
+      "le ramadan",
+      "ramadan"
+    ]
+  },
+  {
+    "question": "Comment s'appelle le jour de repos hebdomadaire dans le judaïsme ?",
+    "answers": [
+      "le shabbat",
+      "shabbat",
+      "sabbat",
+      "le sabbat"
+    ]
+  },
+  {
+    "question": "Quelle fête hindoue est surnommée la fête des lumières ?",
+    "answers": [
+      "diwali",
+      "divali",
+      "deepavali"
+    ]
+  },
+  {
+    "question": "Quel héros grec était vulnérable au talon ?",
+    "answers": [
+      "achille"
+    ]
+  },
+  {
+    "question": "Quelle créature mi-homme mi-taureau vivait dans le labyrinthe de Crète ?",
+    "answers": [
+      "le minotaure",
+      "minotaure"
+    ]
+  },
+  {
+    "question": "Quelle figure mythologique avait des serpents à la place des cheveux ?",
+    "answers": [
+      "méduse",
+      "meduse"
+    ]
+  },
+  {
+    "question": "Quel oiseau mythique renaît de ses cendres ?",
+    "answers": [
+      "le phénix",
+      "phénix",
+      "phenix"
+    ]
+  },
+  {
+    "question": "Quel héros grec a accompli douze travaux ?",
+    "answers": [
+      "héraclès",
+      "heracles",
+      "hercule"
+    ]
+  },
+  {
+    "question": "Dans quelle ville se trouve le siège principal de l'Organisation des Nations unies ?",
+    "answers": [
+      "new york",
+      "new york city"
+    ]
+  },
+  {
+    "question": "Combien d'étoiles figurent sur le drapeau de l'Union européenne ?",
+    "answers": [
+      "12",
+      "douze"
+    ]
+  },
+  {
+    "question": "Quelle monnaie est utilisée par la majorité des pays de l'Union européenne ?",
+    "answers": [
+      "l'euro",
+      "euro"
+    ]
+  },
+  {
+    "question": "Quelles sont les deux chambres du Parlement français ?",
+    "answers": [
+      "l'assemblée nationale et le sénat",
+      "assemblée nationale et sénat",
+      "le sénat et l'assemblée nationale",
+      "sénat et assemblée nationale"
+    ]
+  },
+  {
+    "question": "Combien d'années dure le mandat du président de la République française ?",
+    "answers": [
+      "5",
+      "cinq",
+      "cinq ans",
+      "5 ans"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on la personne élue qui dirige une commune française ?",
+    "answers": [
+      "le maire",
+      "maire",
+      "la maire"
+    ]
+  },
+  {
+    "question": "Quel représentant de l'État dirige les services de l'État dans un département français ?",
+    "answers": [
+      "le préfet",
+      "préfet",
+      "prefet",
+      "la préfète",
+      "préfète"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on le texte juridique suprême qui organise les pouvoirs d'un État ?",
+    "answers": [
+      "la constitution",
+      "constitution"
+    ]
+  },
+  {
+    "question": "Dans quel régime politique le pouvoir appartient-il au peuple ?",
+    "answers": [
+      "la démocratie",
+      "démocratie",
+      "democratie"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on une hausse générale et durable des prix ?",
+    "answers": [
+      "l'inflation",
+      "inflation"
+    ]
+  },
+  {
+    "question": "Que signifie le sigle PIB ?",
+    "answers": [
+      "produit intérieur brut",
+      "le produit intérieur brut"
+    ]
+  },
+  {
+    "question": "Quelle institution gère la politique monétaire de la zone euro ?",
+    "answers": [
+      "la banque centrale européenne",
+      "banque centrale européenne",
+      "bce"
+    ]
+  },
+  {
+    "question": "En quelle année les pièces et billets en euros ont-ils été mis en circulation ?",
+    "answers": [
+      "2002"
+    ]
+  },
+  {
+    "question": "En quelle année l'Organisation des Nations unies a-t-elle été fondée ?",
+    "answers": [
+      "1945"
+    ]
+  },
+  {
+    "question": "Que signifie le sigle UNESCO en français ?",
+    "answers": [
+      "organisation des nations unies pour l'éducation la science et la culture",
+      "organisation des nations unies pour l'éducation, la science et la culture"
+    ]
+  },
+  {
+    "question": "Quelle organisation internationale est spécialisée dans la santé publique mondiale ?",
+    "answers": [
+      "l'organisation mondiale de la santé",
+      "organisation mondiale de la santé",
+      "oms"
+    ]
+  },
+  {
+    "question": "Quelle agence de l'ONU agit principalement en faveur des enfants ?",
+    "answers": [
+      "l'unicef",
+      "unicef"
+    ]
+  },
+  {
+    "question": "Quel symbole coloré donne son nom à une grande organisation humanitaire internationale ?",
+    "answers": [
+      "la croix-rouge",
+      "croix-rouge",
+      "croix rouge"
+    ]
+  },
+  {
+    "question": "Quelle ville belge accueille plusieurs institutions majeures de l'Union européenne ?",
+    "answers": [
+      "bruxelles"
+    ]
+  },
+  {
+    "question": "Quel espace européen permet la libre circulation sans contrôles systématiques aux frontières intérieures ?",
+    "answers": [
+      "l'espace schengen",
+      "espace schengen",
+      "schengen"
+    ]
+  },
+  {
+    "question": "Quel pouvoir de l'État est chargé de voter les lois ?",
+    "answers": [
+      "le pouvoir législatif",
+      "pouvoir législatif",
+      "le législatif",
+      "législatif"
+    ]
+  },
+  {
+    "question": "Quel pouvoir de l'État est chargé de rendre la justice ?",
+    "answers": [
+      "le pouvoir judiciaire",
+      "pouvoir judiciaire",
+      "le judiciaire",
+      "judiciaire"
+    ]
+  },
+  {
+    "question": "Quelle est la monnaie du Japon ?",
+    "answers": [
+      "le yen",
+      "yen"
+    ]
+  },
+  {
+    "question": "Quelle est la monnaie de la Suisse ?",
+    "answers": [
+      "le franc suisse",
+      "franc suisse"
+    ]
+  },
+  {
+    "question": "Quelle est la monnaie de l'Inde ?",
+    "answers": [
+      "la roupie indienne",
+      "roupie indienne",
+      "la roupie",
+      "roupie"
+    ]
+  },
+  {
+    "question": "Combien de cases possède un échiquier ?",
+    "answers": [
+      "64",
+      "soixante-quatre",
+      "soixante quatre"
+    ]
+  },
+  {
+    "question": "Quel est le but principal du Monopoly ?",
+    "answers": [
+      "ruiner ses adversaires",
+      "mettre ses adversaires en faillite",
+      "être le dernier joueur non ruiné",
+      "devenir le plus riche"
+    ]
+  },
+  {
+    "question": "Dans quel jeu forme-t-on des mots avec des lettres portant des points ?",
+    "answers": [
+      "le scrabble",
+      "scrabble"
+    ]
+  },
+  {
+    "question": "Combien de couleurs possède un Rubik's Cube classique ?",
+    "answers": [
+      "6",
+      "six"
+    ]
+  },
+  {
+    "question": "Combien de cartes compte un jeu standard sans jokers ?",
+    "answers": [
+      "52",
+      "cinquante-deux",
+      "cinquante deux"
+    ]
+  },
+  {
+    "question": "Combien de couleurs ou enseignes compte un jeu de cartes français standard ?",
+    "answers": [
+      "4",
+      "quatre"
+    ]
+  },
+  {
+    "question": "Combien de cartes compte un jeu de tarot français complet ?",
+    "answers": [
+      "78",
+      "soixante-dix-huit",
+      "soixante dix huit"
+    ]
+  },
+  {
+    "question": "Combien de dominos compte un jeu classique double-six ?",
+    "answers": [
+      "28",
+      "vingt-huit",
+      "vingt huit"
+    ]
+  },
+  {
+    "question": "Quel est le métier de Mario dans la célèbre série de jeux vidéo ?",
+    "answers": [
+      "plombier",
+      "un plombier"
+    ]
+  },
+  {
+    "question": "Comment s'appelle le héros vêtu de vert de la série The Legend of Zelda ?",
+    "answers": [
+      "link"
+    ]
+  },
+  {
+    "question": "Quel Pokémon jaune est la mascotte de la franchise ?",
+    "answers": [
+      "pikachu"
+    ]
+  },
+  {
+    "question": "Quel matériau faut-il notamment utiliser pour construire un portail du Nether dans Minecraft ?",
+    "answers": [
+      "l'obsidienne",
+      "obsidienne"
+    ]
+  },
+  {
+    "question": "À quel genre de jeu appartient principalement Fortnite Battle Royale ?",
+    "answers": [
+      "battle royale",
+      "un battle royale"
+    ]
+  },
+  {
+    "question": "Combien de fantômes poursuivent Pac-Man dans le jeu d'arcade original ?",
+    "answers": [
+      "4",
+      "quatre"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on les pièces géométriques qui tombent dans Tetris ?",
+    "answers": [
+      "les tétriminos",
+      "tétrimos",
+      "tetrominos",
+      "tetriminos"
+    ]
+  },
+  {
+    "question": "Quel animal est Sonic dans les jeux vidéo ?",
+    "answers": [
+      "un hérisson",
+      "hérisson",
+      "herisson"
+    ]
+  },
+  {
+    "question": "Quelle aventurière est l'héroïne de la série Tomb Raider ?",
+    "answers": [
+      "lara croft",
+      "croft"
+    ]
+  },
+  {
+    "question": "Comment s'appelle le héros principal de la série God of War ?",
+    "answers": [
+      "kratos"
+    ]
+  },
+  {
+    "question": "Comment appelle-t-on le saboteur caché dans Among Us ?",
+    "answers": [
+      "l'imposteur",
+      "imposteur",
+      "un imposteur"
+    ]
+  },
+  {
+    "question": "Quel type de vie simule principalement le jeu Les Sims ?",
+    "answers": [
+      "la vie quotidienne",
+      "vie quotidienne",
+      "la vie humaine",
+      "une vie virtuelle"
+    ]
+  },
+  {
+    "question": "Quel dé à vingt faces est emblématique de Donjons et Dragons ?",
+    "answers": [
+      "le d20",
+      "d20",
+      "un dé à vingt faces",
+      "dé à 20 faces"
+    ]
+  },
+  {
+    "question": "Quel mystère les joueurs doivent-ils résoudre dans le Cluedo ?",
+    "answers": [
+      "un meurtre",
+      "meurtre",
+      "l'identité du meurtrier",
+      "qui a tué la victime"
+    ]
+  },
+  {
+    "question": "Quel mot doit-on annoncer lorsqu'il ne reste qu'une carte au Uno ?",
+    "answers": [
+      "uno"
+    ]
+  },
+  {
+    "question": "Combien de pions possède chaque joueur au début d'une partie de dames internationales ?",
+    "answers": [
+      "20",
+      "vingt"
+    ]
+  },
+  {
+    "question": "Quelle reine de cœur tyrannique apparaît dans Alice au pays des merveilles ?",
+    "answers": [
+      "la reine de cœur",
+      "reine de cœur",
+      "la reine de coeur",
+      "reine de coeur"
+    ]
+  },
+  {
+    "question": "Qui est la personne la plus fantastique de ce serveur ?",
+    "answers": [
+      "esty"
+    ]
+  },
+  {
+    "question": "Qui est l'homme le plus beau de ce serveur ?",
+    "answers": [
+      "tropi"
+    ]
   }
 ]
