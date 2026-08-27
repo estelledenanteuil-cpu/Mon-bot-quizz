@@ -1,0 +1,22 @@
+[
+  {
+    "question": "Je précède toujours le jour mais je ne suis jamais le matin. Parfois je dévore la lumière, parfois je la libère. Qui suis-je ?",
+    "answers": ["la nuit", "nuit"]
+  },
+  {
+    "question": "Un homme regarde un tableau et dit : « Je n'ai ni frère ni sœur, mais le père de cet homme est le fils de mon père. » Qui regarde-t-il ?",
+    "answers": ["son fils", "fils"]
+  },
+  {
+    "question": "Plus j'ai de gardiens, moins je suis en sécurité. Que suis-je ?",
+    "answers": ["un secret"]
+  },
+  {
+    "question": "Deux mères et deux filles partent en voyage, mais il n'y a que trois personnes en tout. Comment est-ce possible ?",
+    "answers": ["grand-mere mere fille", "une grand-mere une mere et une fille", "grand mere mere et fille"]
+  },
+  {
+    "question": "Je n'ai pas de vie, mais je peux mourir. Qu'est-ce que je suis ?",
+    "answers": ["une pile", "pile", "batterie"]
+  }
+]
