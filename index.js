@@ -9,6 +9,9 @@
 // 5. Attribue le rôle "Cerveau du serveur" aux personnes en tête du classement
 // 6. Limite !enigme à 5 utilisations par membre et par jour
 // 7. Permet aux administrateurs de remettre le classement à zéro
+// 8. Répond à !besty avec une phrase good vibes choisie au hasard
+// 9. Permet de déclencher un casse-tête avec !cassetete
+// 10. Limite !cassetete à 5 utilisations par membre et par jour
 
 const {
   Client,
@@ -23,6 +26,8 @@ require('dotenv').config();
 
 const QUESTIONS_FILE = path.join(__dirname, 'questions.json');
 const ENIGMES_FILE = path.join(__dirname, 'enigmes.json');
+const CASSE_TETES_FILE = path.join(__dirname, 'casse-tetes.json');
+const BESTY_FILE = path.join(__dirname, 'besty.json');
 
 // Si un volume Railway est attaché, Railway fournit automatiquement ce chemin.
 // Sinon, le bot continue de fonctionner avec le dossier courant.
@@ -34,13 +39,16 @@ fs.mkdirSync(DATA_DIR, { recursive: true });
 const SCORES_FILE = path.join(DATA_DIR, 'scores.json');
 const CURRENT_QUESTION_FILE = path.join(DATA_DIR, 'current-question.json');
 const ENIGMA_USAGE_FILE = path.join(DATA_DIR, 'enigme-usage.json');
+const CASSE_TETE_USAGE_FILE = path.join(DATA_DIR, 'casse-tete-usage.json');
 const LEGACY_SCORES_FILE = path.join(__dirname, 'scores.json');
 
 const QUIZ_CHANNEL_ID = process.env.QUIZ_CHANNEL_ID;
 const REWARD_ROLE_ID = process.env.REWARD_ROLE_ID;
 const XP_PER_QUESTION = 5;
 const XP_PER_ENIGME = 10;
+const XP_PER_CASSE_TETE = 10;
 const MAX_ENIGMES_PER_DAY = 5;
+const MAX_CASSE_TETES_PER_DAY = 5;
 
 const DAILY_TIMES = (process.env.DAILY_TIMES || '10,14,18,20,23')
   .split(',')
@@ -138,6 +146,44 @@ function recordEnigmaUsage(userId) {
   enigmaUsage.users[userId] = getEnigmaUsage(userId) + 1;
   saveJSON(ENIGMA_USAGE_FILE, enigmaUsage);
   return enigmaUsage.users[userId];
+}
+
+// --- Limite quotidienne séparée des casse-têtes déclenchés avec !cassetete ---
+function createEmptyCasseTeteUsage() {
+  return { date: getParisDateKey(), users: {} };
+}
+
+let casseTeteUsage = loadJSON(
+  CASSE_TETE_USAGE_FILE,
+  createEmptyCasseTeteUsage()
+);
+
+function ensureTodayCasseTeteUsage() {
+  const today = getParisDateKey();
+  const isValid =
+    casseTeteUsage &&
+    typeof casseTeteUsage === 'object' &&
+    casseTeteUsage.date === today &&
+    casseTeteUsage.users &&
+    typeof casseTeteUsage.users === 'object' &&
+    !Array.isArray(casseTeteUsage.users);
+
+  if (!isValid) {
+    casseTeteUsage = { date: today, users: {} };
+    saveJSON(CASSE_TETE_USAGE_FILE, casseTeteUsage);
+  }
+}
+
+function getCasseTeteUsage(userId) {
+  ensureTodayCasseTeteUsage();
+  return Number(casseTeteUsage.users[userId]) || 0;
+}
+
+function recordCasseTeteUsage(userId) {
+  ensureTodayCasseTeteUsage();
+  casseTeteUsage.users[userId] = getCasseTeteUsage(userId) + 1;
+  saveJSON(CASSE_TETE_USAGE_FILE, casseTeteUsage);
+  return casseTeteUsage.users[userId];
 }
 
 function isValidQuestionState(value) {
@@ -250,6 +296,31 @@ async function postEnigme(channel, remainingAfter = null) {
   return true;
 }
 
+async function postCasseTete(channel, remainingAfter = null) {
+  const question = pickFrom(CASSE_TETES_FILE);
+  if (!question) {
+    await channel.send("Aucun casse-tête n'est disponible pour le moment.");
+    return false;
+  }
+
+  const quotaText =
+    remainingAfter === null
+      ? ''
+      : remainingAfter === 0
+        ? "\n\n*⚠️ C'était ton 5e et dernier casse-tête à lancer aujourd'hui !*"
+        : `\n\n*Il te restera ${remainingAfter} casse-tête${remainingAfter > 1 ? 's' : ''} à lancer aujourd'hui.*`;
+
+  const sentMessage = await channel.send(
+    `🧩 **Casse-tête !**\n\n${question.question}\n\n*Premier(e) à trouver gagne ${XP_PER_CASSE_TETE} XP !*${quotaText}`
+  );
+
+  setCurrentQuestion(
+    buildQuestionState(question, XP_PER_CASSE_TETE, 'cassetete', sentMessage)
+  );
+  console.log(`Casse-tête publié et sauvegardé (${sentMessage.id}).`);
+  return true;
+}
+
 // --- Restauration depuis l'historique Discord ---
 // Cette sécurité permet aussi de retrouver la question après un déploiement
 // effectué avant l'ajout d'un volume Railway.
@@ -257,7 +328,8 @@ function isQuizQuestionMessage(message) {
   return Boolean(
     message.author.id === client.user.id &&
       (message.content.startsWith('🧩 **Question du jour !**') ||
-        message.content.startsWith('🧠 **Énigme !**'))
+        message.content.startsWith('🧠 **Énigme !**') ||
+        message.content.startsWith('🧩 **Casse-tête !**'))
   );
 }
 
@@ -274,6 +346,10 @@ function questionFromDiscordMessage(message) {
     filePath = ENIGMES_FILE;
     xpValue = XP_PER_ENIGME;
     type = 'enigme';
+  } else if (message.content.startsWith('🧩 **Casse-tête !**')) {
+    filePath = CASSE_TETES_FILE;
+    xpValue = XP_PER_CASSE_TETE;
+    type = 'cassetete';
   } else {
     return null;
   }
@@ -492,12 +568,28 @@ async function awardXP(message, wonQuestion) {
 // --- Écoute des messages du salon quiz ---
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
+
+  const command = message.content.trim().toLowerCase();
+
+  // Cette commande fonctionne dans tous les salons accessibles au bot.
+  // Elle ne modifie ni les scores, ni les quotas, ni la question en cours.
+  if (command === '!besty') {
+    const phrase = pickFrom(BESTY_FILE);
+    if (typeof phrase !== 'string' || !phrase.trim()) {
+      await message.reply(
+        "😱 La réserve de bonnes ondes est vide ! Préviens Esty Besty qu'il faut vérifier le fichier `besty.json`."
+      );
+      return;
+    }
+
+    await message.reply(`✨ **Ton message Besty :**\n${phrase}`);
+    return;
+  }
+
   if (message.channel.id !== QUIZ_CHANNEL_ID) return;
 
   await questionStateReady;
   console.log(`Message reçu dans le salon quiz de ${message.author.tag}.`);
-
-  const command = message.content.trim().toLowerCase();
 
   if (command === '!enigme') {
     // Vérifie d'abord qu'une question ouverte n'a pas été perdue lors d'un
@@ -520,6 +612,30 @@ client.on(Events.MessageCreate, async (message) => {
     const posted = await postEnigme(message.channel, remainingAfter);
     if (posted) {
       recordEnigmaUsage(message.author.id);
+    }
+    return;
+  }
+
+  if (command === '!cassetete') {
+    // Le quota des casse-têtes est indépendant de celui des énigmes.
+    await ensureCurrentQuestion();
+    if (currentQuestion) {
+      await message.reply("Une question est déjà en cours, réponds à celle-ci d'abord !");
+      return;
+    }
+
+    const usedToday = getCasseTeteUsage(message.author.id);
+    if (usedToday >= MAX_CASSE_TETES_PER_DAY) {
+      await message.reply(
+        "🕵️ **Doucement, Sherlock !** Tu as déjà lancé tes 5 casse-têtes aujourd'hui. Même les plus grands cerveaux ont besoin de refroidir jusqu'à demain ! 🧠❄️"
+      );
+      return;
+    }
+
+    const remainingAfter = MAX_CASSE_TETES_PER_DAY - usedToday - 1;
+    const posted = await postCasseTete(message.channel, remainingAfter);
+    if (posted) {
+      recordCasseTeteUsage(message.author.id);
     }
     return;
   }
@@ -611,7 +727,9 @@ client.once(Events.ClientReady, async (readyClient) => {
   }
 
   console.log(`Questions automatiques programmées à : ${DAILY_TIMES.join('h, ')}h`);
-  console.log('Commandes activées : !enigme, !classement, !resetclassement');
+  console.log(
+    'Commandes activées : !enigme, !cassetete, !besty, !classement, !resetclassement'
+  );
   console.log(`Données sauvegardées dans : ${DATA_DIR}`);
 
   DAILY_TIMES.forEach((hour) => {
