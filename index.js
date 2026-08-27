@@ -312,6 +312,28 @@ async function restoreQuestionFromDiscord() {
   }
 }
 
+// Si Railway remplace le conteneur entre la question et une réponse, l'état
+// en mémoire peut être absent. Une seule récupération est lancée à la fois,
+// puis tous les messages en attente réutilisent le même résultat.
+let questionRecoveryPromise = null;
+
+async function ensureCurrentQuestion() {
+  if (currentQuestion) return true;
+
+  if (!questionRecoveryPromise) {
+    questionRecoveryPromise = restoreQuestionFromDiscord()
+      .catch((error) => {
+        console.error('Récupération immédiate de la question impossible :', error);
+      })
+      .finally(() => {
+        questionRecoveryPromise = null;
+      });
+  }
+
+  await questionRecoveryPromise;
+  return Boolean(currentQuestion);
+}
+
 // --- Rôle "Cerveau du serveur" ---
 async function updateBrainRole(guild) {
   if (!REWARD_ROLE_ID) return;
@@ -385,6 +407,9 @@ client.on(Events.MessageCreate, async (message) => {
   const command = message.content.trim().toLowerCase();
 
   if (command === '!enigme') {
+    // Vérifie d'abord qu'une question ouverte n'a pas été perdue lors d'un
+    // changement de conteneur Railway.
+    await ensureCurrentQuestion();
     if (currentQuestion) {
       await message.reply("Une question est déjà en cours, réponds à celle-ci d'abord !");
       return;
@@ -409,6 +434,15 @@ client.on(Events.MessageCreate, async (message) => {
 
     await message.reply(`🏅 **Classement**\n${lines.join('\n')}`);
     return;
+  }
+
+  // Dernier filet de sécurité : récupère la question depuis Discord juste
+  // avant de décider que le message doit être ignoré.
+  if (!currentQuestion) {
+    const recovered = await ensureCurrentQuestion();
+    if (recovered) {
+      console.log('Question récupérée juste avant la vérification de la réponse.');
+    }
   }
 
   if (!currentQuestion) {
