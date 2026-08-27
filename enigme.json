@@ -1,22 +1,3569 @@
 [
   {
-    "question": "Je précède toujours le jour mais je ne suis jamais le matin. Parfois je dévore la lumière, parfois je la libère. Qui suis-je ?",
-    "answers": ["la nuit", "nuit"]
+    "question": "Je pense à un nombre. Je le triple, puis je retire 9, et j'obtiens 42. Quel est ce nombre ?",
+    "answers": [
+      "17"
+    ]
   },
   {
-    "question": "Un homme regarde un tableau et dit : « Je n'ai ni frère ni sœur, mais le père de cet homme est le fils de mon père. » Qui regarde-t-il ?",
-    "answers": ["son fils", "fils"]
+    "question": "Un voyage dure 23 semaines complètes et 4 jours. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "165",
+      "165 jours"
+    ]
   },
   {
-    "question": "Plus j'ai de gardiens, moins je suis en sécurité. Que suis-je ?",
-    "answers": ["un secret"]
+    "question": "Chaque nombre de cette suite est multiplié par 3. Quel est le suivant : 5, 15, 45, 135, ... ?",
+    "answers": [
+      "405"
+    ]
   },
   {
-    "question": "Deux mères et deux filles partent en voyage, mais il n'y a que trois personnes en tout. Comment est-ce possible ?",
-    "answers": ["grand-mere mere fille", "une grand-mere une mere et une fille", "grand mere mere et fille"]
+    "question": "Une pièce contient un corps. La porte est verrouillée de l'intérieur, la fenêtre est ouverte, il a neigé et aucune trace de pas n'est visible dehors. Comment l'assassin est-il entré ?",
+    "answers": [
+      "il n'est pas entré",
+      "il n'y avait pas d'assassin",
+      "la victime s'est suicidée",
+      "suicide"
+    ]
   },
   {
-    "question": "Je n'ai pas de vie, mais je peux mourir. Qu'est-ce que je suis ?",
-    "answers": ["une pile", "pile", "batterie"]
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 7 pièces pour une valeur de 10 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "3",
+      "3 pièces",
+      "3 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 13 mètres de long et son périmètre est de 34 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "4",
+      "4 mètres",
+      "4 m"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 3. Quel est le suivant : 8, 24, 72, 216, ... ?",
+    "answers": [
+      "648"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 67. Quel est le plus petit ?",
+    "answers": [
+      "33"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 11 pièces pour une valeur de 16 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "5",
+      "5 pièces",
+      "5 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Dans 8 ans, Léa aura 39 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "31",
+      "31 ans"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 3, et j'obtiens 57. Quel est ce nombre ?",
+    "answers": [
+      "27"
+    ]
+  },
+  {
+    "question": "Dans 6 ans, Léa aura 19 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "13",
+      "13 ans"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 7, et j'obtiens 38. Quel est ce nombre ?",
+    "answers": [
+      "15"
+    ]
+  },
+  {
+    "question": "Une femme tombe d'une échelle haute de vingt mètres sans se blesser. Pourquoi ?",
+    "answers": [
+      "elle était sur le premier barreau",
+      "elle est tombée du premier barreau",
+      "elle était tout en bas",
+      "elle n'était pas en haut"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 51. Quel est celui du milieu ?",
+    "answers": [
+      "17"
+    ]
+  },
+  {
+    "question": "Un voyage dure 25 semaines complètes et 6 jours. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "181",
+      "181 jours"
+    ]
+  },
+  {
+    "question": "Un voyage dure 11 semaines complètes et 4 jours. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "81",
+      "81 jours"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 17 mètres de long et son périmètre est de 50 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "8",
+      "8 mètres",
+      "8 m"
+    ]
+  },
+  {
+    "question": "Une pièce carrée possède un chat dans chaque coin. Chaque chat voit les trois autres. Combien y a-t-il de chats ?",
+    "answers": [
+      "4",
+      "quatre"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 13 pièces pour une valeur de 23 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "10",
+      "10 pièces",
+      "10 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 152 m² et une longueur de 19 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "8",
+      "8 mètres",
+      "8 m"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 90. Quel est celui du milieu ?",
+    "answers": [
+      "30"
+    ]
+  },
+  {
+    "question": "Un voyage dure 4 semaines complètes et 3 jours. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "31",
+      "31 jours"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 5, et j'obtiens 88. Quel est ce nombre ?",
+    "answers": [
+      "31"
+    ]
+  },
+  {
+    "question": "Je commence par E, je finis par E et je ne contiens qu'une seule lettre. Qui suis-je ?",
+    "answers": [
+      "une enveloppe",
+      "l'enveloppe",
+      "enveloppe"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 43. Quel est le plus petit ?",
+    "answers": [
+      "21"
+    ]
+  },
+  {
+    "question": "Deux pères et deux fils vont pêcher. Ils attrapent trois poissons et chacun en prend un. Combien sont-ils ?",
+    "answers": [
+      "3",
+      "trois"
+    ]
+  },
+  {
+    "question": "Je pousse souvent dans les bois, j'ai un pied et un chapeau. Qui suis-je ?",
+    "answers": [
+      "un champignon",
+      "le champignon",
+      "champignon"
+    ]
+  },
+  {
+    "question": "Je te suis partout le jour, mais je disparais dans l'obscurité. Qui suis-je ?",
+    "answers": [
+      "ton ombre",
+      "l'ombre",
+      "ombre",
+      "une ombre"
+    ]
+  },
+  {
+    "question": "Dix poissons sont dans un aquarium. Trois se noient. Combien en reste-t-il ?",
+    "answers": [
+      "10",
+      "dix",
+      "les dix"
+    ]
+  },
+  {
+    "question": "Quel mot est le plus long, puisqu'on peut toujours l'étirer ?",
+    "answers": [
+      "élastique",
+      "elastique",
+      "un élastique",
+      "l'élastique"
+    ]
+  },
+  {
+    "question": "Je déchire le ciel en lumière avant que mon bruit n'arrive. Qui suis-je ?",
+    "answers": [
+      "un éclair",
+      "l'éclair",
+      "éclair",
+      "eclair",
+      "la foudre",
+      "foudre"
+    ]
+  },
+  {
+    "question": "Un homme saute d'un avion sans parachute et survit sans aucune blessure. Pourquoi ?",
+    "answers": [
+      "l'avion était au sol",
+      "l'avion n'avait pas décollé",
+      "il a sauté d'un avion au sol"
+    ]
+  },
+  {
+    "question": "Tu entres dans une pièce sombre avec une allumette. Il y a une bougie, une lampe et une cheminée. Qu'allumes-tu d'abord ?",
+    "answers": [
+      "l'allumette",
+      "allumette"
+    ]
+  },
+  {
+    "question": "Combien de fois les aiguilles d'une horloge se superposent-elles en douze heures ?",
+    "answers": [
+      "11",
+      "onze",
+      "onze fois",
+      "11 fois"
+    ]
+  },
+  {
+    "question": "Un voyage dure 6 semaines complètes et 5 jours. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "47",
+      "47 jours"
+    ]
+  },
+  {
+    "question": "Une femme entre dans une pièce et trouve un homme mort près d'une vitre brisée et d'une flaque d'eau. La victime s'appelle Nemo. Qui était Nemo ?",
+    "answers": [
+      "un poisson",
+      "un poisson rouge",
+      "le poisson"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 7, et j'obtiens 65. Quel est ce nombre ?",
+    "answers": [
+      "24"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 3, et j'obtiens 84. Quel est ce nombre ?",
+    "answers": [
+      "29"
+    ]
+  },
+  {
+    "question": "Je change de forme chaque nuit sans jamais vraiment changer. Qui suis-je ?",
+    "answers": [
+      "la lune",
+      "lune"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 3. Quel est le suivant : 2, 6, 18, 54, ... ?",
+    "answers": [
+      "162"
+    ]
+  },
+  {
+    "question": "Nous allons toujours par paire et nous protégeons tes pieds. Qui sommes-nous ?",
+    "answers": [
+      "des chaussures",
+      "les chaussures",
+      "chaussures",
+      "une paire de chaussures"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 16. Qui suis-je ?",
+    "answers": [
+      "4"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 9, et j'obtiens 69. Quel est ce nombre ?",
+    "answers": [
+      "26"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 69 m² et une longueur de 23 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "3",
+      "3 mètres",
+      "3 m"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 2, 4, 6, 8, 10, ... ?",
+    "answers": [
+      "12"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 22, 24, 26, 28, 30, ... ?",
+    "answers": [
+      "32"
+    ]
+  },
+  {
+    "question": "Mon premier est un rongeur, mon second est le nombre dix, et mon tout est un légume rose ou rouge. Qui suis-je ?",
+    "answers": [
+      "un radis",
+      "radis",
+      "le radis"
+    ]
+  },
+  {
+    "question": "Je brille la nuit à des années de distance, mais je ne suis pas une lampe. Qui suis-je ?",
+    "answers": [
+      "une étoile",
+      "l'étoile",
+      "étoile",
+      "etoile"
+    ]
+  },
+  {
+    "question": "Tu disposes de deux cordes qui brûlent chacune en une heure, mais irrégulièrement. Comment mesurer 45 minutes ?",
+    "answers": [
+      "brûler une corde par les deux bouts et l'autre par un bout puis allumer son second bout",
+      "allumer la première aux deux bouts et la seconde à un bout puis aux deux bouts"
+    ]
+  },
+  {
+    "question": "Un homme marche sous une pluie battante sans chapeau ni parapluie. Aucun cheveu n'est mouillé. Pourquoi ?",
+    "answers": [
+      "il est chauve",
+      "parce qu'il est chauve",
+      "il n'a pas de cheveux"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 30. Quel est celui du milieu ?",
+    "answers": [
+      "10"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 64. Qui suis-je ?",
+    "answers": [
+      "8"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 7, et j'obtiens 27. Quel est ce nombre ?",
+    "answers": [
+      "10"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 324. Qui suis-je ?",
+    "answers": [
+      "18"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 60 m² et une longueur de 15 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "4",
+      "4 mètres",
+      "4 m"
+    ]
+  },
+  {
+    "question": "Un cube est peint sur toutes ses faces puis découpé en 27 petits cubes égaux. Combien ont exactement deux faces peintes ?",
+    "answers": [
+      "12",
+      "douze"
+    ]
+  },
+  {
+    "question": "Un escargot grimpe de 3 mètres le jour et redescend de 2 mètres la nuit. En combien de jours atteint-il le sommet d'un mur de 10 mètres ?",
+    "answers": [
+      "8 jours",
+      "huit jours",
+      "8"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 210 m² et une longueur de 21 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "10",
+      "10 mètres",
+      "10 m"
+    ]
+  },
+  {
+    "question": "Un train électrique roule vers le nord tandis que le vent souffle vers l'ouest. Où va la fumée ?",
+    "answers": [
+      "nulle part",
+      "il n'y a pas de fumée",
+      "un train électrique ne fume pas"
+    ]
+  },
+  {
+    "question": "Quel mot est toujours écrit « incorrectement » dans cette question ?",
+    "answers": [
+      "incorrectement",
+      "le mot incorrectement"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 7, et j'obtiens 55. Quel est ce nombre ?",
+    "answers": [
+      "24"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 14 mètres de long et son périmètre est de 38 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "5",
+      "5 mètres",
+      "5 m"
+    ]
+  },
+  {
+    "question": "Je couvre l'herbe de petites gouttes au petit matin. Qui suis-je ?",
+    "answers": [
+      "la rosée",
+      "rosée",
+      "rosee"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 7 gouttes : il y en a alors 19. Combien y en avait-il au départ ?",
+    "answers": [
+      "24",
+      "24 gouttes"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 121. Qui suis-je ?",
+    "answers": [
+      "11"
+    ]
+  },
+  {
+    "question": "Dans 10 ans, Léa aura 43 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "33",
+      "33 ans"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 49. Qui suis-je ?",
+    "answers": [
+      "7"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 55. Quel est le plus petit ?",
+    "answers": [
+      "27"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 29 pièces pour une valeur de 51 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "22",
+      "22 pièces",
+      "22 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Un voyage dure 19 semaines complètes et 6 jours. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "139",
+      "139 jours"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 189 m² et une longueur de 27 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "7",
+      "7 mètres",
+      "7 m"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 4. Quel est le suivant : 12, 48, 192, 768, ... ?",
+    "answers": [
+      "3072"
+    ]
+  },
+  {
+    "question": "Dans 8 ans, Léa aura 23 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "15",
+      "15 ans"
+    ]
+  },
+  {
+    "question": "Parmi huit boules identiques, une est plus lourde. Quel nombre minimal de pesées avec une balance à plateaux suffit pour la trouver ?",
+    "answers": [
+      "2",
+      "deux",
+      "deux pesées",
+      "2 pesées"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 26 m² et une longueur de 13 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "2",
+      "2 mètres",
+      "2 m"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 12 têtes et 42 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "9",
+      "9 lapins"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 28 mètres de long et son périmètre est de 66 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "5",
+      "5 mètres",
+      "5 m"
+    ]
+  },
+  {
+    "question": "Un garçon est opéré après un accident. Le chirurgien dit : « Je ne peux pas l'opérer, c'est mon fils. » Comment est-ce possible ?",
+    "answers": [
+      "le chirurgien est sa mère",
+      "c'est sa mère",
+      "sa mère est chirurgienne"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 21 pièces pour une valeur de 39 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "18",
+      "18 pièces",
+      "18 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 41. Quel est le plus petit ?",
+    "answers": [
+      "20"
+    ]
+  },
+  {
+    "question": "Un père a quatre filles. Chacune a un frère. Combien d'enfants a-t-il ?",
+    "answers": [
+      "5",
+      "cinq"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 30 têtes et 110 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "25",
+      "25 lapins"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 12, 14, 16, 18, 20, ... ?",
+    "answers": [
+      "22"
+    ]
+  },
+  {
+    "question": "Dans 3 ans, Léa aura 29 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "26",
+      "26 ans"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 39. Quel est le plus petit ?",
+    "answers": [
+      "19"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 4, et j'obtiens 59. Quel est ce nombre ?",
+    "answers": [
+      "21"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 7 gouttes : il y en a alors 31. Combien y en avait-il au départ ?",
+    "answers": [
+      "48",
+      "48 gouttes"
+    ]
+  },
+  {
+    "question": "Mon premier relie la tête aux épaules, mon second est le contraire de nu, et mon tout se pose sur la table. Qui suis-je ?",
+    "answers": [
+      "un couvert",
+      "couvert",
+      "le couvert"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 23 mètres de long et son périmètre est de 60 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "7",
+      "7 mètres",
+      "7 m"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 5, et j'obtiens 63. Quel est ce nombre ?",
+    "answers": [
+      "29"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 6 gouttes : il y en a alors 23. Combien y en avait-il au départ ?",
+    "answers": [
+      "34",
+      "34 gouttes"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 13 têtes et 38 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "6",
+      "6 lapins"
+    ]
+  },
+  {
+    "question": "Je suis pleine de trous, mais je peux retenir de l'eau. Qui suis-je ?",
+    "answers": [
+      "une éponge",
+      "l'éponge",
+      "éponge",
+      "eponge"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 69. Quel est le plus petit ?",
+    "answers": [
+      "34"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 27 mètres de long et son périmètre est de 62 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "4",
+      "4 mètres",
+      "4 m"
+    ]
+  },
+  {
+    "question": "Un nénuphar double de surface chaque jour et couvre tout l'étang au 30e jour. Quel jour en couvrait-il la moitié ?",
+    "answers": [
+      "le 29e jour",
+      "29e jour",
+      "jour 29",
+      "29"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 26 têtes et 98 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "23",
+      "23 lapins"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 25 têtes et 88 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "19",
+      "19 lapins"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 10 gouttes : il y en a alors 31. Combien y en avait-il au départ ?",
+    "answers": [
+      "42",
+      "42 gouttes"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 9 pièces pour une valeur de 13 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "4",
+      "4 pièces",
+      "4 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 21. Quel est le plus petit ?",
+    "answers": [
+      "10"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 20, 25, 30, 35, 40, ... ?",
+    "answers": [
+      "45"
+    ]
+  },
+  {
+    "question": "Dans 7 ans, Léa aura 21 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "14",
+      "14 ans"
+    ]
+  },
+  {
+    "question": "On me lèche avant de me fermer. Qui suis-je ?",
+    "answers": [
+      "une enveloppe",
+      "l'enveloppe",
+      "enveloppe"
+    ]
+  },
+  {
+    "question": "Plus je sèche, plus je deviens mouillée. Qui suis-je ?",
+    "answers": [
+      "une serviette",
+      "la serviette",
+      "serviette"
+    ]
+  },
+  {
+    "question": "Je suis propre quand je suis noir et sale quand je suis blanc. Qui suis-je ?",
+    "answers": [
+      "un tableau noir",
+      "le tableau noir",
+      "tableau noir",
+      "une ardoise",
+      "ardoise"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 8, et j'obtiens 30. Quel est ce nombre ?",
+    "answers": [
+      "11"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 27. Quel est celui du milieu ?",
+    "answers": [
+      "9"
+    ]
+  },
+  {
+    "question": "Mon premier miaule, mon second recouvre ton corps et mon tout se porte sur la tête. Qui suis-je ?",
+    "answers": [
+      "un chapeau",
+      "chapeau",
+      "le chapeau"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 24, 28, 32, 36, 40, ... ?",
+    "answers": [
+      "44"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 7 gouttes : il y en a alors 25. Combien y en avait-il au départ ?",
+    "answers": [
+      "36",
+      "36 gouttes"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 5, et j'obtiens 49. Quel est ce nombre ?",
+    "answers": [
+      "22"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 22 mètres de long et son périmètre est de 56 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "6",
+      "6 mètres",
+      "6 m"
+    ]
+  },
+  {
+    "question": "Je me lève chaque matin sans sortir de mon lit. Qui suis-je ?",
+    "answers": [
+      "le soleil",
+      "soleil"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 3, et j'obtiens 30. Quel est ce nombre ?",
+    "answers": [
+      "11"
+    ]
+  },
+  {
+    "question": "Je suis un nuage posé au ras du sol. Qui suis-je ?",
+    "answers": [
+      "le brouillard",
+      "brouillard",
+      "la brume",
+      "brume"
+    ]
+  },
+  {
+    "question": "Quelle voyelle apparaît trois fois dans le mot « ananas » ?",
+    "answers": [
+      "a",
+      "la lettre a"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 4. Quel est le suivant : 21, 84, 336, 1344, ... ?",
+    "answers": [
+      "5376"
+    ]
+  },
+  {
+    "question": "Dans 5 ans, Léa aura 33 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "28",
+      "28 ans"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 80 m² et une longueur de 10 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "8",
+      "8 mètres",
+      "8 m"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 81. Quel est celui du milieu ?",
+    "answers": [
+      "27"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 42. Quel est celui du milieu ?",
+    "answers": [
+      "14"
+    ]
+  },
+  {
+    "question": "Une femme tire sur son mari, le plonge dans l'eau puis le suspend. Une heure après, ils dînent ensemble. Que faisait-elle ?",
+    "answers": [
+      "elle développait une photo",
+      "elle était photographe",
+      "elle a pris une photo",
+      "de la photographie"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 6, et j'obtiens 90. Quel est ce nombre ?",
+    "answers": [
+      "32"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 3. Quel est le suivant : 14, 42, 126, 378, ... ?",
+    "answers": [
+      "1134"
+    ]
+  },
+  {
+    "question": "Un fermier a 17 moutons. Tous sauf 9 meurent. Combien en reste-t-il ?",
+    "answers": [
+      "9",
+      "neuf"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 2. Quel est le suivant : 13, 26, 52, 104, ... ?",
+    "answers": [
+      "208"
+    ]
+  },
+  {
+    "question": "J'ai un goulot mais je n'ai pas de tête. Qui suis-je ?",
+    "answers": [
+      "une bouteille",
+      "la bouteille",
+      "bouteille"
+    ]
+  },
+  {
+    "question": "Un voyage dure 7 semaines complètes et 6 jours. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "55",
+      "55 jours"
+    ]
+  },
+  {
+    "question": "Un voyage dure 5 semaines complètes et 4 jours. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "39",
+      "39 jours"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 8 gouttes : il y en a alors 21. Combien y en avait-il au départ ?",
+    "answers": [
+      "26",
+      "26 gouttes"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 224 m² et une longueur de 28 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "8",
+      "8 mètres",
+      "8 m"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 3. Quel est le suivant : 23, 69, 207, 621, ... ?",
+    "answers": [
+      "1863"
+    ]
+  },
+  {
+    "question": "Dans 3 ans, Léa aura 21 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "18",
+      "18 ans"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 17 pièces pour une valeur de 29 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "12",
+      "12 pièces",
+      "12 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 4, et j'obtiens 32. Quel est ce nombre ?",
+    "answers": [
+      "12"
+    ]
+  },
+  {
+    "question": "Un coq pond un œuf au sommet d'un toit. De quel côté tombe l'œuf ?",
+    "answers": [
+      "aucun",
+      "d'aucun côté",
+      "un coq ne pond pas",
+      "les coqs ne pondent pas"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 61. Quel est le plus petit ?",
+    "answers": [
+      "30"
+    ]
+  },
+  {
+    "question": "Plus on m'enlève de matière, plus je deviens grand. Qui suis-je ?",
+    "answers": [
+      "un trou",
+      "le trou",
+      "trou"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 6, et j'obtiens 24. Quel est ce nombre ?",
+    "answers": [
+      "9"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 33 pièces pour une valeur de 57 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "24",
+      "24 pièces",
+      "24 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 10 gouttes : il y en a alors 25. Combien y en avait-il au départ ?",
+    "answers": [
+      "30",
+      "30 gouttes"
+    ]
+  },
+  {
+    "question": "Je nais verte, je change de couleur puis je tombe en automne. Qui suis-je ?",
+    "answers": [
+      "une feuille",
+      "la feuille",
+      "feuille"
+    ]
+  },
+  {
+    "question": "J'ai des touches mais aucune serrure. Qui suis-je ?",
+    "answers": [
+      "un piano",
+      "le piano",
+      "piano",
+      "un clavier",
+      "clavier"
+    ]
+  },
+  {
+    "question": "Un homme demande un verre d'eau dans un bar. Le serveur braque une arme sur lui. L'homme répond merci et part. Pourquoi ?",
+    "answers": [
+      "il avait le hoquet",
+      "à cause du hoquet",
+      "le serveur lui a fait passer le hoquet"
+    ]
+  },
+  {
+    "question": "Tu as neuf pièces identiques en apparence, dont une plus légère. Combien de pesées à la balance suffisent pour la trouver ?",
+    "answers": [
+      "2",
+      "deux",
+      "deux pesées"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 289. Qui suis-je ?",
+    "answers": [
+      "17"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 8 gouttes : il y en a alors 39. Combien y en avait-il au départ ?",
+    "answers": [
+      "62",
+      "62 gouttes"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 3. Quel est le suivant : 11, 33, 99, 297, ... ?",
+    "answers": [
+      "891"
+    ]
+  },
+  {
+    "question": "Un homme est retrouvé pendu dans une pièce fermée, avec seulement une flaque d'eau sous ses pieds. Sur quoi était-il monté ?",
+    "answers": [
+      "un bloc de glace",
+      "de la glace",
+      "un glaçon",
+      "glace"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 21 pièces pour une valeur de 35 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "14",
+      "14 pièces",
+      "14 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 15 mètres de long et son périmètre est de 42 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "6",
+      "6 mètres",
+      "6 m"
+    ]
+  },
+  {
+    "question": "Je suis au début de « nuit » et à la fin de « matin ». Qui suis-je ?",
+    "answers": [
+      "n",
+      "la lettre n"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 27 pièces pour une valeur de 48 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "21",
+      "21 pièces",
+      "21 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 2, et j'obtiens 82. Quel est ce nombre ?",
+    "answers": [
+      "28"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 54. Quel est celui du milieu ?",
+    "answers": [
+      "18"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 57. Quel est celui du milieu ?",
+    "answers": [
+      "19"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 63. Quel est le plus petit ?",
+    "answers": [
+      "31"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 26, 32, 38, 44, 50, ... ?",
+    "answers": [
+      "56"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 72. Quel est celui du milieu ?",
+    "answers": [
+      "24"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 484. Qui suis-je ?",
+    "answers": [
+      "22"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 19 mètres de long et son périmètre est de 44 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "3",
+      "3 mètres",
+      "3 m"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 8 gouttes : il y en a alors 27. Combien y en avait-il au départ ?",
+    "answers": [
+      "38",
+      "38 gouttes"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 5, et j'obtiens 61. Quel est ce nombre ?",
+    "answers": [
+      "22"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 529. Qui suis-je ?",
+    "answers": [
+      "23"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 5 mètres de long et son périmètre est de 16 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "3",
+      "3 mètres",
+      "3 m"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 3, et j'obtiens 43. Quel est ce nombre ?",
+    "answers": [
+      "20"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 27 pièces pour une valeur de 44 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "17",
+      "17 pièces",
+      "17 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 21 mètres de long et son périmètre est de 52 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "5",
+      "5 mètres",
+      "5 m"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 3. Quel est le suivant : 17, 51, 153, 459, ... ?",
+    "answers": [
+      "1377"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 19 pièces pour une valeur de 32 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "13",
+      "13 pièces",
+      "13 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 39. Quel est celui du milieu ?",
+    "answers": [
+      "13"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 5 gouttes : il y en a alors 27. Combien y en avait-il au départ ?",
+    "answers": [
+      "44",
+      "44 gouttes"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 441. Qui suis-je ?",
+    "answers": [
+      "21"
+    ]
+  },
+  {
+    "question": "Un voyage dure 14 semaines complètes et 1 jour. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "99",
+      "99 jours"
+    ]
+  },
+  {
+    "question": "Une famille compte cinq filles. Chaque fille a le même frère. Combien y a-t-il d'enfants ?",
+    "answers": [
+      "6",
+      "six"
+    ]
+  },
+  {
+    "question": "Une maison rouge est faite de briques rouges et une maison bleue de briques bleues. De quoi est faite une serre ?",
+    "answers": [
+      "de verre",
+      "en verre",
+      "du verre"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 6, et j'obtiens 38. Quel est ce nombre ?",
+    "answers": [
+      "16"
+    ]
+  },
+  {
+    "question": "Qu'est-ce qui pèse le plus lourd : un kilo de plumes ou un kilo de plomb ?",
+    "answers": [
+      "le même poids",
+      "ils pèsent pareil",
+      "aucun",
+      "un kilo chacun"
+    ]
+  },
+  {
+    "question": "J'ai un lit mais je ne dors jamais, et une bouche mais je ne mange jamais. Qui suis-je ?",
+    "answers": [
+      "une rivière",
+      "la rivière",
+      "rivière",
+      "riviere",
+      "un fleuve",
+      "fleuve"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 2. Quel est le suivant : 7, 14, 28, 56, ... ?",
+    "answers": [
+      "112"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 5 gouttes : il y en a alors 33. Combien y en avait-il au départ ?",
+    "answers": [
+      "56",
+      "56 gouttes"
+    ]
+  },
+  {
+    "question": "Il y a trois interrupteurs en bas et une ampoule à l'étage. Tu ne peux monter qu'une fois. Comment identifier le bon interrupteur ?",
+    "answers": [
+      "utiliser la chaleur de l'ampoule",
+      "allumer un interrupteur puis l'éteindre et toucher l'ampoule",
+      "avec la chaleur"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 8 mètres de long et son périmètre est de 28 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "6",
+      "6 mètres",
+      "6 m"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 8 m² et une longueur de 4 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "2",
+      "2 mètres",
+      "2 m"
+    ]
+  },
+  {
+    "question": "Je peux ouvrir une porte sans jamais entrer dans la pièce. Qui suis-je ?",
+    "answers": [
+      "une clé",
+      "la clé",
+      "clé",
+      "cle"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 3. Quel est le suivant : 20, 60, 180, 540, ... ?",
+    "answers": [
+      "1620"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 10, et j'obtiens 44. Quel est ce nombre ?",
+    "answers": [
+      "18"
+    ]
+  },
+  {
+    "question": "Je m'ouvre quand la pluie tombe et me ferme quand elle s'arrête. Qui suis-je ?",
+    "answers": [
+      "un parapluie",
+      "le parapluie",
+      "parapluie"
+    ]
+  },
+  {
+    "question": "Dans 10 ans, Léa aura 35 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "25",
+      "25 ans"
+    ]
+  },
+  {
+    "question": "Deux personnes boivent le même thé glacé empoisonné. Celle qui boit cinq verres rapidement survit, celle qui en boit un lentement meurt. Où était le poison ?",
+    "answers": [
+      "dans les glaçons",
+      "dans la glace",
+      "les glaçons"
+    ]
+  },
+  {
+    "question": "Une femme regarde une photo et dit : « La mère de cette personne est la fille de ma mère. » Qui est sur la photo ?",
+    "answers": [
+      "son enfant",
+      "son fils",
+      "sa fille",
+      "l'enfant de la femme"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 63. Quel est celui du milieu ?",
+    "answers": [
+      "21"
+    ]
+  },
+  {
+    "question": "Je suis une immense étendue sèche où l'eau est rare. Qui suis-je ?",
+    "answers": [
+      "un désert",
+      "le désert",
+      "désert",
+      "desert"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 6 mètres de long et son périmètre est de 20 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "4",
+      "4 mètres",
+      "4 m"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 25 pièces pour une valeur de 45 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "20",
+      "20 pièces",
+      "20 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Un voyage dure 16 semaines complètes et 3 jours. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "115",
+      "115 jours"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 84. Quel est celui du milieu ?",
+    "answers": [
+      "28"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 51. Quel est le plus petit ?",
+    "answers": [
+      "25"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 26 mètres de long et son périmètre est de 58 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "3",
+      "3 mètres",
+      "3 m"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 5, 10, 15, 20, 25, ... ?",
+    "answers": [
+      "30"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 16 têtes et 54 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "11",
+      "11 lapins"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 18, 21, 24, 27, 30, ... ?",
+    "answers": [
+      "33"
+    ]
+  },
+  {
+    "question": "J'ai une couverture et beaucoup de feuilles, mais je ne suis pas un arbre. Qui suis-je ?",
+    "answers": [
+      "un livre",
+      "le livre",
+      "livre"
+    ]
+  },
+  {
+    "question": "Je porte ma maison sur mon dos et j'avance très lentement. Qui suis-je ?",
+    "answers": [
+      "un escargot",
+      "l'escargot",
+      "escargot"
+    ]
+  },
+  {
+    "question": "Dans une chambre verrouillée, un homme est mort près d'un tas de sciure. Que lui est-il arrivé s'il travaillait au cirque ?",
+    "answers": [
+      "quelqu'un a raccourci sa canne",
+      "sa canne a été raccourcie",
+      "il était nain et sa canne a été sciée"
+    ]
+  },
+  {
+    "question": "Mon premier est une céréale, mon second est derrière toi, et mon tout cache une fenêtre. Qui suis-je ?",
+    "answers": [
+      "un rideau",
+      "rideau",
+      "le rideau"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 17 pièces pour une valeur de 25 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "8",
+      "8 pièces",
+      "8 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 6, et j'obtiens 63. Quel est ce nombre ?",
+    "answers": [
+      "23"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 144. Qui suis-je ?",
+    "answers": [
+      "12"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 3, et j'obtiens 57. Quel est ce nombre ?",
+    "answers": [
+      "20"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 2. Quel est le suivant : 25, 50, 100, 200, ... ?",
+    "answers": [
+      "400"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 65. Quel est le plus petit ?",
+    "answers": [
+      "32"
+    ]
+  },
+  {
+    "question": "Dans 9 ans, Léa aura 41 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "32",
+      "32 ans"
+    ]
+  },
+  {
+    "question": "Dans 4 ans, Léa aura 31 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "27",
+      "27 ans"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 15 pièces pour une valeur de 22 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "7",
+      "7 pièces",
+      "7 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 5, et j'obtiens 35. Quel est ce nombre ?",
+    "answers": [
+      "15"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 8, et j'obtiens 67. Quel est ce nombre ?",
+    "answers": [
+      "25"
+    ]
+  },
+  {
+    "question": "Un homme de petite taille prend l'ascenseur jusqu'au 7e étage puis monte à pied jusqu'au 10e. Quand il pleut, il monte directement au 10e. Pourquoi ?",
+    "answers": [
+      "il utilise son parapluie pour atteindre le bouton",
+      "il est trop petit et atteint le bouton avec son parapluie",
+      "il est trop petit"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 49. Quel est le plus petit ?",
+    "answers": [
+      "24"
+    ]
+  },
+  {
+    "question": "J'ai des dents qui s'emboîtent pour fermer les vêtements. Qui suis-je ?",
+    "answers": [
+      "une fermeture éclair",
+      "la fermeture éclair",
+      "fermeture éclair",
+      "fermeture eclair",
+      "un zip",
+      "zip"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 625. Qui suis-je ?",
+    "answers": [
+      "25"
+    ]
+  },
+  {
+    "question": "Un voyage dure 13 semaines complètes et 6 jours. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "97",
+      "97 jours"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 28 têtes et 104 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "24",
+      "24 lapins"
+    ]
+  },
+  {
+    "question": "Un sac contient trois chaussettes rouges et trois bleues. Combien faut-il en prendre dans le noir pour être certain d'avoir une paire de même couleur ?",
+    "answers": [
+      "3",
+      "trois",
+      "trois chaussettes"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 11 mètres de long et son périmètre est de 40 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "9",
+      "9 mètres",
+      "9 m"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 18. Quel est celui du milieu ?",
+    "answers": [
+      "6"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 25 mètres de long et son périmètre est de 68 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "9",
+      "9 mètres",
+      "9 m"
+    ]
+  },
+  {
+    "question": "Avant la découverte de l'Everest, quelle était la plus haute montagne du monde ?",
+    "answers": [
+      "l'everest",
+      "everest",
+      "le mont everest"
+    ]
+  },
+  {
+    "question": "Un chauffeur emprunte une rue en sens interdit devant un policier, qui ne l'arrête pas. Pourquoi ?",
+    "answers": [
+      "il marche",
+      "il est à pied",
+      "il ne conduit pas"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 27. Quel est le plus petit ?",
+    "answers": [
+      "13"
+    ]
+  },
+  {
+    "question": "Je suis la première lettre de « table » et la dernière de « chat ». Qui suis-je ?",
+    "answers": [
+      "t",
+      "la lettre t"
+    ]
+  },
+  {
+    "question": "Je dors sous terre avant de devenir une plante. Qui suis-je ?",
+    "answers": [
+      "une graine",
+      "la graine",
+      "graine"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 7, 9, 11, 13, 15, ... ?",
+    "answers": [
+      "17"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 8, et j'obtiens 94. Quel est ce nombre ?",
+    "answers": [
+      "34"
+    ]
+  },
+  {
+    "question": "Combien de fois une personne fête-t-elle réellement son jour de naissance ?",
+    "answers": [
+      "1",
+      "une fois",
+      "une seule fois"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 15 têtes et 44 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "7",
+      "7 lapins"
+    ]
+  },
+  {
+    "question": "Quel mot de six lettres contient les cinq voyelles A, E, I, O et U ?",
+    "answers": [
+      "oiseau",
+      "un oiseau"
+    ]
+  },
+  {
+    "question": "Quelle consonne apparaît deux fois dans le mot « lettre » ?",
+    "answers": [
+      "t",
+      "la lettre t"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 6 gouttes : il y en a alors 17. Combien y en avait-il au départ ?",
+    "answers": [
+      "22",
+      "22 gouttes"
+    ]
+  },
+  {
+    "question": "Que peux-tu retenir sans jamais le toucher avec tes mains ?",
+    "answers": [
+      "ton souffle",
+      "le souffle",
+      "sa respiration",
+      "la respiration"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 17 têtes et 64 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "15",
+      "15 lapins"
+    ]
+  },
+  {
+    "question": "Un voyage dure 9 semaines complètes et 2 jours. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "65",
+      "65 jours"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 60. Quel est celui du milieu ?",
+    "answers": [
+      "20"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 6 gouttes : il y en a alors 29. Combien y en avait-il au départ ?",
+    "answers": [
+      "46",
+      "46 gouttes"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 16 mètres de long et son périmètre est de 46 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "7",
+      "7 mètres",
+      "7 m"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 9, 13, 17, 21, 25, ... ?",
+    "answers": [
+      "29"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 19 têtes et 70 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "16",
+      "16 lapins"
+    ]
+  },
+  {
+    "question": "Combien de mois de l'année possèdent au moins 28 jours ?",
+    "answers": [
+      "12",
+      "douze",
+      "tous",
+      "tous les mois"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 9, et j'obtiens 61. Quel est ce nombre ?",
+    "answers": [
+      "26"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 29. Quel est le plus petit ?",
+    "answers": [
+      "14"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 87. Quel est celui du milieu ?",
+    "answers": [
+      "29"
+    ]
+  },
+  {
+    "question": "Je suis invisible, indispensable à la vie et tu me respires sans y penser. Qui suis-je ?",
+    "answers": [
+      "l'air",
+      "air"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 6 gouttes : il y en a alors 35. Combien y en avait-il au départ ?",
+    "answers": [
+      "58",
+      "58 gouttes"
+    ]
+  },
+  {
+    "question": "Dans 3 ans, Léa aura 37 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "34",
+      "34 ans"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 24 m² et une longueur de 6 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "4",
+      "4 mètres",
+      "4 m"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 6, 12, 18, 24, 30, ... ?",
+    "answers": [
+      "36"
+    ]
+  },
+  {
+    "question": "Je nais au large, je cours vers la plage et je me brise sans douleur. Qui suis-je ?",
+    "answers": [
+      "une vague",
+      "la vague",
+      "vague"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 25 pièces pour une valeur de 41 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "16",
+      "16 pièces",
+      "16 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Je n'ai ni bouche ni voix, pourtant je réponds toujours quand on m'appelle. Qui suis-je ?",
+    "answers": [
+      "l'écho",
+      "écho",
+      "echo",
+      "l echo"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 81. Qui suis-je ?",
+    "answers": [
+      "9"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 5, et j'obtiens 34. Quel est ce nombre ?",
+    "answers": [
+      "13"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 126 m² et une longueur de 18 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "7",
+      "7 mètres",
+      "7 m"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 9 gouttes : il y en a alors 41. Combien y en avait-il au départ ?",
+    "answers": [
+      "64",
+      "64 gouttes"
+    ]
+  },
+  {
+    "question": "Un médecin te donne trois comprimés à prendre toutes les trente minutes. En combien de temps les auras-tu tous pris ?",
+    "answers": [
+      "1 heure",
+      "une heure",
+      "60 minutes"
+    ]
+  },
+  {
+    "question": "Une batte et une balle coûtent 1,10 €. La batte coûte 1 € de plus que la balle. Combien coûte la balle ?",
+    "answers": [
+      "0,05 €",
+      "5 centimes",
+      "0.05 €",
+      "cinq centimes"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 3, 6, 9, 12, 15, ... ?",
+    "answers": [
+      "18"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 8, 11, 14, 17, 20, ... ?",
+    "answers": [
+      "23"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 29 têtes et 100 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "21",
+      "21 lapins"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 36. Quel est celui du milieu ?",
+    "answers": [
+      "12"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 29 pièces pour une valeur de 55 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "26",
+      "26 pièces",
+      "26 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 225. Qui suis-je ?",
+    "answers": [
+      "15"
+    ]
+  },
+  {
+    "question": "Si tu dépasses la personne en deuxième position dans une course, à quelle place te retrouves-tu ?",
+    "answers": [
+      "deuxième",
+      "2e",
+      "seconde",
+      "à la deuxième place"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 12 mètres de long et son périmètre est de 30 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "3",
+      "3 mètres",
+      "3 m"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 10, 15, 20, 25, 30, ... ?",
+    "answers": [
+      "35"
+    ]
+  },
+  {
+    "question": "Trois oies marchent en file : deux sont devant une oie et deux sont derrière une oie. Combien y a-t-il d'oies ?",
+    "answers": [
+      "3",
+      "trois"
+    ]
+  },
+  {
+    "question": "Un voyage dure 12 semaines complètes et 5 jours. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "89",
+      "89 jours"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 7 gouttes : il y en a alors 37. Combien y en avait-il au départ ?",
+    "answers": [
+      "60",
+      "60 gouttes"
+    ]
+  },
+  {
+    "question": "Je monte toujours, mais je ne redescends jamais dans la cheminée. Qui suis-je ?",
+    "answers": [
+      "la fumée",
+      "fumée",
+      "fumee"
+    ]
+  },
+  {
+    "question": "Un détective visite une maison ronde. La domestique affirme qu'elle nettoyait les coins. Pourquoi devient-elle suspecte ?",
+    "answers": [
+      "une maison ronde n'a pas de coins",
+      "il n'y a pas de coins",
+      "elle ment"
+    ]
+  },
+  {
+    "question": "Combien de lettres contient le mot « alphabet » ?",
+    "answers": [
+      "8",
+      "huit"
+    ]
+  },
+  {
+    "question": "Dans un tiroir se trouvent dix chaussettes noires et dix blanches. Combien faut-il en prendre dans le noir pour garantir deux chaussettes de même couleur ?",
+    "answers": [
+      "3",
+      "trois",
+      "trois chaussettes"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 23. Quel est le plus petit ?",
+    "answers": [
+      "11"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 196. Qui suis-je ?",
+    "answers": [
+      "14"
+    ]
+  },
+  {
+    "question": "Je suis au début de « espace », au début de « étoile » et à la fin de « monde ». Qui suis-je ?",
+    "answers": [
+      "e",
+      "la lettre e"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 66. Quel est celui du milieu ?",
+    "answers": [
+      "22"
+    ]
+  },
+  {
+    "question": "Un homme se réveille, éteint une lumière et se rendort. Le lendemain, il apprend que plusieurs personnes sont mortes. Quel était son métier ?",
+    "answers": [
+      "gardien de phare",
+      "le gardien d'un phare",
+      "gardien d'un phare"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 2. Quel est le suivant : 16, 32, 64, 128, ... ?",
+    "answers": [
+      "256"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 4. Quel est le suivant : 15, 60, 240, 960, ... ?",
+    "answers": [
+      "3840"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 169. Qui suis-je ?",
+    "answers": [
+      "13"
+    ]
+  },
+  {
+    "question": "Deux mères et deux filles vont au cinéma, mais elles ne sont que trois. Comment est-ce possible ?",
+    "answers": [
+      "une grand-mère une mère et une fille",
+      "grand-mère mère et fille",
+      "trois générations"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 78. Quel est celui du milieu ?",
+    "answers": [
+      "26"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 9 gouttes : il y en a alors 35. Combien y en avait-il au départ ?",
+    "answers": [
+      "52",
+      "52 gouttes"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 9, et j'obtiens 33. Quel est ce nombre ?",
+    "answers": [
+      "12"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 18 mètres de long et son périmètre est de 54 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "9",
+      "9 mètres",
+      "9 m"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 11 têtes et 32 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "5",
+      "5 lapins"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 31 pièces pour une valeur de 54 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "23",
+      "23 pièces",
+      "23 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 35 pièces pour une valeur de 60 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "25",
+      "25 pièces",
+      "25 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Une bouteille et son bouchon coûtent 1,10 €. La bouteille coûte 1 € de plus que le bouchon. Combien coûte le bouchon ?",
+    "answers": [
+      "0,05 €",
+      "5 centimes",
+      "cinq centimes",
+      "0.05 €"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 9 gouttes : il y en a alors 29. Combien y en avait-il au départ ?",
+    "answers": [
+      "40",
+      "40 gouttes"
+    ]
+  },
+  {
+    "question": "Je suis de l'eau devenue dure et je disparais à la chaleur. Qui suis-je ?",
+    "answers": [
+      "la glace",
+      "glace"
+    ]
+  },
+  {
+    "question": "Un voyage dure 24 semaines complètes et 5 jours. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "173",
+      "173 jours"
+    ]
+  },
+  {
+    "question": "Dans 3 ans, Léa aura 13 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "10",
+      "10 ans"
+    ]
+  },
+  {
+    "question": "Je possède sept couleurs et j'apparais souvent après la pluie. Qui suis-je ?",
+    "answers": [
+      "un arc-en-ciel",
+      "l'arc-en-ciel",
+      "arc-en-ciel",
+      "arc en ciel"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 7 têtes et 20 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "3",
+      "3 lapins"
+    ]
+  },
+  {
+    "question": "Quel animal se cache au début du mot « château » ?",
+    "answers": [
+      "chat",
+      "le chat",
+      "un chat"
+    ]
+  },
+  {
+    "question": "Dès que tu prononces mon nom, tu me brises. Qui suis-je ?",
+    "answers": [
+      "le silence",
+      "silence"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 24. Quel est celui du milieu ?",
+    "answers": [
+      "8"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 156 m² et une longueur de 26 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "6",
+      "6 mètres",
+      "6 m"
+    ]
+  },
+  {
+    "question": "Dans 5 ans, Léa aura 17 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "12",
+      "12 ans"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 11, 17, 23, 29, 35, ... ?",
+    "answers": [
+      "41"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 45. Quel est celui du milieu ?",
+    "answers": [
+      "15"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 14 têtes et 48 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "10",
+      "10 lapins"
+    ]
+  },
+  {
+    "question": "Un homme est retrouvé mort dans une cabine au milieu d'une forêt. La cabine est fermée et il n'y a aucune route. De quelle cabine s'agit-il ?",
+    "answers": [
+      "une cabine d'avion",
+      "la cabine d'un avion",
+      "un avion"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 36. Qui suis-je ?",
+    "answers": [
+      "6"
+    ]
+  },
+  {
+    "question": "Un voyage dure 20 semaines complètes et 1 jour. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "141",
+      "141 jours"
+    ]
+  },
+  {
+    "question": "Un voyage dure 2 semaines complètes et 1 jour. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "15",
+      "15 jours"
+    ]
+  },
+  {
+    "question": "Dans 9 ans, Léa aura 25 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "16",
+      "16 ans"
+    ]
+  },
+  {
+    "question": "Je deviens plus petit chaque fois que j'éclaire. Qui suis-je ?",
+    "answers": [
+      "une bougie",
+      "la bougie",
+      "bougie"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 20 têtes et 66 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "13",
+      "13 lapins"
+    ]
+  },
+  {
+    "question": "Je flotte sans ailes et je pleure sans yeux. Qui suis-je ?",
+    "answers": [
+      "un nuage",
+      "le nuage",
+      "nuage"
+    ]
+  },
+  {
+    "question": "J'ai un œil mais je ne peux pas voir. Qui suis-je ?",
+    "answers": [
+      "une aiguille",
+      "l'aiguille",
+      "aiguille"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 4, et j'obtiens 32. Quel est ce nombre ?",
+    "answers": [
+      "14"
+    ]
+  },
+  {
+    "question": "On m'entend après l'éclair, mais on ne me voit jamais. Qui suis-je ?",
+    "answers": [
+      "le tonnerre",
+      "tonnerre"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 23 têtes et 82 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "18",
+      "18 lapins"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 6, et j'obtiens 52. Quel est ce nombre ?",
+    "answers": [
+      "23"
+    ]
+  },
+  {
+    "question": "Un voyage dure 21 semaines complètes et 2 jours. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "149",
+      "149 jours"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 53. Quel est le plus petit ?",
+    "answers": [
+      "26"
+    ]
+  },
+  {
+    "question": "Un voyage dure 26 semaines complètes et 1 jour. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "183",
+      "183 jours"
+    ]
+  },
+  {
+    "question": "J'ai des villes sans maisons, des forêts sans arbres et des mers sans eau. Qui suis-je ?",
+    "answers": [
+      "une carte",
+      "la carte",
+      "carte",
+      "une carte géographique"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 2. Quel est le suivant : 19, 38, 76, 152, ... ?",
+    "answers": [
+      "304"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 63 m² et une longueur de 9 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "7",
+      "7 mètres",
+      "7 m"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 18 têtes et 60 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "12",
+      "12 lapins"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 4. Quel est le suivant : 3, 12, 48, 192, ... ?",
+    "answers": [
+      "768"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 17, 19, 21, 23, 25, ... ?",
+    "answers": [
+      "27"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 2. Quel est le suivant : 4, 8, 16, 32, ... ?",
+    "answers": [
+      "64"
+    ]
+  },
+  {
+    "question": "Mon premier est un véhicule, mon second se place devant une cheminée, et mon tout est un légume orange. Qui suis-je ?",
+    "answers": [
+      "une carotte",
+      "carotte",
+      "la carotte"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 57. Quel est le plus petit ?",
+    "answers": [
+      "28"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 42 m² et une longueur de 14 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "3",
+      "3 mètres",
+      "3 m"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 784. Qui suis-je ?",
+    "answers": [
+      "28"
+    ]
+  },
+  {
+    "question": "Qu'est-ce qui peut monter dans une cheminée en descendant, mais pas descendre dans une cheminée en montant ?",
+    "answers": [
+      "un parapluie",
+      "le parapluie",
+      "parapluie"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 5 gouttes : il y en a alors 21. Combien y en avait-il au départ ?",
+    "answers": [
+      "32",
+      "32 gouttes"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 48 m² et une longueur de 8 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "6",
+      "6 mètres",
+      "6 m"
+    ]
+  },
+  {
+    "question": "Je fabrique une toile sans fil ni aiguille. Qui suis-je ?",
+    "answers": [
+      "une araignée",
+      "l'araignée",
+      "araignée",
+      "araignee"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 22 têtes et 72 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "14",
+      "14 lapins"
+    ]
+  },
+  {
+    "question": "Je porte mon âge en cercles cachés dans mon tronc. Qui suis-je ?",
+    "answers": [
+      "un arbre",
+      "l'arbre",
+      "arbre"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 5 gouttes : il y en a alors 39. Combien y en avait-il au départ ?",
+    "answers": [
+      "68",
+      "68 gouttes"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 35 m² et une longueur de 7 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "5",
+      "5 mètres",
+      "5 m"
+    ]
+  },
+  {
+    "question": "Dans 4 ans, Léa aura 15 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "11",
+      "11 ans"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 13 pièces pour une valeur de 19 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "6",
+      "6 pièces",
+      "6 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 25. Quel est le plus petit ?",
+    "answers": [
+      "12"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 4. Quel est le suivant : 9, 36, 144, 576, ... ?",
+    "answers": [
+      "2304"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 576. Qui suis-je ?",
+    "answers": [
+      "24"
+    ]
+  },
+  {
+    "question": "Un homme est né en 1955 et mort en 1955 à l'âge de 80 ans. Comment est-ce possible ?",
+    "answers": [
+      "1955 était le numéro de sa chambre",
+      "1955 est un numéro de chambre",
+      "c'était le numéro de la chambre",
+      "1955 n'était pas une année"
+    ]
+  },
+  {
+    "question": "Dans 7 ans, Léa aura 37 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "30",
+      "30 ans"
+    ]
+  },
+  {
+    "question": "Deux pièces totalisent 30 centimes et l'une d'elles n'est pas une pièce de 10 centimes. Quelles sont-elles ?",
+    "answers": [
+      "20 centimes et 10 centimes",
+      "une pièce de 20 et une de 10",
+      "20 et 10 centimes"
+    ]
+  },
+  {
+    "question": "Un voyage dure 17 semaines complètes et 4 jours. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "123",
+      "123 jours"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 23, 26, 29, 32, 35, ... ?",
+    "answers": [
+      "38"
+    ]
+  },
+  {
+    "question": "Dans 10 ans, Léa aura 27 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "17",
+      "17 ans"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 10, et j'obtiens 71. Quel est ce nombre ?",
+    "answers": [
+      "27"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 5, et j'obtiens 21. Quel est ce nombre ?",
+    "answers": [
+      "8"
+    ]
+  },
+  {
+    "question": "Un voyage dure 10 semaines complètes et 3 jours. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "73",
+      "73 jours"
+    ]
+  },
+  {
+    "question": "Qu'est-ce qui augmente chaque année sans jamais diminuer ?",
+    "answers": [
+      "l'âge",
+      "âge",
+      "age",
+      "ton âge"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 9, et j'obtiens 47. Quel est ce nombre ?",
+    "answers": [
+      "19"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 5 têtes et 14 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "2",
+      "2 lapins"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 96 m² et une longueur de 24 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "4",
+      "4 mètres",
+      "4 m"
+    ]
+  },
+  {
+    "question": "On ne me voit pas, mais on voit les feuilles danser quand je passe. Qui suis-je ?",
+    "answers": [
+      "le vent",
+      "vent"
+    ]
+  },
+  {
+    "question": "Dans 7 ans, Léa aura 29 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "22",
+      "22 ans"
+    ]
+  },
+  {
+    "question": "J'ai un sommet mais pas de tête, et des flancs mais pas de corps. Qui suis-je ?",
+    "answers": [
+      "une montagne",
+      "la montagne",
+      "montagne"
+    ]
+  },
+  {
+    "question": "J'ai beaucoup de dents, mais je ne peux pas mordre. Qui suis-je ?",
+    "answers": [
+      "un peigne",
+      "le peigne",
+      "peigne"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 2. Quel est le suivant : 22, 44, 88, 176, ... ?",
+    "answers": [
+      "352"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 10 têtes et 36 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "8",
+      "8 lapins"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 24 mètres de long et son périmètre est de 64 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "8",
+      "8 mètres",
+      "8 m"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 14, 18, 22, 26, 30, ... ?",
+    "answers": [
+      "34"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 21. Quel est celui du milieu ?",
+    "answers": [
+      "7"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 256. Qui suis-je ?",
+    "answers": [
+      "16"
+    ]
+  },
+  {
+    "question": "Si hier était demain, aujourd'hui serait vendredi. Quel jour sommes-nous réellement ?",
+    "answers": [
+      "dimanche"
+    ]
+  },
+  {
+    "question": "Je dors parfois pendant des siècles puis je crache du feu. Qui suis-je ?",
+    "answers": [
+      "un volcan",
+      "le volcan",
+      "volcan"
+    ]
+  },
+  {
+    "question": "Un avion s'écrase exactement à la frontière entre la France et l'Espagne. Où enterre-t-on les survivants ?",
+    "answers": [
+      "nulle part",
+      "on n'enterre pas les survivants",
+      "les survivants ne sont pas enterrés"
+    ]
+  },
+  {
+    "question": "Dans 9 ans, Léa aura 33 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "24",
+      "24 ans"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 47. Quel est le plus petit ?",
+    "answers": [
+      "23"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 21 têtes et 76 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "17",
+      "17 lapins"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 23 pièces pour une valeur de 38 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "15",
+      "15 pièces",
+      "15 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 100. Qui suis-je ?",
+    "answers": [
+      "10"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 19 pièces pour une valeur de 28 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "9",
+      "9 pièces",
+      "9 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 5 gouttes : il y en a alors 15. Combien y en avait-il au départ ?",
+    "answers": [
+      "20",
+      "20 gouttes"
+    ]
+  },
+  {
+    "question": "Dans 5 ans, Léa aura 25 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "20",
+      "20 ans"
+    ]
+  },
+  {
+    "question": "Quel insecte se cache à la fin du mot « pantalon » ?",
+    "answers": [
+      "taon",
+      "le taon",
+      "un taon"
+    ]
+  },
+  {
+    "question": "Quelle lettre apparaît une fois dans « minute », deux fois dans « moment » et jamais dans « heure » ?",
+    "answers": [
+      "m",
+      "la lettre m"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 10 mètres de long et son périmètre est de 36 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "8",
+      "8 mètres",
+      "8 m"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 10 gouttes : il y en a alors 37. Combien y en avait-il au départ ?",
+    "answers": [
+      "54",
+      "54 gouttes"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 80 m² et une longueur de 16 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "5",
+      "5 mètres",
+      "5 m"
+    ]
+  },
+  {
+    "question": "Un homme est trouvé mort avec un magnétophone. La bande dit « Je n'ai plus de raison de vivre », puis un coup de feu. Pourquoi le détective conclut-il à un meurtre ?",
+    "answers": [
+      "quelqu'un a rembobiné la bande",
+      "la bande avait été rembobinée",
+      "le mort ne pouvait pas rembobiner"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 7, et j'obtiens 92. Quel est ce nombre ?",
+    "answers": [
+      "33"
+    ]
+  },
+  {
+    "question": "Un cambriolage a lieu un dimanche. La cuisinière préparait le repas, le jardinier taillait les roses et le facteur distribuait le courrier. Qui ment ?",
+    "answers": [
+      "le facteur",
+      "facteur"
+    ]
+  },
+  {
+    "question": "Un homme entre dans un restaurant et commande de l'albatros. Après une bouchée, il sort et appelle la police. Qu'a-t-il compris ?",
+    "answers": [
+      "qu'il n'avait pas mangé de l'albatros auparavant",
+      "qu'on lui avait fait manger de la chair humaine",
+      "il avait mangé un humain"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 33. Quel est le plus petit ?",
+    "answers": [
+      "16"
+    ]
+  },
+  {
+    "question": "Mon premier est un oiseau noir et blanc, mon second est un rongeur, et mon tout navigue parfois sur les mers. Qui suis-je ?",
+    "answers": [
+      "un pirate",
+      "pirate",
+      "le pirate"
+    ]
+  },
+  {
+    "question": "Un voyage dure 3 semaines complètes et 2 jours. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "23",
+      "23 jours"
+    ]
+  },
+  {
+    "question": "Un berger doit faire traverser une rivière à un loup, une chèvre et un chou. Qui doit-il transporter en premier ?",
+    "answers": [
+      "la chèvre",
+      "chèvre",
+      "la chevre"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 21, 27, 33, 39, 45, ... ?",
+    "answers": [
+      "51"
+    ]
+  },
+  {
+    "question": "J'ai des aiguilles mais je ne pique pas. Qui suis-je ?",
+    "answers": [
+      "une horloge",
+      "horloge",
+      "une montre",
+      "montre"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 15, 20, 25, 30, 35, ... ?",
+    "answers": [
+      "40"
+    ]
+  },
+  {
+    "question": "Quelle lettre se trouve exactement au milieu du mot « Paris » ?",
+    "answers": [
+      "r",
+      "la lettre r"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 4. Quel est le suivant : 6, 24, 96, 384, ... ?",
+    "answers": [
+      "1536"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 102 m² et une longueur de 17 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "6",
+      "6 mètres",
+      "6 m"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 15 m² et une longueur de 5 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "3",
+      "3 mètres",
+      "3 m"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 120 m² et une longueur de 12 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "10",
+      "10 mètres",
+      "10 m"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 24 têtes et 92 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "22",
+      "22 lapins"
+    ]
+  },
+  {
+    "question": "Un voyage dure 18 semaines complètes et 5 jours. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "131",
+      "131 jours"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 27 têtes et 94 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "20",
+      "20 lapins"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 25. Qui suis-je ?",
+    "answers": [
+      "5"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 16, 22, 28, 34, 40, ... ?",
+    "answers": [
+      "46"
+    ]
+  },
+  {
+    "question": "Un livre et un marque-page coûtent 22 €. Le livre coûte 20 € de plus que le marque-page. Combien coûte le marque-page ?",
+    "answers": [
+      "1 €",
+      "1 euro",
+      "un euro"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 3, et j'obtiens 29. Quel est ce nombre ?",
+    "answers": [
+      "13"
+    ]
+  },
+  {
+    "question": "Un homme regarde un portrait et dit : « Je n'ai pas de frère, mais le père de cet homme est le fils de mon père. » Qui est sur le portrait ?",
+    "answers": [
+      "son fils",
+      "le fils de l'homme",
+      "son propre fils"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 75. Quel est celui du milieu ?",
+    "answers": [
+      "25"
+    ]
+  },
+  {
+    "question": "Dans une course, tu es troisième et tu dépasses la personne devant toi. Quelle place occupes-tu ?",
+    "answers": [
+      "deuxième",
+      "2e",
+      "seconde"
+    ]
+  },
+  {
+    "question": "Trois boîtes portent les étiquettes Pommes, Oranges et Mélange, mais toutes les étiquettes sont fausses. Dans quelle boîte faut-il piocher d'abord ?",
+    "answers": [
+      "la boîte mélange",
+      "la boite mélange",
+      "la boîte étiquetée mélange",
+      "mélange"
+    ]
+  },
+  {
+    "question": "Dans 6 ans, Léa aura 35 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "29",
+      "29 ans"
+    ]
+  },
+  {
+    "question": "Un voyage dure 8 semaines complètes et 1 jour. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "57",
+      "57 jours"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 2, et j'obtiens 28. Quel est ce nombre ?",
+    "answers": [
+      "10"
+    ]
+  },
+  {
+    "question": "Mon premier est une négation, mon second se trouve au bout de la jambe, et mon tout sert à écrire. Qui suis-je ?",
+    "answers": [
+      "du papier",
+      "papier",
+      "le papier"
+    ]
+  },
+  {
+    "question": "Mon premier transporte de l'eau, mon second est le nombre six, et mon tout se mange souvent grillé. Qui suis-je ?",
+    "answers": [
+      "une saucisse",
+      "saucisse",
+      "la saucisse"
+    ]
+  },
+  {
+    "question": "Je voyage autour du monde tout en restant dans un coin. Qui suis-je ?",
+    "answers": [
+      "un timbre",
+      "le timbre",
+      "timbre"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 180 m² et une longueur de 20 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "9",
+      "9 mètres",
+      "9 m"
+    ]
+  },
+  {
+    "question": "Un homme mort tient une allumette dans le désert, sans aucune trace autour de lui. De quel moyen de transport est-il tombé ?",
+    "answers": [
+      "une montgolfière",
+      "un ballon",
+      "un ballon à air chaud"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 99 m² et une longueur de 11 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "9",
+      "9 mètres",
+      "9 m"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 37. Quel est le plus petit ?",
+    "answers": [
+      "18"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 9 mètres de long et son périmètre est de 32 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "7",
+      "7 mètres",
+      "7 m"
+    ]
+  },
+  {
+    "question": "Un homme pousse sa voiture jusqu'à un hôtel et comprend qu'il est ruiné. À quel jeu joue-t-il ?",
+    "answers": [
+      "monopoly",
+      "au monopoly",
+      "le monopoly"
+    ]
+  },
+  {
+    "question": "Un homme est retrouvé mort dans un champ avec un sac fermé sur le dos. Que contenait le sac ?",
+    "answers": [
+      "un parachute",
+      "son parachute",
+      "un parachute qui ne s'est pas ouvert"
+    ]
+  },
+  {
+    "question": "Une femme appelle la police et dit que son collier a été volé. La fenêtre est brisée vers l'extérieur et le verre est dans le jardin. Pourquoi est-elle suspecte ?",
+    "answers": [
+      "la vitre a été cassée de l'intérieur",
+      "elle a cassé la vitre depuis l'intérieur",
+      "le verre aurait dû être à l'intérieur"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 23 pièces pour une valeur de 42 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "19",
+      "19 pièces",
+      "19 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 4, 8, 12, 16, 20, ... ?",
+    "answers": [
+      "24"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 3 têtes et 8 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "1",
+      "1 lapins"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 400. Qui suis-je ?",
+    "answers": [
+      "20"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 25, 30, 35, 40, 45, ... ?",
+    "answers": [
+      "50"
+    ]
+  },
+  {
+    "question": "Un homme se rase plusieurs fois par jour, pourtant il garde sa barbe. Qui est-il ?",
+    "answers": [
+      "un barbier",
+      "le barbier",
+      "barbier",
+      "un coiffeur",
+      "coiffeur"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 4, et j'obtiens 46. Quel est ce nombre ?",
+    "answers": [
+      "21"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 19, 23, 27, 31, 35, ... ?",
+    "answers": [
+      "39"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 4. Quel est le suivant : 24, 96, 384, 1536, ... ?",
+    "answers": [
+      "6144"
+    ]
+  },
+  {
+    "question": "Dans un enclos, il n'y a que des poules et des lapins. On compte 9 têtes et 26 pattes. Combien y a-t-il de lapins ?",
+    "answers": [
+      "4",
+      "4 lapins"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 8 gouttes : il y en a alors 33. Combien y en avait-il au départ ?",
+    "answers": [
+      "50",
+      "50 gouttes"
+    ]
+  },
+  {
+    "question": "Un voyage dure 22 semaines complètes et 3 jours. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "157",
+      "157 jours"
+    ]
+  },
+  {
+    "question": "Qu'est-ce qui doit être cassé avant d'être utilisé ?",
+    "answers": [
+      "un œuf",
+      "l'œuf",
+      "oeuf",
+      "un oeuf"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 729. Qui suis-je ?",
+    "answers": [
+      "27"
+    ]
+  },
+  {
+    "question": "Tu as six pommes et tu en prends quatre. Combien en as-tu ?",
+    "answers": [
+      "4",
+      "quatre"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 6, et j'obtiens 36. Quel est ce nombre ?",
+    "answers": [
+      "14"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 8, et j'obtiens 40. Quel est ce nombre ?",
+    "answers": [
+      "16"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 7, et j'obtiens 41. Quel est ce nombre ?",
+    "answers": [
+      "17"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 15 pièces pour une valeur de 26 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "11",
+      "11 pièces",
+      "11 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Une horloge met 5 secondes pour sonner 6 coups. Combien met-elle de secondes pour sonner 12 coups au même rythme ?",
+    "answers": [
+      "11 secondes",
+      "onze secondes",
+      "11"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 676. Qui suis-je ?",
+    "answers": [
+      "26"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 20 mètres de long et son périmètre est de 48 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "4",
+      "4 mètres",
+      "4 m"
+    ]
+  },
+  {
+    "question": "Je te regarde, mais je n'ai ni yeux ni visage. Qui suis-je ?",
+    "answers": [
+      "un miroir",
+      "le miroir",
+      "miroir"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 8, et j'obtiens 58. Quel est ce nombre ?",
+    "answers": [
+      "25"
+    ]
+  },
+  {
+    "question": "Dans 4 ans, Léa aura 23 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "19",
+      "19 ans"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 4, et j'obtiens 18. Quel est ce nombre ?",
+    "answers": [
+      "7"
+    ]
+  },
+  {
+    "question": "Je suis un nombre entier positif. Multiplié par moi-même, je donne 361. Qui suis-je ?",
+    "answers": [
+      "19"
+    ]
+  },
+  {
+    "question": "Dans 6 ans, Léa aura 27 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "21",
+      "21 ans"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 31. Quel est le plus petit ?",
+    "answers": [
+      "15"
+    ]
+  },
+  {
+    "question": "Je tombe sans me faire mal et je fonds sans avoir chaud au cœur. Qui suis-je ?",
+    "answers": [
+      "la neige",
+      "neige",
+      "un flocon",
+      "flocon"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 4, et j'obtiens 86. Quel est ce nombre ?",
+    "answers": [
+      "30"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 9 gouttes : il y en a alors 23. Combien y en avait-il au départ ?",
+    "answers": [
+      "28",
+      "28 gouttes"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 125 m² et une longueur de 25 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "5",
+      "5 mètres",
+      "5 m"
+    ]
+  },
+  {
+    "question": "Un voyage dure 15 semaines complètes et 2 jours. Combien de jours dure-t-il au total ?",
+    "answers": [
+      "107",
+      "107 jours"
+    ]
+  },
+  {
+    "question": "Une femme vit au 20e étage. Chaque matin elle descend, mais le soir elle monte au 15e puis prend les escaliers. Pourquoi ?",
+    "answers": [
+      "elle est trop petite pour atteindre le bouton 20",
+      "elle n'atteint pas le bouton du 20e",
+      "elle est petite"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 35. Quel est le plus petit ?",
+    "answers": [
+      "17"
+    ]
+  },
+  {
+    "question": "Une bourse contient seulement des pièces de 1 € et de 2 €. Elle compte 5 pièces pour une valeur de 7 €. Combien contient-elle de pièces de 2 € ?",
+    "answers": [
+      "2",
+      "2 pièces",
+      "2 pièces de 2 €"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 69. Quel est celui du milieu ?",
+    "answers": [
+      "23"
+    ]
+  },
+  {
+    "question": "Je peux être liquide, solide ou vapeur, mais je reste toujours la même substance. Qui suis-je ?",
+    "answers": [
+      "l'eau",
+      "eau"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 45. Quel est le plus petit ?",
+    "answers": [
+      "22"
+    ]
+  },
+  {
+    "question": "Mon premier miaule, mon second est un petit mot écrit, et mon tout vit dans le désert. Qui suis-je ?",
+    "answers": [
+      "un chameau",
+      "chameau",
+      "le chameau"
+    ]
+  },
+  {
+    "question": "Un tapis rectangulaire a une aire de 44 m² et une longueur de 22 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "2",
+      "2 mètres",
+      "2 m"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 8, et j'obtiens 44. Quel est ce nombre ?",
+    "answers": [
+      "18"
+    ]
+  },
+  {
+    "question": "Je monte et je descends sans jamais bouger. Qui suis-je ?",
+    "answers": [
+      "un escalier",
+      "l'escalier",
+      "escalier"
+    ]
+  },
+  {
+    "question": "Mon premier coupe du bois, mon second est un tronc sans sa dernière lettre, et mon tout est un fruit jaune. Qui suis-je ?",
+    "answers": [
+      "un citron",
+      "citron",
+      "le citron"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 4, et j'obtiens 60. Quel est ce nombre ?",
+    "answers": [
+      "28"
+    ]
+  },
+  {
+    "question": "Deux nombres entiers consécutifs ont pour somme 59. Quel est le plus petit ?",
+    "answers": [
+      "29"
+    ]
+  },
+  {
+    "question": "Une fiole contient une quantité paire de gouttes. J'en utilise la moitié puis j'ajoute 10 gouttes : il y en a alors 43. Combien y en avait-il au départ ?",
+    "answers": [
+      "66",
+      "66 gouttes"
+    ]
+  },
+  {
+    "question": "Quatre personnes doivent traverser un pont de nuit avec une lampe. Elles mettent 1, 2, 7 et 10 minutes. Quel est le temps minimal total ?",
+    "answers": [
+      "17 minutes",
+      "dix-sept minutes",
+      "17"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 4. Quel est le suivant : 18, 72, 288, 1152, ... ?",
+    "answers": [
+      "4608"
+    ]
+  },
+  {
+    "question": "Je suis un mot de cinq lettres, je commence par L, je termine par E et on me lit. Qui suis-je ?",
+    "answers": [
+      "un livre",
+      "livre",
+      "le livre"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 6, et j'obtiens 66. Quel est ce nombre ?",
+    "answers": [
+      "30"
+    ]
+  },
+  {
+    "question": "Je mange du bois, je danse et je meurs sous l'eau. Qui suis-je ?",
+    "answers": [
+      "le feu",
+      "feu"
+    ]
+  },
+  {
+    "question": "Cinq machines fabriquent cinq objets en cinq minutes. Combien de temps faut-il à cent machines pour fabriquer cent objets ?",
+    "answers": [
+      "5 minutes",
+      "cinq minutes"
+    ]
+  },
+  {
+    "question": "Quel nombre complète cette suite : 13, 16, 19, 22, 25, ... ?",
+    "answers": [
+      "28"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 2. Quel est le suivant : 1, 2, 4, 8, ... ?",
+    "answers": [
+      "16"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 33. Quel est celui du milieu ?",
+    "answers": [
+      "11"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 7 mètres de long et son périmètre est de 24 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "5",
+      "5 mètres",
+      "5 m"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le double, puis j'ajoute 3, et j'obtiens 15. Quel est ce nombre ?",
+    "answers": [
+      "6"
+    ]
+  },
+  {
+    "question": "Je suis rempli d'eau salée et mes vagues touchent plusieurs continents. Qui suis-je ?",
+    "answers": [
+      "un océan",
+      "l'océan",
+      "océan",
+      "ocean"
+    ]
+  },
+  {
+    "question": "Jusqu'où un chien peut-il courir dans une forêt ?",
+    "answers": [
+      "jusqu'à la moitié",
+      "à mi-chemin",
+      "la moitié",
+      "jusqu'au milieu"
+    ]
+  },
+  {
+    "question": "Dans 8 ans, Léa aura 31 ans. Quel âge a-t-elle aujourd'hui ?",
+    "answers": [
+      "23",
+      "23 ans"
+    ]
+  },
+  {
+    "question": "Un jardin rectangulaire mesure 29 mètres de long et son périmètre est de 70 mètres. Quelle est sa largeur ?",
+    "answers": [
+      "6",
+      "6 mètres",
+      "6 m"
+    ]
+  },
+  {
+    "question": "Chaque nombre de cette suite est multiplié par 2. Quel est le suivant : 10, 20, 40, 80, ... ?",
+    "answers": [
+      "160"
+    ]
+  },
+  {
+    "question": "Trois nombres entiers consécutifs ont pour somme 48. Quel est celui du milieu ?",
+    "answers": [
+      "16"
+    ]
+  },
+  {
+    "question": "Je pense à un nombre. Je le triple, puis je retire 2, et j'obtiens 55. Quel est ce nombre ?",
+    "answers": [
+      "19"
+    ]
   }
 ]
