@@ -7,8 +7,15 @@
 // 3. Détecte la première bonne réponse dans le salon du quiz
 // 4. Conserve les scores ET la question en cours après un redémarrage Railway
 // 5. Attribue le rôle "Cerveau du serveur" aux personnes en tête du classement
+// 6. Limite !enigme à 5 utilisations par membre et par jour
+// 7. Permet aux administrateurs de remettre le classement à zéro
 
-const { Client, GatewayIntentBits, Events } = require('discord.js');
+const {
+  Client,
+  GatewayIntentBits,
+  Events,
+  PermissionFlagsBits,
+} = require('discord.js');
 const cron = require('node-cron');
 const fs = require('fs');
 const path = require('path');
@@ -26,12 +33,14 @@ fs.mkdirSync(DATA_DIR, { recursive: true });
 
 const SCORES_FILE = path.join(DATA_DIR, 'scores.json');
 const CURRENT_QUESTION_FILE = path.join(DATA_DIR, 'current-question.json');
+const ENIGMA_USAGE_FILE = path.join(DATA_DIR, 'enigme-usage.json');
 const LEGACY_SCORES_FILE = path.join(__dirname, 'scores.json');
 
 const QUIZ_CHANNEL_ID = process.env.QUIZ_CHANNEL_ID;
 const REWARD_ROLE_ID = process.env.REWARD_ROLE_ID;
 const XP_PER_QUESTION = 5;
 const XP_PER_ENIGME = 10;
+const MAX_ENIGMES_PER_DAY = 5;
 
 const DAILY_TIMES = (process.env.DAILY_TIMES || '10,14,18,20,23')
   .split(',')
@@ -82,6 +91,53 @@ let scores = loadJSON(SCORES_FILE, null);
 if (!scores || typeof scores !== 'object' || Array.isArray(scores)) {
   scores = loadJSON(LEGACY_SCORES_FILE, {});
   saveJSON(SCORES_FILE, scores);
+}
+
+// --- Limite quotidienne des énigmes déclenchées avec !enigme ---
+function getParisDateKey() {
+  const parts = new Intl.DateTimeFormat('fr-FR', {
+    timeZone: 'Europe/Paris',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(new Date());
+
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${values.year}-${values.month}-${values.day}`;
+}
+
+function createEmptyEnigmaUsage() {
+  return { date: getParisDateKey(), users: {} };
+}
+
+let enigmaUsage = loadJSON(ENIGMA_USAGE_FILE, createEmptyEnigmaUsage());
+
+function ensureTodayEnigmaUsage() {
+  const today = getParisDateKey();
+  const isValid =
+    enigmaUsage &&
+    typeof enigmaUsage === 'object' &&
+    enigmaUsage.date === today &&
+    enigmaUsage.users &&
+    typeof enigmaUsage.users === 'object' &&
+    !Array.isArray(enigmaUsage.users);
+
+  if (!isValid) {
+    enigmaUsage = { date: today, users: {} };
+    saveJSON(ENIGMA_USAGE_FILE, enigmaUsage);
+  }
+}
+
+function getEnigmaUsage(userId) {
+  ensureTodayEnigmaUsage();
+  return Number(enigmaUsage.users[userId]) || 0;
+}
+
+function recordEnigmaUsage(userId) {
+  ensureTodayEnigmaUsage();
+  enigmaUsage.users[userId] = getEnigmaUsage(userId) + 1;
+  saveJSON(ENIGMA_USAGE_FILE, enigmaUsage);
+  return enigmaUsage.users[userId];
 }
 
 function isValidQuestionState(value) {
@@ -169,21 +225,29 @@ async function postDailyQuestion() {
   console.log(`Question publiée et sauvegardée (${sentMessage.id}).`);
 }
 
-async function postEnigme(channel) {
+async function postEnigme(channel, remainingAfter = null) {
   const question = pickFrom(ENIGMES_FILE);
   if (!question) {
     await channel.send("Aucune énigme n'est disponible pour le moment.");
-    return;
+    return false;
   }
 
+  const quotaText =
+    remainingAfter === null
+      ? ''
+      : remainingAfter === 0
+        ? "\n\n*⚠️ C'était ta 5e et dernière énigme à lancer aujourd'hui !*"
+        : `\n\n*Il te restera ${remainingAfter} énigme${remainingAfter > 1 ? 's' : ''} à lancer aujourd'hui.*`;
+
   const sentMessage = await channel.send(
-    `🧠 **Énigme !**\n\n${question.question}\n\n*Premier(e) à trouver gagne ${XP_PER_ENIGME} XP !*`
+    `🧠 **Énigme !**\n\n${question.question}\n\n*Premier(e) à trouver gagne ${XP_PER_ENIGME} XP !*${quotaText}`
   );
 
   setCurrentQuestion(
     buildQuestionState(question, XP_PER_ENIGME, 'enigme', sentMessage)
   );
   console.log(`Énigme publiée et sauvegardée (${sentMessage.id}).`);
+  return true;
 }
 
 // --- Restauration depuis l'historique Discord ---
@@ -384,6 +448,35 @@ async function updateBrainRole(guild) {
   }
 }
 
+function canResetLeaderboard(message) {
+  const isServerOwner = message.guild?.ownerId === message.author.id;
+  const isAdministrator = message.member?.permissions?.has?.(
+    PermissionFlagsBits.Administrator
+  );
+  return Boolean(isServerOwner || isAdministrator);
+}
+
+async function resetLeaderboard(message) {
+  scores = {};
+  saveJSON(SCORES_FILE, scores);
+
+  if (REWARD_ROLE_ID) {
+    const role = await message.guild.roles.fetch(REWARD_ROLE_ID).catch(() => null);
+    if (role) {
+      await message.guild.members.fetch();
+      for (const member of role.members.values()) {
+        await member.roles.remove(role).catch((error) => {
+          console.error(`Impossible de retirer le rôle à ${member.user.tag} :`, error);
+        });
+      }
+    }
+  }
+
+  await message.reply(
+    '🧹 **Grand ménage terminé !** Le classement et tous les XP ont été remis à zéro. Le rôle **Cerveau du serveur** est de nouveau à conquérir ! 🧠'
+  );
+}
+
 async function awardXP(message, wonQuestion) {
   const userId = message.author.id;
   scores[userId] = (scores[userId] || 0) + wonQuestion.xpValue;
@@ -414,7 +507,39 @@ client.on(Events.MessageCreate, async (message) => {
       await message.reply("Une question est déjà en cours, réponds à celle-ci d'abord !");
       return;
     }
-    await postEnigme(message.channel);
+
+    const usedToday = getEnigmaUsage(message.author.id);
+    if (usedToday >= MAX_ENIGMES_PER_DAY) {
+      await message.reply(
+        "🚨 **Halte-là, Einstein !** Tu as déjà lancé tes 5 énigmes aujourd'hui. Tes neurones sont placés en repos obligatoire jusqu'à demain ! 🧠💤"
+      );
+      return;
+    }
+
+    const remainingAfter = MAX_ENIGMES_PER_DAY - usedToday - 1;
+    const posted = await postEnigme(message.channel, remainingAfter);
+    if (posted) {
+      recordEnigmaUsage(message.author.id);
+    }
+    return;
+  }
+
+  if (command === '!resetclassement' || command === '!resetclassement confirmer') {
+    if (!canResetLeaderboard(message)) {
+      await message.reply(
+        "⛔ Bien essayé, petit génie… mais seuls les administrateurs peuvent remettre le classement à zéro !"
+      );
+      return;
+    }
+
+    if (command === '!resetclassement') {
+      await message.reply(
+        '⚠️ Cette commande effacera **tous les XP**. Pour confirmer, écris exactement : `!resetclassement confirmer`'
+      );
+      return;
+    }
+
+    await resetLeaderboard(message);
     return;
   }
 
@@ -486,7 +611,7 @@ client.once(Events.ClientReady, async (readyClient) => {
   }
 
   console.log(`Questions automatiques programmées à : ${DAILY_TIMES.join('h, ')}h`);
-  console.log('Commande à la demande activée : !enigme');
+  console.log('Commandes activées : !enigme, !classement, !resetclassement');
   console.log(`Données sauvegardées dans : ${DATA_DIR}`);
 
   DAILY_TIMES.forEach((hour) => {
