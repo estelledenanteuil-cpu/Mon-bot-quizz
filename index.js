@@ -787,7 +787,7 @@ function buildWelcomeMessage(member) {
     `Pour commencer ton aventure comme une queen, tu peux choisir tes ${rolesLink}, ` +
     `venir faire une petite ${presentationLink} pour qu’on te découvre, ` +
     `et regarder les ${announcementsLink} afin de ne rien manquer. ` +
-    `Prends ton temps, explore et viens papoter dès que tu te sens prête ou prêt. 💖`
+    `Prends ton temps, explore et viens papoter dès que tu te sens prête ou prêt ma boT ! 🫶🏻`
   );
 }
 
