@@ -50,16 +50,27 @@ const XP_PER_ENIGME = 10;
 const XP_PER_CASSE_TETE = 10;
 const MAX_ENIGMES_PER_DAY = 5;
 const MAX_CASSE_TETES_PER_DAY = 5;
-const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash-lite';
+// Railway est hébergé à Amsterdam pour ce projet. Certains modèles Gemini
+// peuvent ne pas être proposés dans toutes les régions : le bot essaie donc
+// automatiquement plusieurs modèles qui possèdent un quota gratuit.
+const GEMINI_MODELS = [
+  process.env.GEMINI_MODEL,
+  'gemini-3-flash-preview',
+  'gemini-3.5-flash-lite',
+  'gemini-2.5-flash',
+  'gemini-2.5-flash-lite',
+].filter((model, index, models) => model && models.indexOf(model) === index);
 const AI_COOLDOWN_MS = 20_000;
 const AI_MAX_QUESTION_LENGTH = 1_200;
 
 const AI_PERSONA = `
 Tu incarnes « La pouf du savoir », la bestie virtuelle d'un serveur Discord francophone.
-Tu réponds toujours en français, en 1 à 3 phrases courtes, naturelles et faciles à lire.
+Tu réponds toujours en français, avec 2 à 4 phrases complètes, naturelles et faciles à lire.
 Ta personnalité est baddie, girly, sûre d'elle, drôle, piquante et légèrement séductrice.
 Tu peux taquiner avec élégance et utiliser 0 à 2 emojis adaptés, sans en mettre partout.
 Tu réponds réellement à la question : ne sacrifie jamais l'information utile pour une punchline.
+Développe suffisamment ta réponse pour qu'elle soit satisfaisante, sans écrire un roman.
+Termine obligatoirement toutes tes phrases et conclus toujours par une ponctuation complète.
 Tu n'humilies pas gratuitement, tu n'encourages ni harcèlement, ni haine, ni danger.
 Tu évites le contenu sexuel explicite. Si une demande est grave ou sensible, tu deviens douce,
 claire et responsable tout en gardant une petite touche Besty.
@@ -276,17 +287,15 @@ async function generateBestyAIReply(question) {
     throw error;
   }
 
-  const endpoint =
-    `https://generativelanguage.googleapis.com/v1beta/models/` +
-    `${encodeURIComponent(GEMINI_MODEL)}:generateContent`;
+  let lastError = null;
 
-  const response = await fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-goog-api-key': process.env.GEMINI_API_KEY,
-    },
-    body: JSON.stringify({
+  for (const model of GEMINI_MODELS) {
+    const endpoint =
+      `https://generativelanguage.googleapis.com/v1beta/models/` +
+      `${encodeURIComponent(model)}:generateContent`;
+
+    const isGemini3 = model.startsWith('gemini-3');
+    const requestBody = JSON.stringify({
       system_instruction: {
         parts: [{ text: AI_PERSONA }],
       },
@@ -297,30 +306,57 @@ async function generateBestyAIReply(question) {
         },
       ],
       generationConfig: {
-        temperature: 0.9,
-        maxOutputTokens: 220,
+        temperature: 1,
+        maxOutputTokens: 800,
+        thinkingConfig: isGemini3
+          ? { thinkingLevel: 'minimal' }
+          : { thinkingBudget: 0 },
       },
-    }),
-    signal: AbortSignal.timeout(20_000),
-  });
+    });
 
-  if (!response.ok) {
-    const error = new Error(`Gemini a répondu avec le statut ${response.status}`);
-    error.status = response.status;
-    throw error;
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-goog-api-key': process.env.GEMINI_API_KEY,
+      },
+      body: requestBody,
+      signal: AbortSignal.timeout(20_000),
+    });
+
+    if (!response.ok) {
+      const apiDetails = await response.text().catch(() => '');
+      console.warn(
+        `Modèle Gemini ${model} indisponible (${response.status}) : ` +
+          apiDetails.slice(0, 300)
+      );
+
+      const error = new Error(
+        `Gemini a répondu avec le statut ${response.status} pour ${model}`
+      );
+      error.status = response.status;
+      lastError = error;
+
+      // Essaie un autre modèle si celui-ci est absent, saturé ou indisponible.
+      if ([404, 429, 503].includes(response.status)) continue;
+      throw error;
+    }
+
+    const data = await response.json();
+    const answer = data.candidates?.[0]?.content?.parts
+      ?.map((part) => part.text || '')
+      .join('')
+      .trim();
+
+    if (answer) {
+      console.log(`Réponse IA générée avec ${model}.`);
+      return answer.slice(0, 1_900);
+    }
+
+    lastError = new Error(`Le modèle ${model} n'a renvoyé aucun texte.`);
   }
 
-  const data = await response.json();
-  const answer = data.candidates?.[0]?.content?.parts
-    ?.map((part) => part.text || '')
-    .join('')
-    .trim();
-
-  if (!answer) {
-    throw new Error("Gemini n'a renvoyé aucun texte.");
-  }
-
-  return answer.slice(0, 1_900);
+  throw lastError || new Error("Aucun modèle Gemini n'est disponible.");
 }
 
 async function handleBestyAIMention(message, question) {
