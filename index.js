@@ -13,6 +13,7 @@
 // 9. Permet de déclencher un casse-tête avec !cassetete
 // 10. Limite !cassetete à 5 utilisations par membre et par jour
 // 11. Répond avec une personnalité IA quand un membre mentionne le bot
+// 12. Accueille un membre dans le salon général lorsqu'il reçoit le rôle choisi
 
 const {
   Client,
@@ -45,6 +46,11 @@ const LEGACY_SCORES_FILE = path.join(__dirname, 'scores.json');
 
 const QUIZ_CHANNEL_ID = process.env.QUIZ_CHANNEL_ID;
 const REWARD_ROLE_ID = process.env.REWARD_ROLE_ID;
+const WELCOME_ROLE_ID = process.env.WELCOME_ROLE_ID;
+const GENERAL_CHANNEL_ID = process.env.GENERAL_CHANNEL_ID;
+const ROLES_CHANNEL_ID = process.env.ROLES_CHANNEL_ID;
+const PRESENTATION_CHANNEL_ID = process.env.PRESENTATION_CHANNEL_ID;
+const ANNOUNCEMENTS_CHANNEL_ID = process.env.ANNOUNCEMENTS_CHANNEL_ID;
 const XP_PER_QUESTION = 5;
 const XP_PER_ENIGME = 10;
 const XP_PER_CASSE_TETE = 10;
@@ -79,6 +85,19 @@ Ne dis jamais que tu es Gemini, Google ou un modèle de langage. Ne cite pas ces
 
 // Une limite simple évite qu'un membre vide le quota gratuit en spammant les mentions.
 const aiCooldowns = new Map();
+
+const WELCOME_OPENINGS = [
+  '✨ Alerte pépite : {member} vient officiellement de rejoindre la maison ! Installe-toi, ici le tapis rouge est permanent et le jugement est resté dehors. 💅',
+  '💋 Rangez les flashs, une nouvelle star arrive : bienvenue {member} ! Tu peux poser tes valises, ta couronne et toute ta personnalité ici.',
+  '🎀 Plot twist absolument délicieux : {member} fait maintenant partie de la famille ! Bienvenue dans notre petit chaos bienveillant.',
+  '👑 Le serveur vient clairement de gagner en charisme : bienvenue {member} ! Fais comme chez toi, mais en encore plus fabuleux.',
+  '🪩 La porte s’ouvre, les paillettes tombent et {member} entre en scène ! Bienvenue parmi les Drôles d’Humains, la Besty.',
+  '🌸 Une nouvelle belle âme vient d’arriver : bienvenue {member} ! Ici, tu peux être toi-même, même quand toi-même est un peu dramatique.',
+  '🚨 Flash info : {member} vient de rejoindre l’aventure ! Le niveau de good vibes du serveur vient officiellement de monter.',
+  '💅 Nouveau personnage principal détecté : bienvenue {member} ! Prends ta place, personne ne te demandera de diminuer ton éclat ici.',
+  '🌙 Le serveur accueille une nouvelle petite étoile : bienvenue {member} ! On espère que tu te sentiras rapidement comme à la maison.',
+  '🥂 Une place vient d’être prise dans notre joyeux bazar : bienvenue {member} ! Entre, respire et viens découvrir ta nouvelle bande de Besties.',
+];
 
 const DAILY_TIMES = (process.env.DAILY_TIMES || '10,14,18,20,23')
   .split(',')
@@ -727,6 +746,80 @@ async function awardXP(message, wonQuestion) {
   await updateBrainRole(message.guild);
 }
 
+// --- Message d'accueil après l'ajout du rôle de validation ---
+function welcomeConfigIsReady() {
+  return Boolean(
+    WELCOME_ROLE_ID &&
+      GENERAL_CHANNEL_ID &&
+      ROLES_CHANNEL_ID &&
+      PRESENTATION_CHANNEL_ID &&
+      ANNOUNCEMENTS_CHANNEL_ID
+  );
+}
+
+function buildChannelLink(label, guildId, channelId) {
+  return `[${label}](https://discord.com/channels/${guildId}/${channelId})`;
+}
+
+function buildWelcomeMessage(member) {
+  const opening =
+    WELCOME_OPENINGS[Math.floor(Math.random() * WELCOME_OPENINGS.length)];
+  const personalizedOpening = opening.replace('{member}', `${member}`);
+
+  const rolesLink = buildChannelLink(
+    'rôles',
+    member.guild.id,
+    ROLES_CHANNEL_ID
+  );
+  const presentationLink = buildChannelLink(
+    'présentation',
+    member.guild.id,
+    PRESENTATION_CHANNEL_ID
+  );
+  const announcementsLink = buildChannelLink(
+    'annonces',
+    member.guild.id,
+    ANNOUNCEMENTS_CHANNEL_ID
+  );
+
+  return (
+    `${personalizedOpening}\n\n` +
+    `Pour commencer ton aventure comme une queen, tu peux choisir tes ${rolesLink}, ` +
+    `venir faire une petite ${presentationLink} pour qu’on te découvre, ` +
+    `et regarder les ${announcementsLink} afin de ne rien manquer. ` +
+    `Prends ton temps, explore et viens papoter dès que tu te sens prête ou prêt. 💖`
+  );
+}
+
+client.on(Events.GuildMemberUpdate, async (oldMember, newMember) => {
+  if (!welcomeConfigIsReady() || newMember.user.bot) return;
+
+  const hadWelcomeRole = oldMember.roles.cache.has(WELCOME_ROLE_ID);
+  const hasWelcomeRole = newMember.roles.cache.has(WELCOME_ROLE_ID);
+  if (hadWelcomeRole || !hasWelcomeRole) return;
+
+  try {
+    const generalChannel = await newMember.guild.channels
+      .fetch(GENERAL_CHANNEL_ID)
+      .catch(() => null);
+
+    if (!generalChannel?.isTextBased()) {
+      console.warn(
+        `Accueil impossible : le salon général ${GENERAL_CHANNEL_ID} est introuvable.`
+      );
+      return;
+    }
+
+    await generalChannel.send({
+      content: buildWelcomeMessage(newMember),
+      allowedMentions: { users: [newMember.id] },
+    });
+    console.log(`Message d'accueil envoyé pour ${newMember.user.tag}.`);
+  } catch (error) {
+    console.error("Impossible d'envoyer le message d'accueil :", error);
+  }
+});
+
 // --- Écoute des messages du salon quiz ---
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
@@ -901,6 +994,26 @@ client.once(Events.ClientReady, async (readyClient) => {
     'Commandes activées : !enigme, !cassetete, !besty, !classement, !resetclassement'
   );
   console.log(`Données sauvegardées dans : ${DATA_DIR}`);
+
+  if (welcomeConfigIsReady()) {
+    console.log(
+      `Accueil automatique activé pour l'ajout du rôle ${WELCOME_ROLE_ID}.`
+    );
+  } else {
+    const missingWelcomeVariables = [
+      ['WELCOME_ROLE_ID', WELCOME_ROLE_ID],
+      ['GENERAL_CHANNEL_ID', GENERAL_CHANNEL_ID],
+      ['ROLES_CHANNEL_ID', ROLES_CHANNEL_ID],
+      ['PRESENTATION_CHANNEL_ID', PRESENTATION_CHANNEL_ID],
+      ['ANNOUNCEMENTS_CHANNEL_ID', ANNOUNCEMENTS_CHANNEL_ID],
+    ]
+      .filter(([, value]) => !value)
+      .map(([name]) => name);
+
+    console.log(
+      `Accueil automatique en attente. Variables manquantes : ${missingWelcomeVariables.join(', ')}`
+    );
+  }
 
   DAILY_TIMES.forEach((hour) => {
     cron.schedule(
