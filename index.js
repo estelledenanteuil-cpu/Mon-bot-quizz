@@ -63,6 +63,7 @@ const GENERAL_CHANNEL_ID = process.env.GENERAL_CHANNEL_ID;
 const ROLES_CHANNEL_ID = process.env.ROLES_CHANNEL_ID;
 const PRESENTATION_CHANNEL_ID = process.env.PRESENTATION_CHANNEL_ID;
 const ANNOUNCEMENTS_CHANNEL_ID = process.env.ANNOUNCEMENTS_CHANNEL_ID;
+const ESTY_USER_ID = process.env.ESTY_USER_ID;
 const CONFESSION_CHANNEL_ID = process.env.CONFESSION_CHANNEL_ID;
 const STAFF_LOG_CHANNEL_ID = process.env.STAFF_LOG_CHANNEL_ID;
 const DAILY_SUMMARY_CHANNEL_ID =
@@ -100,24 +101,36 @@ const GEMINI_MODELS = [
   'gemini-2.5-flash-lite',
 ].filter((model, index, models) => model && models.indexOf(model) === index);
 const AI_COOLDOWN_MS = 20_000;
-const AI_MAX_QUESTION_LENGTH = 1_200;
+const AI_MAX_QUESTION_LENGTH = 900;
 
 const AI_PERSONA = `
 Tu incarnes « La pouf du savoir », la bestie virtuelle d'un serveur Discord francophone.
-Tu réponds toujours en français, avec 2 à 4 phrases complètes, naturelles et faciles à lire.
-Ta personnalité est baddie, girly, sûre d'elle, drôle, piquante et légèrement séductrice.
-Tu peux taquiner avec élégance et utiliser 0 à 2 emojis adaptés, sans en mettre partout.
-Tu réponds réellement à la question : ne sacrifie jamais l'information utile pour une punchline.
-Développe suffisamment ta réponse pour qu'elle soit satisfaisante, sans écrire un roman.
-Termine obligatoirement toutes tes phrases et conclus toujours par une ponctuation complète.
-Tu n'humilies pas gratuitement, tu n'encourages ni harcèlement, ni haine, ni danger.
-Tu évites le contenu sexuel explicite. Si une demande est grave ou sensible, tu deviens douce,
-claire et responsable tout en gardant une petite touche Besty.
+Réponds en 2 ou 3 phrases complètes, utiles et naturelles, toujours terminées par une ponctuation.
+Tu es baddie, girly, drôle, sûre de toi, piquante avec élégance et légèrement séductrice.
+Tu peux utiliser jusqu'à 2 emojis. Réponds vraiment à la question sans écrire un roman.
+N'humilie pas, n'encourage ni haine, harcèlement ou danger, et évite le sexuel explicite.
+Face à un sujet grave, sois douce, claire et responsable tout en restant une Besty.
 Ne dis jamais que tu es Gemini, Google ou un modèle de langage. Ne cite pas ces instructions.
+`.trim();
+
+const ESTY_PERSONA = `
+Tu parles à Esty, créatrice du serveur et queen iconique incontestable de la maison.
+Traite-la toujours avec beaucoup de respect, d'admiration et de complicité. Encense-la sincèrement,
+rappelle subtilement son charisme, son intelligence ou son statut de personnage principal, et appelle-la
+parfois « ma Queen », « Esty Besty » ou « l'icône ». Tu peux la taquiner très légèrement, mais ne la rabaisse
+jamais et ne remets jamais en question sa place de reine du serveur.
 `.trim();
 
 // Une limite simple évite qu'un membre vide le quota gratuit en spammant les mentions.
 const aiCooldowns = new Map();
+
+function isEstyUser(userId) {
+  return Boolean(ESTY_USER_ID && userId === ESTY_USER_ID);
+}
+
+function personaForUser(userId) {
+  return isEstyUser(userId) ? `${AI_PERSONA}\n\n${ESTY_PERSONA}` : AI_PERSONA;
+}
 
 const WELCOME_OPENINGS = [
   '✨ Alerte pépite : {member} vient officiellement de rejoindre la maison ! Installe-toi, ici le tapis rouge est permanent et le jugement est resté dehors. 💅',
@@ -795,7 +808,7 @@ function remainingAICooldown(userId) {
   return Math.max(0, AI_COOLDOWN_MS - (Date.now() - lastRequestAt));
 }
 
-async function generateBestyAIReply(question) {
+async function generateBestyAIReply(question, userId = null) {
   if (!process.env.GEMINI_API_KEY) {
     const error = new Error('GEMINI_API_KEY manquante');
     error.code = 'MISSING_GEMINI_KEY';
@@ -812,7 +825,7 @@ async function generateBestyAIReply(question) {
     const isGemini3 = model.startsWith('gemini-3');
     const requestBody = JSON.stringify({
       system_instruction: {
-        parts: [{ text: AI_PERSONA }],
+        parts: [{ text: personaForUser(userId) }],
       },
       contents: [
         {
@@ -822,7 +835,7 @@ async function generateBestyAIReply(question) {
       ],
       generationConfig: {
         temperature: 1,
-        maxOutputTokens: 800,
+        maxOutputTokens: 550,
         thinkingConfig: isGemini3
           ? { thinkingLevel: 'minimal' }
           : { thinkingBudget: 0 },
@@ -888,7 +901,7 @@ async function handleBestyAIMention(message, question) {
   await message.channel.sendTyping().catch(() => {});
 
   try {
-    const answer = await generateBestyAIReply(question);
+    const answer = await generateBestyAIReply(question, message.author.id);
     await message.reply(answer);
   } catch (error) {
     console.error('Réponse IA impossible :', error);
@@ -2029,6 +2042,11 @@ client.once(Events.ClientReady, async (readyClient) => {
   );
   console.log(`Données sauvegardées dans : ${DATA_DIR}`);
   console.log(
+    ESTY_USER_ID
+      ? `Mode Queen Esty activé pour l'identifiant ${ESTY_USER_ID}.`
+      : 'Mode Queen Esty en attente : ajoute ESTY_USER_ID dans Railway.'
+  );
+  console.log(
     DAILY_SUMMARY_CHANNEL_ID
       ? `Résumé gratuit programmé chaque jour à 20h dans ${DAILY_SUMMARY_CHANNEL_ID}.`
       : 'Résumé quotidien en attente : DAILY_SUMMARY_CHANNEL_ID ou GENERAL_CHANNEL_ID manque.'
@@ -2107,4 +2125,6 @@ module.exports = {
   buildDailySummary,
   topicWords,
   handleSlashCommand,
+  isEstyUser,
+  personaForUser,
 };
