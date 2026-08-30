@@ -313,6 +313,10 @@ const SLASH_COMMANDS = [
   new SlashCommandBuilder().setName('besty').setDescription('Recevoir une phrase good vibes de la Besty'),
   new SlashCommandBuilder().setName('classement').setDescription('Afficher le classement des cerveaux'),
   new SlashCommandBuilder()
+    .setName('skip')
+    .setDescription('Remplacer la question bloquée par une nouvelle (modération)')
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
+  new SlashCommandBuilder()
     .setName('resetclassement')
     .setDescription('Remettre tous les XP à zéro (administration)')
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
@@ -788,10 +792,14 @@ function normalize(value) {
     .trim();
 }
 
-function pickFrom(filePath) {
+function pickFrom(filePath, excludedQuestion = null) {
   const list = loadJSON(filePath, []);
   if (!Array.isArray(list) || list.length === 0) return null;
-  return list[Math.floor(Math.random() * list.length)];
+  const available = excludedQuestion
+    ? list.filter((item) => item?.question !== excludedQuestion)
+    : list;
+  const choices = available.length > 0 ? available : list;
+  return choices[Math.floor(Math.random() * choices.length)];
 }
 
 function extractMentionQuestion(message) {
@@ -939,11 +947,11 @@ function buildQuestionState(question, xpValue, type, sentMessage) {
 }
 
 // --- Publication des questions ---
-async function postDailyQuestion() {
+async function postDailyQuestion(excludedQuestion = null) {
   await ensureCurrentQuestion();
   if (currentQuestion) {
     console.log('Question automatique reportée : une question est déjà en cours.');
-    return;
+    return false;
   }
 
   const channel = await client.channels.fetch(QUIZ_CHANNEL_ID);
@@ -951,10 +959,10 @@ async function postDailyQuestion() {
     throw new Error(`Le salon ${QUIZ_CHANNEL_ID} est introuvable ou n'est pas textuel.`);
   }
 
-  const question = pickFrom(QUESTIONS_FILE);
+  const question = pickFrom(QUESTIONS_FILE, excludedQuestion);
   if (!question) {
     console.log('Aucune question dans questions.json');
-    return;
+    return false;
   }
 
   const sentMessage = await channel.send(
@@ -965,10 +973,11 @@ async function postDailyQuestion() {
     buildQuestionState(question, XP_PER_QUESTION, 'question', sentMessage)
   );
   console.log(`Question publiée et sauvegardée (${sentMessage.id}).`);
+  return true;
 }
 
-async function postEnigme(channel, remainingAfter = null) {
-  const question = pickFrom(ENIGMES_FILE);
+async function postEnigme(channel, remainingAfter = null, excludedQuestion = null) {
+  const question = pickFrom(ENIGMES_FILE, excludedQuestion);
   if (!question) {
     await channel.send("Aucune énigme n'est disponible pour le moment.");
     return false;
@@ -992,8 +1001,8 @@ async function postEnigme(channel, remainingAfter = null) {
   return true;
 }
 
-async function postCasseTete(channel, remainingAfter = null) {
-  const question = pickFrom(CASSE_TETES_FILE);
+async function postCasseTete(channel, remainingAfter = null, excludedQuestion = null) {
+  const question = pickFrom(CASSE_TETES_FILE, excludedQuestion);
   if (!question) {
     await channel.send("Aucun casse-tête n'est disponible pour le moment.");
     return false;
@@ -1440,6 +1449,54 @@ async function handleSlashCommand(interaction) {
 
   if (name === 'enigme' || name === 'cassetete') {
     await runSlashQuizCommand(interaction, name);
+    return;
+  }
+
+  if (name === 'skip') {
+    if (!interaction.memberPermissions?.has(PermissionFlagsBits.ManageMessages)) {
+      await slashError(interaction, '⛔ Seule la modération peut changer une question en cours.');
+      return;
+    }
+    if (interaction.channelId !== QUIZ_CHANNEL_ID) {
+      await slashError(interaction, `Cette commande doit être utilisée dans <#${QUIZ_CHANNEL_ID}>.`);
+      return;
+    }
+
+    await interaction.deferReply();
+    await ensureCurrentQuestion();
+    if (!currentQuestion) {
+      await interaction.editReply('Il n’y a aucune question en cours à passer.');
+      return;
+    }
+
+    const skippedQuestion = currentQuestion;
+    clearCurrentQuestion();
+
+    try {
+      let posted = false;
+      if (skippedQuestion.type === 'enigme') {
+        posted = await postEnigme(interaction.channel, null, skippedQuestion.question);
+      } else if (skippedQuestion.type === 'cassetete') {
+        posted = await postCasseTete(interaction.channel, null, skippedQuestion.question);
+      } else {
+        posted = await postDailyQuestion(skippedQuestion.question);
+      }
+
+      if (!posted) {
+        setCurrentQuestion(skippedQuestion);
+        await interaction.editReply(
+          'Petit contretemps : je n’ai pas trouvé de question de remplacement. L’ancienne reste active.'
+        );
+        return;
+      }
+
+      await interaction.editReply(
+        '⏭️ **Question passée par la modération !** Une nouvelle vient d’être publiée. Aucun quota membre n’a été consommé.'
+      );
+    } catch (error) {
+      if (!currentQuestion) setCurrentQuestion(skippedQuestion);
+      throw error;
+    }
     return;
   }
 
