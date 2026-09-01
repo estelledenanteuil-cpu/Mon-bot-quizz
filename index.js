@@ -17,7 +17,6 @@
 // 13. Propose toutes les commandes en /, sans Gemini pour les animations
 // 14. Gère verdicts, matchs, humeurs, roasts consentis, confessions et duels
 // 15. Conserve les messages populaires pour la commande /souvenir
-// 16. Publie chaque jour à 20h un résumé local des salons publics choisis
 
 const {
   Client,
@@ -68,6 +67,9 @@ const CONFESSION_CHANNEL_ID = process.env.CONFESSION_CHANNEL_ID;
 const STAFF_LOG_CHANNEL_ID = process.env.STAFF_LOG_CHANNEL_ID;
 const DAILY_SUMMARY_CHANNEL_ID =
   process.env.DAILY_SUMMARY_CHANNEL_ID || GENERAL_CHANNEL_ID;
+// Le résumé automatique de 20h est volontairement désactivé dans cette version.
+// La question du quiz programmée à 20h reste bien active via DAILY_TIMES.
+const DAILY_SUMMARY_ENABLED = false;
 const DUEL_CHANNEL_ID = process.env.DUEL_CHANNEL_ID || null;
 const SUMMARY_SOURCE_CHANNEL_IDS = new Set(
   (process.env.SUMMARY_SOURCE_CHANNEL_IDS || GENERAL_CHANNEL_ID || '')
@@ -95,13 +97,14 @@ const MAX_SOUVENIRS_STORED = 500;
 // automatiquement plusieurs modèles qui possèdent un quota gratuit.
 const GEMINI_MODELS = [
   process.env.GEMINI_MODEL,
-  'gemini-3-flash-preview',
-  'gemini-3.5-flash-lite',
-  'gemini-2.5-flash',
   'gemini-2.5-flash-lite',
+  'gemini-2.5-flash',
+  'gemini-3-flash-preview',
 ].filter((model, index, models) => model && models.indexOf(model) === index);
 const AI_COOLDOWN_MS = 20_000;
 const AI_MAX_QUESTION_LENGTH = 900;
+const AI_REQUEST_TIMEOUT_MS = 35_000;
+const AI_MAX_OUTPUT_TOKENS = 400;
 
 const AI_PERSONA = `
 Tu incarnes « La pouf du savoir », la bestie virtuelle d'un serveur Discord francophone.
@@ -485,6 +488,7 @@ function cleanStoredContent(content, maxLength = 500) {
 }
 
 function recordDailyMessage(message) {
+  if (!DAILY_SUMMARY_ENABLED) return;
   if (!message.guild || !shouldTrackSummaryChannel(message.channel.id)) return;
 
   const content = cleanStoredContent(message.content);
@@ -510,11 +514,13 @@ function recordDailyMessage(message) {
 }
 
 function recordXpGain(userId, xp, type) {
+  if (!DAILY_SUMMARY_ENABLED) return;
   dailyActivity.xpGains.push({ userId, xp, type, at: new Date().toISOString() });
   scheduleActivitySave();
 }
 
 function recordNewMember(userId) {
+  if (!DAILY_SUMMARY_ENABLED) return;
   if (!dailyActivity.newMembers.includes(userId)) {
     dailyActivity.newMembers.push(userId);
     scheduleActivitySave();
@@ -645,6 +651,7 @@ async function buildDailySummary(guild, activity = dailyActivity) {
 }
 
 async function postDailySummary() {
+  if (!DAILY_SUMMARY_ENABLED) return;
   if (!DAILY_SUMMARY_CHANNEL_ID) {
     console.warn('Résumé quotidien désactivé : DAILY_SUMMARY_CHANNEL_ID ou GENERAL_CHANNEL_ID manque.');
     return;
@@ -843,22 +850,36 @@ async function generateBestyAIReply(question, userId = null) {
       ],
       generationConfig: {
         temperature: 1,
-        maxOutputTokens: 550,
+        maxOutputTokens: AI_MAX_OUTPUT_TOKENS,
         thinkingConfig: isGemini3
           ? { thinkingLevel: 'minimal' }
           : { thinkingBudget: 0 },
       },
     });
 
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-goog-api-key': process.env.GEMINI_API_KEY,
-      },
-      body: requestBody,
-      signal: AbortSignal.timeout(20_000),
-    });
+    let response;
+    try {
+      response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': process.env.GEMINI_API_KEY,
+        },
+        body: requestBody,
+        signal: AbortSignal.timeout(AI_REQUEST_TIMEOUT_MS),
+      });
+    } catch (error) {
+      lastError = error;
+      if (error?.name === 'TimeoutError' || error?.name === 'AbortError') {
+        console.warn(
+          `Le modèle Gemini ${model} a dépassé ${AI_REQUEST_TIMEOUT_MS / 1_000} secondes : essai du suivant.`
+        );
+        continue;
+      }
+
+      console.warn(`Connexion impossible avec le modèle Gemini ${model} : ${error.message}`);
+      continue;
+    }
 
     if (!response.ok) {
       const apiDetails = await response.text().catch(() => '');
@@ -2103,11 +2124,7 @@ client.once(Events.ClientReady, async (readyClient) => {
       ? `Mode Queen Esty activé pour l'identifiant ${ESTY_USER_ID}.`
       : 'Mode Queen Esty en attente : ajoute ESTY_USER_ID dans Railway.'
   );
-  console.log(
-    DAILY_SUMMARY_CHANNEL_ID
-      ? `Résumé gratuit programmé chaque jour à 20h dans ${DAILY_SUMMARY_CHANNEL_ID}.`
-      : 'Résumé quotidien en attente : DAILY_SUMMARY_CHANNEL_ID ou GENERAL_CHANNEL_ID manque.'
-  );
+  console.log('Résumé quotidien de 20h désactivé dans cette version.');
 
   if (welcomeConfigIsReady()) {
     console.log(
@@ -2141,15 +2158,6 @@ client.once(Events.ClientReady, async (readyClient) => {
     );
   });
 
-  cron.schedule(
-    '0 20 * * *',
-    () => {
-      postDailySummary().catch((error) => {
-        console.error('Impossible de publier le résumé quotidien :', error);
-      });
-    },
-    { timezone: 'Europe/Paris' }
-  );
 });
 
 client.on(Events.Error, (error) => {
