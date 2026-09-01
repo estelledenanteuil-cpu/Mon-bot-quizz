@@ -92,14 +92,16 @@ const XP_PER_DUEL = 20;
 const MIN_REACTIONS_FOR_SOUVENIR = 3;
 const MAX_DAILY_MESSAGES_STORED = 5_000;
 const MAX_SOUVENIRS_STORED = 500;
-// Railway est hébergé à Amsterdam pour ce projet. Certains modèles Gemini
-// peuvent ne pas être proposés dans toutes les régions : le bot essaie donc
-// automatiquement plusieurs modèles qui possèdent un quota gratuit.
+// Le bot essaie d'abord le modèle Lite pour limiter l'utilisation de Gemini,
+// puis deux modèles de secours si le premier est temporairement indisponible.
+// Les anciens modèles Gemini 2.5 ne sont plus utilisés.
 const GEMINI_MODELS = [
-  process.env.GEMINI_MODEL,
-  'gemini-2.5-flash-lite',
-  'gemini-2.5-flash',
-  'gemini-3-flash-preview',
+  'gemini-3.5-flash-lite',
+  'gemini-3.6-flash',
+  'gemini-3.7-flash',
+  process.env.GEMINI_MODEL?.startsWith('gemini-3')
+    ? process.env.GEMINI_MODEL
+    : null,
 ].filter((model, index, models) => model && models.indexOf(model) === index);
 const AI_COOLDOWN_MS = 20_000;
 const AI_MAX_QUESTION_LENGTH = 900;
@@ -895,7 +897,7 @@ async function generateBestyAIReply(question, userId = null) {
       lastError = error;
 
       // Essaie un autre modèle si celui-ci est absent, saturé ou indisponible.
-      if ([404, 429, 503].includes(response.status)) continue;
+      if ([400, 404, 429, 503].includes(response.status)) continue;
       throw error;
     }
 
