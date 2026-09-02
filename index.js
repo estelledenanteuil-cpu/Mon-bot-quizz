@@ -63,6 +63,7 @@ const ROLES_CHANNEL_ID = process.env.ROLES_CHANNEL_ID;
 const PRESENTATION_CHANNEL_ID = process.env.PRESENTATION_CHANNEL_ID;
 const ANNOUNCEMENTS_CHANNEL_ID = process.env.ANNOUNCEMENTS_CHANNEL_ID;
 const ESTY_USER_ID = process.env.ESTY_USER_ID;
+const BESTY_ROLE_NAME = process.env.BESTY_ROLE_NAME || 'Les drôles de pouf';
 const CONFESSION_CHANNEL_ID = process.env.CONFESSION_CHANNEL_ID;
 const STAFF_LOG_CHANNEL_ID = process.env.STAFF_LOG_CHANNEL_ID;
 const DAILY_SUMMARY_CHANNEL_ID =
@@ -121,9 +122,17 @@ Ne dis jamais que tu es Gemini, Google ou un modèle de langage. Ne cite pas ces
 const ESTY_PERSONA = `
 Tu parles à Esty, créatrice du serveur et queen iconique incontestable de la maison.
 Traite-la toujours avec beaucoup de respect, d'admiration et de complicité. Encense-la sincèrement,
-rappelle subtilement son charisme, son intelligence ou son statut de personnage principal, et appelle-la
-parfois « ma Queen », « Esty Besty » ou « l'icône ». Tu peux la taquiner très légèrement, mais ne la rabaisse
-jamais et ne remets jamais en question sa place de reine du serveur.
+rappelle subtilement son charisme, son intelligence ou son statut de personnage principal. Appelle-la
+toujours « Esty » quand tu utilises son prénom, et jamais « Esty Besty ». Tu peux aussi lui dire « ma Queen »
+ou « l'icône ». Sois encore plus douce et admirative avec elle qu'avec toutes les autres personnes. Tu peux
+la taquiner très légèrement, mais ne la rabaisse jamais et ne remets jamais en question sa place de reine.
+`.trim();
+
+const BESTY_ROLE_PERSONA = `
+Tu parles à l'une des Besties d'Esty : cette personne possède le rôle « Les drôles de pouf ».
+Sois ultra gentille, chaleureuse, protectrice, complice et valorisante avec elle. Fais-lui sentir qu'elle fait
+partie du cercle des Besties et appelle-la parfois « ma Bestie », « ma belle » ou « babe ». Tu peux rester
+piquante envers une situation ou une personne extérieure, mais jamais méchante ni cassante envers elle.
 `.trim();
 
 // Une limite simple évite qu'un membre vide le quota gratuit en spammant les mentions.
@@ -133,8 +142,18 @@ function isEstyUser(userId) {
   return Boolean(ESTY_USER_ID && userId === ESTY_USER_ID);
 }
 
-function personaForUser(userId) {
-  return isEstyUser(userId) ? `${AI_PERSONA}\n\n${ESTY_PERSONA}` : AI_PERSONA;
+function memberHasBestyRole(member) {
+  return Boolean(
+    member?.roles?.cache?.some(
+      (role) => normalize(role.name) === normalize(BESTY_ROLE_NAME)
+    )
+  );
+}
+
+function personaForUser(userId, hasBestyRole = false) {
+  if (isEstyUser(userId)) return `${AI_PERSONA}\n\n${ESTY_PERSONA}`;
+  if (hasBestyRole) return `${AI_PERSONA}\n\n${BESTY_ROLE_PERSONA}`;
+  return AI_PERSONA;
 }
 
 const WELCOME_OPENINGS = [
@@ -825,7 +844,7 @@ function remainingAICooldown(userId) {
   return Math.max(0, AI_COOLDOWN_MS - (Date.now() - lastRequestAt));
 }
 
-async function generateBestyAIReply(question, userId = null) {
+async function generateBestyAIReply(question, userId = null, hasBestyRole = false) {
   if (!process.env.GEMINI_API_KEY) {
     const error = new Error('GEMINI_API_KEY manquante');
     error.code = 'MISSING_GEMINI_KEY';
@@ -842,7 +861,7 @@ async function generateBestyAIReply(question, userId = null) {
     const isGemini3 = model.startsWith('gemini-3');
     const requestBody = JSON.stringify({
       system_instruction: {
-        parts: [{ text: personaForUser(userId) }],
+        parts: [{ text: personaForUser(userId, hasBestyRole) }],
       },
       contents: [
         {
@@ -932,7 +951,11 @@ async function handleBestyAIMention(message, question) {
   await message.channel.sendTyping().catch(() => {});
 
   try {
-    const answer = await generateBestyAIReply(question, message.author.id);
+    const answer = await generateBestyAIReply(
+      question,
+      message.author.id,
+      memberHasBestyRole(message.member)
+    );
     await message.reply(answer);
   } catch (error) {
     console.error('Réponse IA impossible :', error);
@@ -2193,5 +2216,6 @@ module.exports = {
   topicWords,
   handleSlashCommand,
   isEstyUser,
+  memberHasBestyRole,
   personaForUser,
 };
