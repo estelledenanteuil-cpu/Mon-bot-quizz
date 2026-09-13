@@ -122,6 +122,7 @@ const AI_MAX_OUTPUT_TOKENS = 400;
 const TTS_MAX_MESSAGE_LENGTH = 180;
 const TTS_MAX_QUEUE_LENGTH = 25;
 const TTS_USER_COOLDOWN_MS = 2_500;
+const TTS_EMPTY_CHANNEL_TIMEOUT_MS = 2 * 60_000;
 
 const AI_PERSONA = `
 Tu incarnes « La pouf du savoir », la bestie virtuelle d'un serveur Discord francophone.
@@ -1589,12 +1590,7 @@ async function playNextTts(session) {
 
 async function startTtsSession(interaction, voiceChannel) {
   const previous = ttsSessions.get(interaction.guildId);
-  if (previous) {
-    previous.queue.length = 0;
-    previous.player.stop(true);
-    previous.connection.destroy();
-    ttsSessions.delete(interaction.guildId);
-  }
+  if (previous) stopTtsSession(interaction.guildId);
 
   const player = createAudioPlayer({
     behaviors: { noSubscriber: NoSubscriberBehavior.Pause },
@@ -1613,6 +1609,7 @@ async function startTtsSession(interaction, voiceChannel) {
     player,
     queue: [],
     current: null,
+    emptyChannelTimer: null,
   };
   ttsSessions.set(interaction.guildId, session);
   connection.subscribe(player);
@@ -1648,6 +1645,8 @@ async function startTtsSession(interaction, voiceChannel) {
 function stopTtsSession(guildId) {
   const session = ttsSessions.get(guildId);
   if (!session) return false;
+  if (session.emptyChannelTimer) clearTimeout(session.emptyChannelTimer);
+  session.emptyChannelTimer = null;
   session.queue.length = 0;
   session.current = null;
   session.player.stop(true);
@@ -1657,6 +1656,43 @@ function stopTtsSession(guildId) {
   ttsSessions.delete(guildId);
   return true;
 }
+
+function voiceChannelHasHumans(session) {
+  const channel = client.channels.cache.get(session.voiceChannelId);
+  return Boolean(
+    channel?.isVoiceBased() && channel.members.some((member) => !member.user.bot)
+  );
+}
+
+function updateTtsEmptyChannelTimer(guildId) {
+  const session = ttsSessions.get(guildId);
+  if (!session) return;
+
+  if (voiceChannelHasHumans(session)) {
+    if (session.emptyChannelTimer) clearTimeout(session.emptyChannelTimer);
+    session.emptyChannelTimer = null;
+    return;
+  }
+
+  if (session.emptyChannelTimer) return;
+  session.emptyChannelTimer = setTimeout(() => {
+    session.emptyChannelTimer = null;
+    if (ttsSessions.get(guildId) !== session || voiceChannelHasHumans(session)) return;
+    console.log(`Salon vocal vide depuis 2 minutes : déconnexion du serveur ${guildId}.`);
+    stopTtsSession(guildId);
+  }, TTS_EMPTY_CHANNEL_TIMEOUT_MS);
+}
+
+client.on(Events.VoiceStateUpdate, (oldState, newState) => {
+  const session = ttsSessions.get(oldState.guild.id);
+  if (!session) return;
+  if (
+    oldState.channelId === session.voiceChannelId ||
+    newState.channelId === session.voiceChannelId
+  ) {
+    updateTtsEmptyChannelTimer(oldState.guild.id);
+  }
+});
 
 async function handleTtsTextMessage(message) {
   if (!message.guild || message.channel.id !== TTS_TEXT_CHANNEL_ID) return false;
