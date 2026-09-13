@@ -1512,7 +1512,12 @@ async function getRandomValidSouvenir(guild) {
 function cleanTtsText(message) {
   return message.cleanContent
     .replace(/<a?:[a-zA-Z0-9_]+:\d+>/g, ' ')
-    .replace(/https?:\/\/\S+/gi, ' ')
+    // Discord transforme parfois un émoji personnalisé en :nom_emoji:.
+    .replace(/:[a-zA-Z0-9_~-]{1,64}:/g, ' ')
+    // Retire les liens Markdown, les URL complètes et les domaines sans https.
+    .replace(/\[[^\]]*\]\((?:https?:\/\/|www\.)[^)]+\)/gi, ' ')
+    .replace(/(?:https?:\/\/|www\.)\S+/gi, ' ')
+    .replace(/\b[a-zA-Z0-9.-]+\.(?:com|fr|net|org|gg|io|tv|me)(?:\/\S*)?/gi, ' ')
     .replace(/[\p{Extended_Pictographic}\p{Regional_Indicator}\p{Emoji_Modifier}\u200D\uFE0F\u20E3]/gu, ' ')
     .replace(/[*_~`>|#]/g, ' ')
     .replace(/\s+/g, ' ')
