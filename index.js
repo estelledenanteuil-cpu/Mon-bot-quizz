@@ -30,9 +30,19 @@ const {
   MessageFlags,
   Partials,
 } = require('discord.js');
+const {
+  AudioPlayerStatus,
+  NoSubscriberBehavior,
+  VoiceConnectionStatus,
+  createAudioPlayer,
+  createAudioResource,
+  entersState,
+  joinVoiceChannel,
+} = require('@discordjs/voice');
 const cron = require('node-cron');
 const fs = require('fs');
 const path = require('path');
+const { Readable } = require('stream');
 require('dotenv').config();
 
 const QUESTIONS_FILE = path.join(__dirname, 'questions.json');
@@ -64,6 +74,8 @@ const PRESENTATION_CHANNEL_ID = process.env.PRESENTATION_CHANNEL_ID;
 const ANNOUNCEMENTS_CHANNEL_ID = process.env.ANNOUNCEMENTS_CHANNEL_ID;
 const ESTY_USER_ID = process.env.ESTY_USER_ID;
 const BESTY_ROLE_NAME = process.env.BESTY_ROLE_NAME || 'Les drôles de pouf';
+const TTS_TEXT_CHANNEL_ID =
+  process.env.TTS_TEXT_CHANNEL_ID || '1295375514223251571';
 const CONFESSION_CHANNEL_ID = process.env.CONFESSION_CHANNEL_ID;
 const STAFF_LOG_CHANNEL_ID = process.env.STAFF_LOG_CHANNEL_ID;
 const DAILY_SUMMARY_CHANNEL_ID =
@@ -107,6 +119,9 @@ const AI_COOLDOWN_MS = 20_000;
 const AI_MAX_QUESTION_LENGTH = 900;
 const AI_REQUEST_TIMEOUT_MS = 35_000;
 const AI_MAX_OUTPUT_TOKENS = 400;
+const TTS_MAX_MESSAGE_LENGTH = 180;
+const TTS_MAX_QUEUE_LENGTH = 25;
+const TTS_USER_COOLDOWN_MS = 2_500;
 
 const AI_PERSONA = `
 Tu incarnes « La pouf du savoir », la bestie virtuelle d'un serveur Discord francophone.
@@ -396,12 +411,21 @@ const SLASH_COMMANDS = [
     .setDescription('Défier un membre pour tenter de gagner 20 XP')
     .addUserOption((option) => option.setName('membre').setDescription('La personne à défier').setRequired(true)),
   new SlashCommandBuilder().setName('souvenir').setDescription('Faire ressortir un message populaire du serveur'),
+  new SlashCommandBuilder().setName('ttsjoin').setDescription('Faire rejoindre le vocal à la Pouf du savoir'),
+  new SlashCommandBuilder().setName('ttsleave').setDescription('Faire quitter le vocal à la Pouf du savoir'),
+  new SlashCommandBuilder().setName('ttsskip').setDescription('Passer le message actuellement lu en vocal'),
+  new SlashCommandBuilder()
+    .setName('ttsclear')
+    .setDescription('Vider la file des messages vocaux (modération)')
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
 ].map((command) => command.toJSON());
 
 const slashCooldowns = new Map();
 const pendingRoasts = new Map();
 const pendingDuels = new Map();
 const activeDuels = new Map();
+const ttsSessions = new Map();
+const ttsUserCooldowns = new Map();
 
 const DAILY_TIMES = (process.env.DAILY_TIMES || '10,14,18,20,23')
   .split(',')
@@ -428,6 +452,7 @@ const client = new Client({
     GatewayIntentBits.MessageContent,
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildMessageReactions,
+    GatewayIntentBits.GuildVoiceStates,
   ],
   partials: [Partials.Message, Partials.Channel, Partials.Reaction],
 });
@@ -1483,6 +1508,163 @@ async function getRandomValidSouvenir(guild) {
   return null;
 }
 
+// --- Lecture vocale gratuite des messages du salon sans micro ---
+function cleanTtsText(message) {
+  return message.cleanContent
+    .replace(/https?:\/\/\S+/gi, ' lien ')
+    .replace(/[*_~`>|#]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, TTS_MAX_MESSAGE_LENGTH);
+}
+
+function canControlTts(interaction, session) {
+  return Boolean(
+    interaction.memberPermissions?.has(PermissionFlagsBits.ManageMessages) ||
+      interaction.member?.voice?.channelId === session.voiceChannelId
+  );
+}
+
+async function createFrenchTtsStream(text) {
+  const endpoint = new URL('https://translate.google.com/translate_tts');
+  endpoint.searchParams.set('ie', 'UTF-8');
+  endpoint.searchParams.set('client', 'tw-ob');
+  endpoint.searchParams.set('tl', 'fr');
+  endpoint.searchParams.set('q', text);
+
+  const response = await fetch(endpoint, {
+    headers: { 'User-Agent': 'Mozilla/5.0' },
+    signal: AbortSignal.timeout(10_000),
+  });
+  if (!response.ok) {
+    throw new Error(`Le service vocal a répondu avec le statut ${response.status}`);
+  }
+
+  const audio = Buffer.from(await response.arrayBuffer());
+  if (audio.length === 0) throw new Error('Le service vocal a renvoyé un son vide');
+  return Readable.from(audio);
+}
+
+async function playNextTts(session) {
+  if (session.current || session.queue.length === 0) return;
+
+  const next = session.queue.shift();
+  session.current = next;
+
+  try {
+    const stream = await createFrenchTtsStream(next.text);
+    if (ttsSessions.get(session.guildId) !== session || session.current !== next) return;
+    const resource = createAudioResource(stream, { inlineVolume: true });
+    resource.volume?.setVolume(0.85);
+    session.player.play(resource);
+  } catch (error) {
+    console.error('Lecture TTS impossible :', error);
+    if (session.current === next) session.current = null;
+    if (ttsSessions.get(session.guildId) === session) {
+      setImmediate(() => void playNextTts(session));
+    }
+  }
+}
+
+async function startTtsSession(interaction, voiceChannel) {
+  const previous = ttsSessions.get(interaction.guildId);
+  if (previous) {
+    previous.queue.length = 0;
+    previous.player.stop(true);
+    previous.connection.destroy();
+    ttsSessions.delete(interaction.guildId);
+  }
+
+  const player = createAudioPlayer({
+    behaviors: { noSubscriber: NoSubscriberBehavior.Pause },
+  });
+  const connection = joinVoiceChannel({
+    channelId: voiceChannel.id,
+    guildId: interaction.guildId,
+    adapterCreator: interaction.guild.voiceAdapterCreator,
+    selfDeaf: true,
+  });
+
+  const session = {
+    guildId: interaction.guildId,
+    voiceChannelId: voiceChannel.id,
+    connection,
+    player,
+    queue: [],
+    current: null,
+  };
+  ttsSessions.set(interaction.guildId, session);
+  connection.subscribe(player);
+
+  player.on(AudioPlayerStatus.Idle, () => {
+    session.current = null;
+    void playNextTts(session);
+  });
+  player.on('error', (error) => {
+    console.error('Erreur du lecteur TTS :', error);
+    session.current = null;
+    void playNextTts(session);
+  });
+  connection.on(VoiceConnectionStatus.Destroyed, () => {
+    if (ttsSessions.get(interaction.guildId) === session) {
+      ttsSessions.delete(interaction.guildId);
+    }
+  });
+
+  try {
+    await entersState(connection, VoiceConnectionStatus.Ready, 15_000);
+  } catch (error) {
+    if (ttsSessions.get(interaction.guildId) === session) {
+      ttsSessions.delete(interaction.guildId);
+    }
+    connection.destroy();
+    throw error;
+  }
+
+  return session;
+}
+
+function stopTtsSession(guildId) {
+  const session = ttsSessions.get(guildId);
+  if (!session) return false;
+  session.queue.length = 0;
+  session.current = null;
+  session.player.stop(true);
+  if (session.connection.state.status !== VoiceConnectionStatus.Destroyed) {
+    session.connection.destroy();
+  }
+  ttsSessions.delete(guildId);
+  return true;
+}
+
+async function handleTtsTextMessage(message) {
+  if (!message.guild || message.channel.id !== TTS_TEXT_CHANNEL_ID) return false;
+
+  const session = ttsSessions.get(message.guild.id);
+  if (!session) return true;
+  const voiceState = message.member?.voice;
+  if (voiceState?.channelId !== session.voiceChannelId) return true;
+  if (!voiceState.selfMute && !voiceState.serverMute) return true;
+  if (message.content.trim().startsWith('/') || message.content.trim().startsWith('!')) {
+    return true;
+  }
+
+  const lastMessageAt = ttsUserCooldowns.get(message.author.id) || 0;
+  if (Date.now() - lastMessageAt < TTS_USER_COOLDOWN_MS) return true;
+
+  const text = cleanTtsText(message);
+  if (!text) return true;
+  if (session.queue.length >= TTS_MAX_QUEUE_LENGTH) {
+    await message.react('⏳').catch(() => {});
+    return true;
+  }
+
+  ttsUserCooldowns.set(message.author.id, Date.now());
+  session.queue.push({ text, authorId: message.author.id });
+  void playNextTts(session);
+  return true;
+}
+
 async function handleSlashCommand(interaction) {
   const name = interaction.commandName;
   const cooldown = remainingSlashCooldown(interaction.user.id, name);
@@ -1497,6 +1679,86 @@ async function handleSlashCommand(interaction) {
 
   if (name === 'enigme' || name === 'cassetete') {
     await runSlashQuizCommand(interaction, name);
+    return;
+  }
+
+  if (name === 'ttsjoin') {
+    if (!interaction.inGuild()) {
+      await slashError(interaction, 'Cette commande fonctionne uniquement sur le serveur.');
+      return;
+    }
+    const member = await interaction.guild.members.fetch(interaction.user.id);
+    const voiceChannel = member.voice.channel;
+    if (!voiceChannel) {
+      await slashError(interaction, '🔇 Rejoins d’abord le salon vocal dans lequel tu veux me faire parler.');
+      return;
+    }
+
+    const botPermissions = voiceChannel.permissionsFor(interaction.guild.members.me);
+    if (
+      !botPermissions?.has(PermissionFlagsBits.Connect) ||
+      !botPermissions?.has(PermissionFlagsBits.Speak)
+    ) {
+      await slashError(
+        interaction,
+        'Je n’ai pas les permissions **Se connecter** et **Parler** dans ce salon vocal.'
+      );
+      return;
+    }
+
+    await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+    await startTtsSession(interaction, voiceChannel);
+    await interaction.editReply(
+      `🔊 Je suis dans **${voiceChannel.name}** ! J’attends les messages dans <#${TTS_TEXT_CHANNEL_ID}>.`
+    );
+    return;
+  }
+
+  if (name === 'ttsleave' || name === 'ttsskip' || name === 'ttsclear') {
+    const session = ttsSessions.get(interaction.guildId);
+    if (!session) {
+      await slashError(interaction, 'Je ne suis actuellement dans aucun salon vocal.');
+      return;
+    }
+    if (!canControlTts(interaction, session)) {
+      await slashError(
+        interaction,
+        'Tu dois être dans mon salon vocal pour utiliser cette commande.'
+      );
+      return;
+    }
+
+    if (name === 'ttsleave') {
+      stopTtsSession(interaction.guildId);
+      await interaction.reply('👋 Je quitte le vocal. Ma voix de diva va se reposer un peu !');
+      return;
+    }
+
+    if (name === 'ttsskip') {
+      const hadMessage = Boolean(session.current);
+      session.current = null;
+      session.player.stop(true);
+      void playNextTts(session);
+      await interaction.reply({
+        content: hadMessage
+          ? '⏭️ Message vocal passé !'
+          : 'Il n’y avait aucun message en cours de lecture.',
+        flags: MessageFlags.Ephemeral,
+      });
+      return;
+    }
+
+    if (!interaction.memberPermissions?.has(PermissionFlagsBits.ManageMessages)) {
+      await slashError(interaction, '⛔ Seule la modération peut vider toute la file vocale.');
+      return;
+    }
+    session.queue.length = 0;
+    session.current = null;
+    session.player.stop(true);
+    await interaction.reply({
+      content: '🧹 La file des messages vocaux a été vidée.',
+      flags: MessageFlags.Ephemeral,
+    });
     return;
   }
 
@@ -1739,7 +2001,7 @@ function buildWelcomeMessage(member) {
 
   return (
     `# ${personalizedOpening}\n\n` +
-    `Pour commencer ton aventure comme une queen, tu peux choisir tes ${rolesLink}, ` +
+    `Pour commencer ton aventure, tu peux choisir tes ${rolesLink}, ` +
     `venir faire une petite ${presentationLink} pour qu’on te découvre, ` +
     `et regarder les ${announcementsLink} afin de ne rien manquer. ` +
     `Prends ton temps, explore et viens papoter dès que tu te sens prête ou prêt ma boT ! 🫶🏻`
@@ -1965,6 +2227,8 @@ client.on(Events.MessageCreate, async (message) => {
 
   recordDailyMessage(message);
 
+  if (await handleTtsTextMessage(message)) return;
+
   const command = message.content.trim().toLowerCase();
 
   if (await handleActiveDuelAnswer(message)) return;
@@ -2143,8 +2407,9 @@ client.once(Events.ClientReady, async (readyClient) => {
 
   console.log(`Questions automatiques programmées à : ${DAILY_TIMES.join('h, ')}h`);
   console.log(
-    'Commandes / activées : enigme, cassetete, besty, classement, resetclassement, questiondujour, verdict, match, humeur, roast, confession, duel, souvenir'
+    'Commandes / activées : enigme, cassetete, besty, classement, resetclassement, questiondujour, verdict, match, humeur, roast, confession, duel, souvenir, ttsjoin, ttsleave, ttsskip, ttsclear'
   );
+  console.log(`Lecture vocale reliée au salon texte ${TTS_TEXT_CHANNEL_ID}.`);
   console.log(`Données sauvegardées dans : ${DATA_DIR}`);
   console.log(
     ESTY_USER_ID
@@ -2198,6 +2463,7 @@ process.on('unhandledRejection', (error) => {
 function shutdown(signal) {
   console.log(`${signal} reçu : arrêt propre du bot.`);
   if (activitySaveTimer) clearTimeout(activitySaveTimer);
+  for (const guildId of ttsSessions.keys()) stopTtsSession(guildId);
   saveJSON(DAILY_ACTIVITY_FILE, dailyActivity);
   saveJSON(SOUVENIRS_FILE, souvenirs);
   client.destroy();
