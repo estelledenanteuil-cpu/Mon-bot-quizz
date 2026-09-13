@@ -93,16 +93,15 @@ const XP_PER_DUEL = 20;
 const MIN_REACTIONS_FOR_SOUVENIR = 3;
 const MAX_DAILY_MESSAGES_STORED = 5_000;
 const MAX_SOUVENIRS_STORED = 500;
-// Le bot essaie d'abord le modèle Lite pour limiter l'utilisation de Gemini,
-// puis deux modèles de secours si le premier est temporairement indisponible.
-// Les anciens modèles Gemini 2.5 ne sont plus utilisés.
+// Si GEMINI_MODEL est renseigné dans Railway, le bot essaie ce modèle en premier.
+// Les autres modèles servent seulement de secours en cas d'indisponibilité.
 const GEMINI_MODELS = [
-  'gemini-3.5-flash-lite',
-  'gemini-3.6-flash',
-  'gemini-3.7-flash',
   process.env.GEMINI_MODEL?.startsWith('gemini-3')
     ? process.env.GEMINI_MODEL
     : null,
+  'gemini-3.5-flash-lite',
+  'gemini-3.6-flash',
+  'gemini-3.7-flash',
 ].filter((model, index, models) => model && models.indexOf(model) === index);
 const AI_COOLDOWN_MS = 20_000;
 const AI_MAX_QUESTION_LENGTH = 900;
@@ -859,6 +858,9 @@ async function generateBestyAIReply(question, userId = null, hasBestyRole = fals
       `${encodeURIComponent(model)}:generateContent`;
 
     const isGemini3 = model.startsWith('gemini-3');
+    // Gemini 3.7 n'accepte pas le niveau « minimal » : son niveau le plus bas
+    // est « low ». Les autres modèles Gemini 3 gardent « minimal ».
+    const thinkingLevel = model === 'gemini-3.7-flash' ? 'low' : 'minimal';
     const requestBody = JSON.stringify({
       system_instruction: {
         parts: [{ text: personaForUser(userId, hasBestyRole) }],
@@ -873,7 +875,7 @@ async function generateBestyAIReply(question, userId = null, hasBestyRole = fals
         temperature: 1,
         maxOutputTokens: AI_MAX_OUTPUT_TOKENS,
         thinkingConfig: isGemini3
-          ? { thinkingLevel: 'minimal' }
+          ? { thinkingLevel }
           : { thinkingBudget: 0 },
       },
     });
