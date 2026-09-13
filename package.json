@@ -1,14 +1,21 @@
 {
   "name": "quiz-discord-bot",
   "version": "1.0.0",
-  "description": "Bot Discord qui pose une question/énigme quotidienne avec système de points et de rôle récompense",
+  "description": "Bot Discord La Pouf du savoir",
   "main": "index.js",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
+    "@discordjs/voice": "^0.19.2",
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.5",
-    "node-cron": "^3.0.3"
+    "ffmpeg-static": "^5.2.0",
+    "libsodium-wrappers": "^0.7.15",
+    "node-cron": "^4.6.0",
+    "opusscript": "^0.1.1"
   }
 }
