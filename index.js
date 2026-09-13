@@ -1511,7 +1511,9 @@ async function getRandomValidSouvenir(guild) {
 // --- Lecture vocale gratuite des messages du salon sans micro ---
 function cleanTtsText(message) {
   return message.cleanContent
-    .replace(/https?:\/\/\S+/gi, ' lien ')
+    .replace(/<a?:[a-zA-Z0-9_]+:\d+>/g, ' ')
+    .replace(/https?:\/\/\S+/gi, ' ')
+    .replace(/[\p{Extended_Pictographic}\p{Regional_Indicator}\p{Emoji_Modifier}\u200D\uFE0F\u20E3]/gu, ' ')
     .replace(/[*_~`>|#]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()
