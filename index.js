@@ -1518,6 +1518,20 @@ function cleanTtsText(message) {
     .slice(0, TTS_MAX_MESSAGE_LENGTH);
 }
 
+function cleanTtsDisplayName(message) {
+  return String(
+    message.member?.displayName ||
+      message.author.globalName ||
+      message.author.username ||
+      'Une Besty'
+  )
+    .replace(/https?:\/\/\S+/gi, ' ')
+    .replace(/[*_~`>|#@]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 32);
+}
+
 function canControlTts(interaction, session) {
   return Boolean(
     interaction.memberPermissions?.has(PermissionFlagsBits.ManageMessages) ||
@@ -1660,7 +1674,11 @@ async function handleTtsTextMessage(message) {
   }
 
   ttsUserCooldowns.set(message.author.id, Date.now());
-  session.queue.push({ text, authorId: message.author.id });
+  const displayName = cleanTtsDisplayName(message);
+  session.queue.push({
+    text: `${displayName} dit : ${text}`,
+    authorId: message.author.id,
+  });
   void playNextTts(session);
   return true;
 }
