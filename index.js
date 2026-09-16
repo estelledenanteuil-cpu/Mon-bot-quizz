@@ -1,4 +1,3 @@
-// VERSION ENIGMES IMAGES
 // ============================================
 // BOT QUIZ QUOTIDIEN — Discord.js v14
 // ============================================
@@ -1406,14 +1405,18 @@ async function restoreQuestionFromDiscord() {
     return;
   }
 
-  const alreadyAnswered = messages.some(
+  // Une question classique se termine par « Bonne réponse », tandis qu'une
+  // énigme-image se termine après cinq minutes avec son propre message de fin.
+  // Les deux messages doivent empêcher la restauration d'une ancienne question.
+  const alreadyFinished = messages.some(
     (message) =>
       message.author.id === client.user.id &&
       message.createdTimestamp > latestQuestionMessage.createdTimestamp &&
-      message.content.startsWith('🎉 Bonne réponse')
+      (message.content.startsWith('🎉 Bonne réponse') ||
+        message.content.startsWith('# ⌛ Énigme-image terminée'))
   );
 
-  if (alreadyAnswered) {
+  if (alreadyFinished) {
     clearCurrentQuestion();
     console.log('La dernière question était déjà terminée.');
     return;
@@ -1443,6 +1446,16 @@ async function restoreQuestionFromDiscord() {
 let questionRecoveryPromise = null;
 
 async function ensureCurrentQuestion() {
+  // Sécurité supplémentaire : si le minuteur a été perdu lors d'un redémarrage
+  // Railway, une énigme-image expirée est terminée ici avant tout nouveau lancement.
+  if (
+    currentQuestion?.type === 'image-enigme' &&
+    Number.isFinite(Number(currentQuestion.expiresAt)) &&
+    Date.now() >= Number(currentQuestion.expiresAt)
+  ) {
+    await finishImageEnigma();
+  }
+
   if (currentQuestion) return true;
 
   if (!questionRecoveryPromise) {
