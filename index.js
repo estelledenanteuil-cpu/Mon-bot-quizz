@@ -25,6 +25,7 @@ const {
   PermissionFlagsBits,
   SlashCommandBuilder,
   ActionRowBuilder,
+  AttachmentBuilder,
   ButtonBuilder,
   ButtonStyle,
   MessageFlags,
@@ -49,6 +50,7 @@ const QUESTIONS_FILE = path.join(__dirname, 'questions.json');
 const ENIGMES_FILE = path.join(__dirname, 'enigmes.json');
 const CASSE_TETES_FILE = path.join(__dirname, 'casse-tetes.json');
 const BESTY_FILE = path.join(__dirname, 'besty.json');
+const IMAGE_ENIGMES_FILE = path.join(__dirname, 'enigmes-images.json');
 
 // Si un volume Railway est attaché, Railway fournit automatiquement ce chemin.
 // Sinon, le bot continue de fonctionner avec le dossier courant.
@@ -99,6 +101,8 @@ const SOUVENIR_CHANNEL_IDS = new Set(
 const XP_PER_QUESTION = 5;
 const XP_PER_ENIGME = 10;
 const XP_PER_CASSE_TETE = 10;
+const XP_PER_IMAGE_ENIGME = 10;
+const IMAGE_ENIGME_DURATION_MS = 5 * 60_000;
 const MAX_ENIGMES_PER_DAY = 5;
 const MAX_CASSE_TETES_PER_DAY = 5;
 const XP_PER_DUEL = 20;
@@ -352,6 +356,10 @@ const SLASH_COMMANDS = [
   new SlashCommandBuilder().setName('besty').setDescription('Recevoir une phrase good vibes de la Besty'),
   new SlashCommandBuilder().setName('classement').setDescription('Afficher le classement des cerveaux'),
   new SlashCommandBuilder()
+    .setName('imageenigme')
+    .setDescription('Lancer immédiatement une énigme-image (modération)')
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
+  new SlashCommandBuilder()
     .setName('skip')
     .setDescription('Remplacer la question bloquée par une nouvelle (modération)')
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
@@ -427,6 +435,8 @@ const pendingDuels = new Map();
 const activeDuels = new Map();
 const ttsSessions = new Map();
 const ttsUserCooldowns = new Map();
+let imageEnigmaTimer = null;
+let imageEnigmesCache = null;
 
 const DAILY_TIMES = (process.env.DAILY_TIMES || '10,14,18,20,23')
   .split(',')
@@ -1020,6 +1030,181 @@ function buildQuestionState(question, xpValue, type, sentMessage) {
   };
 }
 
+function imageEnigmaButtons(imageId, disabled = false) {
+  return new ActionRowBuilder().addComponents(
+    ...'ABCD'.split('').map((letter) =>
+      new ButtonBuilder()
+        .setCustomId(`image_answer:${imageId}:${letter}`)
+        .setLabel(letter)
+        .setStyle(ButtonStyle.Primary)
+        .setDisabled(disabled)
+    )
+  );
+}
+
+function pickImageEnigma(excludedId = null) {
+  if (!imageEnigmesCache) {
+    imageEnigmesCache = loadJSON(IMAGE_ENIGMES_FILE, []);
+  }
+  const list = imageEnigmesCache;
+  if (!Array.isArray(list) || list.length === 0) return null;
+  const valid = list.filter(
+    (item) =>
+      item &&
+      typeof item.id === 'string' &&
+      typeof item.question === 'string' &&
+      (typeof item.imageBase64 === 'string' || typeof item.image === 'string') &&
+      item.options &&
+      'ABCD'.split('').every((letter) => typeof item.options[letter] === 'string') &&
+      'ABCD'.includes(item.correctAnswer)
+  );
+  const available = excludedId
+    ? valid.filter((item) => item.id !== excludedId)
+    : valid;
+  const choices = available.length ? available : valid;
+  return choices.length ? pickArray(choices) : null;
+}
+
+function imageEnigmaState(question, sentMessage) {
+  return {
+    question: question.question,
+    answers: [question.correctAnswer],
+    xpValue: XP_PER_IMAGE_ENIGME,
+    type: 'image-enigme',
+    imageId: question.id,
+    correctAnswer: question.correctAnswer,
+    explanation: question.explanation || '',
+    respondedUserIds: [],
+    correctUserIds: [],
+    messageId: sentMessage.id,
+    channelId: sentMessage.channel.id,
+    askedAt: sentMessage.createdAt.toISOString(),
+    expiresAt: Date.now() + IMAGE_ENIGME_DURATION_MS,
+  };
+}
+
+function clearImageEnigmaTimer() {
+  if (imageEnigmaTimer) clearTimeout(imageEnigmaTimer);
+  imageEnigmaTimer = null;
+}
+
+function scheduleImageEnigmaEnd() {
+  clearImageEnigmaTimer();
+  if (currentQuestion?.type !== 'image-enigme') return;
+  const remaining = Math.max(0, Number(currentQuestion.expiresAt) - Date.now());
+  imageEnigmaTimer = setTimeout(() => {
+    finishImageEnigma().catch((error) => {
+      console.error("Impossible de terminer l'énigme-image :", error);
+    });
+  }, remaining);
+}
+
+async function postImageEnigma(channel, excludedId = null) {
+  const question = pickImageEnigma(excludedId);
+  if (!question) {
+    await channel.send(
+      "Aucune énigme-image n'est disponible : vérifie `enigmes-images.json`."
+    );
+    return false;
+  }
+
+  const optionsText = 'ABCD'
+    .split('')
+    .map((letter) => `**${letter} — ${question.options[letter]}**`)
+    .join('\n');
+  let attachmentSource;
+  let attachmentName = `${question.id}.png`;
+  if (typeof question.imageBase64 === 'string' && question.imageBase64) {
+    try {
+      attachmentSource = Buffer.from(question.imageBase64, 'base64');
+    } catch (error) {
+      console.error(`Image Base64 invalide pour ${question.id} :`, error);
+    }
+  } else if (typeof question.image === 'string') {
+    const root = path.resolve(__dirname);
+    const imagePath = path.resolve(__dirname, question.image);
+    if (imagePath.startsWith(`${root}${path.sep}`) && fs.existsSync(imagePath)) {
+      attachmentSource = imagePath;
+      attachmentName = path.basename(imagePath);
+    }
+  }
+  if (!attachmentSource || (Buffer.isBuffer(attachmentSource) && !attachmentSource.length)) {
+    await channel.send(
+      `L'image de l'énigme ${question.id} est introuvable dans \`enigmes-images.json\`.`
+    );
+    return false;
+  }
+  const attachment = new AttachmentBuilder(attachmentSource, { name: attachmentName });
+  const sentMessage = await channel.send({
+    content:
+      `# 🖼️ Énigme-image !\n\n` +
+      `${question.question}\n\n${optionsText}\n\n` +
+      `*Clique sur A, B, C ou D. Tu n'as droit qu'à une seule réponse.*\n` +
+      `*Fin dans 5 minutes — chaque bonne réponse gagne ${XP_PER_IMAGE_ENIGME} XP !*\n` +
+      `-# Référence : ${question.id}`,
+    files: [attachment],
+    components: [imageEnigmaButtons(question.id)],
+    allowedMentions: { parse: [] },
+  });
+
+  setCurrentQuestion(imageEnigmaState(question, sentMessage));
+  scheduleImageEnigmaEnd();
+  console.log(`Énigme-image publiée et sauvegardée (${question.id}).`);
+  return true;
+}
+
+async function postScheduledImageEnigma() {
+  await ensureCurrentQuestion();
+  if (currentQuestion) {
+    console.log(
+      "Énigme-image automatique reportée : une question est déjà en cours."
+    );
+    return false;
+  }
+  const channel = await client.channels.fetch(QUIZ_CHANNEL_ID);
+  if (!channel?.isTextBased()) {
+    throw new Error(`Le salon ${QUIZ_CHANNEL_ID} est introuvable ou non textuel.`);
+  }
+  return postImageEnigma(channel);
+}
+
+async function finishImageEnigma() {
+  if (currentQuestion?.type !== 'image-enigme') return false;
+  const finished = currentQuestion;
+  clearImageEnigmaTimer();
+
+  const winners = [...new Set(finished.correctUserIds || [])];
+  for (const userId of winners) {
+    scores[userId] = (scores[userId] || 0) + XP_PER_IMAGE_ENIGME;
+    recordXpGain(userId, XP_PER_IMAGE_ENIGME, 'image-enigme');
+  }
+  if (winners.length) saveJSON(SCORES_FILE, scores);
+  clearCurrentQuestion();
+
+  const channel = await client.channels.fetch(finished.channelId).catch(() => null);
+  if (channel?.isTextBased()) {
+    const original = await channel.messages.fetch(finished.messageId).catch(() => null);
+    await original
+      ?.edit({ components: [imageEnigmaButtons(finished.imageId, true)] })
+      .catch(() => {});
+
+    const winnerText = winners.length
+      ? `Bravo ${winners.map((id) => `<@${id}>`).join(', ')} : **${XP_PER_IMAGE_ENIGME} XP** chacun !`
+      : "Personne n'a trouvé cette fois-ci. La Pouf garde ses XP bien au chaud !";
+    const explanation = finished.explanation
+      ? `\n\n💡 **Explication :** ${finished.explanation}`
+      : '';
+    await channel.send({
+      content:
+        `# ⌛ Énigme-image terminée\n\n` +
+        `La bonne réponse était **${finished.correctAnswer}**.\n${winnerText}${explanation}`,
+      allowedMentions: { users: winners },
+    });
+    if (channel.guild && winners.length) await updateBrainRole(channel.guild);
+  }
+  return true;
+}
+
 // --- Publication des questions ---
 async function postDailyQuestion(excludedQuestion = null) {
   await ensureCurrentQuestion();
@@ -1108,7 +1293,8 @@ function isQuizQuestionMessage(message) {
     message.author.id === client.user.id &&
       (message.content.startsWith('🧩 **Question du jour !**') ||
         message.content.startsWith('🧠 **Énigme !**') ||
-        message.content.startsWith('🧩 **Casse-tête !**'))
+        message.content.startsWith('🧩 **Casse-tête !**') ||
+        message.content.startsWith('# 🖼️ Énigme-image !'))
   );
 }
 
@@ -1116,6 +1302,21 @@ function questionFromDiscordMessage(message) {
   let filePath;
   let xpValue;
   let type;
+
+  if (message.content.startsWith('# 🖼️ Énigme-image !')) {
+    const imageId = message.content.match(/Référence\s*:\s*([a-z0-9-]+)/i)?.[1];
+    if (!imageEnigmesCache) {
+      imageEnigmesCache = loadJSON(IMAGE_ENIGMES_FILE, []);
+    }
+    const question = (Array.isArray(imageEnigmesCache) ? imageEnigmesCache : []).find(
+      (item) => item?.id === imageId
+    );
+    if (!question) return null;
+    return {
+      ...imageEnigmaState(question, message),
+      expiresAt: message.createdTimestamp + IMAGE_ENIGME_DURATION_MS,
+    };
+  }
 
   if (message.content.startsWith('🧩 **Question du jour !**')) {
     filePath = QUESTIONS_FILE;
@@ -1161,6 +1362,10 @@ function questionFromDiscordMessage(message) {
 }
 
 async function restoreQuestionFromDiscord() {
+  if (currentQuestion?.type === 'image-enigme') {
+    console.log('Énigme-image restaurée depuis le stockage persistant.');
+    return;
+  }
   const channel = await client.channels.fetch(QUIZ_CHANNEL_ID);
   if (!channel?.isTextBased() || !channel.messages) return;
 
@@ -1743,6 +1948,40 @@ async function handleSlashCommand(interaction) {
     return;
   }
 
+  if (name === 'imageenigme') {
+    if (!interaction.memberPermissions?.has(PermissionFlagsBits.ManageMessages)) {
+      await slashError(
+        interaction,
+        '⛔ Seule la modération peut lancer une énigme-image manuellement.'
+      );
+      return;
+    }
+    if (interaction.channelId !== QUIZ_CHANNEL_ID) {
+      await slashError(
+        interaction,
+        `Cette commande doit être utilisée dans <#${QUIZ_CHANNEL_ID}>.`
+      );
+      return;
+    }
+
+    await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+    await ensureCurrentQuestion();
+    if (currentQuestion) {
+      await interaction.editReply(
+        "Une question est déjà en cours. Utilise `/skip` si le staff veut vraiment la remplacer."
+      );
+      return;
+    }
+
+    const posted = await postImageEnigma(interaction.channel);
+    await interaction.editReply(
+      posted
+        ? "🖼️ L'énigme-image est publiée ! Les membres ont cinq minutes pour répondre."
+        : "Impossible de publier l'énigme-image. Vérifie le fichier JSON et le dossier `images`."
+    );
+    return;
+  }
+
   if (name === 'ttsjoin') {
     if (!interaction.inGuild()) {
       await slashError(interaction, 'Cette commande fonctionne uniquement sur le serveur.');
@@ -1841,11 +2080,17 @@ async function handleSlashCommand(interaction) {
     }
 
     const skippedQuestion = currentQuestion;
+    if (skippedQuestion.type === 'image-enigme') clearImageEnigmaTimer();
     clearCurrentQuestion();
 
     try {
       let posted = false;
-      if (skippedQuestion.type === 'enigme') {
+      if (skippedQuestion.type === 'image-enigme') {
+        posted = await postImageEnigma(
+          interaction.channel,
+          skippedQuestion.imageId
+        );
+      } else if (skippedQuestion.type === 'enigme') {
         posted = await postEnigme(interaction.channel, null, skippedQuestion.question);
       } else if (skippedQuestion.type === 'cassetete') {
         posted = await postCasseTete(interaction.channel, null, skippedQuestion.question);
@@ -1855,6 +2100,7 @@ async function handleSlashCommand(interaction) {
 
       if (!posted) {
         setCurrentQuestion(skippedQuestion);
+        if (skippedQuestion.type === 'image-enigme') scheduleImageEnigmaEnd();
         await interaction.editReply(
           'Petit contretemps : je n’ai pas trouvé de question de remplacement. L’ancienne reste active.'
         );
@@ -1865,7 +2111,10 @@ async function handleSlashCommand(interaction) {
         '⏭️ **Question passée par la modération !** Une nouvelle vient d’être publiée. Aucun quota membre n’a été consommé.'
       );
     } catch (error) {
-      if (!currentQuestion) setCurrentQuestion(skippedQuestion);
+      if (!currentQuestion) {
+        setCurrentQuestion(skippedQuestion);
+        if (skippedQuestion.type === 'image-enigme') scheduleImageEnigmaEnd();
+      }
       throw error;
     }
     return;
@@ -2225,6 +2474,47 @@ async function handleActiveDuelAnswer(message) {
   return true;
 }
 
+async function handleImageEnigmaButton(interaction) {
+  const [, imageId, letter] = interaction.customId.split(':');
+  if (
+    currentQuestion?.type !== 'image-enigme' ||
+    currentQuestion.imageId !== imageId ||
+    currentQuestion.messageId !== interaction.message.id
+  ) {
+    await slashError(interaction, "Cette énigme-image n'est plus active.");
+    return;
+  }
+
+  if (Date.now() >= Number(currentQuestion.expiresAt)) {
+    await slashError(interaction, '⌛ Trop tard ma boT : les cinq minutes sont terminées.');
+    await finishImageEnigma();
+    return;
+  }
+
+  const responded = new Set(currentQuestion.respondedUserIds || []);
+  if (responded.has(interaction.user.id)) {
+    await slashError(
+      interaction,
+      "Tu as déjà validé ta réponse. Une seule tentative par personne, pas de triche de diva !"
+    );
+    return;
+  }
+
+  responded.add(interaction.user.id);
+  currentQuestion.respondedUserIds = [...responded];
+  if (letter === currentQuestion.correctAnswer) {
+    const correct = new Set(currentQuestion.correctUserIds || []);
+    correct.add(interaction.user.id);
+    currentQuestion.correctUserIds = [...correct];
+  }
+  setCurrentQuestion(currentQuestion);
+
+  await interaction.reply({
+    content: `🔒 Ta réponse **${letter}** est enregistrée. Verdict à la fin des cinq minutes !`,
+    flags: MessageFlags.Ephemeral,
+  });
+}
+
 client.on(Events.InteractionCreate, async (interaction) => {
   try {
     if (interaction.isChatInputCommand()) {
@@ -2232,6 +2522,10 @@ client.on(Events.InteractionCreate, async (interaction) => {
       return;
     }
     if (!interaction.isButton()) return;
+    if (interaction.customId.startsWith('image_answer:')) {
+      await handleImageEnigmaButton(interaction);
+      return;
+    }
     if (interaction.customId.startsWith('roast_')) {
       await handleRoastButton(interaction);
       return;
@@ -2422,6 +2716,9 @@ client.on(Events.MessageCreate, async (message) => {
     return;
   }
 
+  // Les énigmes-image se répondent uniquement avec les boutons A, B, C ou D.
+  if (currentQuestion.type === 'image-enigme') return;
+
   const userAnswer = normalize(message.content);
   const isCorrect = currentQuestion.answers
     .map(normalize)
@@ -2466,9 +2763,11 @@ client.once(Events.ClientReady, async (readyClient) => {
     markQuestionStateReady();
   }
 
-  console.log(`Questions automatiques programmées à : ${DAILY_TIMES.join('h, ')}h`);
+  if (currentQuestion?.type === 'image-enigme') scheduleImageEnigmaEnd();
+
+  console.log(`Énigmes-image automatiques programmées à : ${DAILY_TIMES.join('h, ')}h`);
   console.log(
-    'Commandes / activées : enigme, cassetete, besty, classement, resetclassement, questiondujour, verdict, match, humeur, roast, confession, duel, souvenir, ttsjoin, ttsleave, ttsskip, ttsclear'
+    'Commandes / activées : enigme, cassetete, imageenigme, besty, classement, resetclassement, questiondujour, verdict, match, humeur, roast, confession, duel, souvenir, ttsjoin, ttsleave, ttsskip, ttsclear'
   );
   console.log(`Lecture vocale reliée au salon texte ${TTS_TEXT_CHANNEL_ID}.`);
   console.log(`Données sauvegardées dans : ${DATA_DIR}`);
@@ -2503,8 +2802,8 @@ client.once(Events.ClientReady, async (readyClient) => {
     cron.schedule(
       `0 ${hour} * * *`,
       () => {
-        postDailyQuestion().catch((error) => {
-          console.error('Impossible de publier la question automatique :', error);
+        postScheduledImageEnigma().catch((error) => {
+          console.error("Impossible de publier l'énigme-image automatique :", error);
         });
       },
       { timezone: 'Europe/Paris' }
@@ -2524,6 +2823,7 @@ process.on('unhandledRejection', (error) => {
 function shutdown(signal) {
   console.log(`${signal} reçu : arrêt propre du bot.`);
   if (activitySaveTimer) clearTimeout(activitySaveTimer);
+  clearImageEnigmaTimer();
   for (const guildId of ttsSessions.keys()) stopTtsSession(guildId);
   saveJSON(DAILY_ACTIVITY_FILE, dailyActivity);
   saveJSON(SOUVENIRS_FILE, souvenirs);
