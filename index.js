@@ -65,6 +65,7 @@ const ENIGMA_USAGE_FILE = path.join(DATA_DIR, 'enigme-usage.json');
 const CASSE_TETE_USAGE_FILE = path.join(DATA_DIR, 'casse-tete-usage.json');
 const DAILY_ACTIVITY_FILE = path.join(DATA_DIR, 'daily-activity.json');
 const SOUVENIRS_FILE = path.join(DATA_DIR, 'souvenirs.json');
+const BUMP_STATS_FILE = path.join(DATA_DIR, 'bump-stats.json');
 const LEGACY_SCORES_FILE = path.join(__dirname, 'scores.json');
 
 const QUIZ_CHANNEL_ID = process.env.QUIZ_CHANNEL_ID;
@@ -80,6 +81,13 @@ const TTS_TEXT_CHANNEL_ID =
   process.env.TTS_TEXT_CHANNEL_ID || '1295375514223251571';
 const CONFESSION_CHANNEL_ID = process.env.CONFESSION_CHANNEL_ID;
 const STAFF_LOG_CHANNEL_ID = process.env.STAFF_LOG_CHANNEL_ID;
+const BUMP_CHANNEL_ID =
+  process.env.BUMP_CHANNEL_ID || '1511096490318364713';
+const BUMP_REWARD_ROLE_ID =
+  process.env.BUMP_REWARD_ROLE_ID || '1550151559512461332';
+// Identifiant officiel du bot DISBOARD. La variable permet de le remplacer si besoin.
+const DISBOARD_BOT_ID =
+  process.env.DISBOARD_BOT_ID || '302050872383242240';
 const DAILY_SUMMARY_CHANNEL_ID =
   process.env.DAILY_SUMMARY_CHANNEL_ID || GENERAL_CHANNEL_ID;
 // Le résumé automatique de 20h est volontairement désactivé dans cette version.
@@ -106,6 +114,8 @@ const IMAGE_ENIGME_DURATION_MS = 5 * 60_000;
 const MAX_ENIGMES_PER_DAY = 5;
 const MAX_CASSE_TETES_PER_DAY = 5;
 const XP_PER_DUEL = 20;
+const XP_PER_BUMP = 5;
+const XP_MONTHLY_BUMP_WINNER = 100;
 const MIN_REACTIONS_FOR_SOUVENIR = 3;
 const MAX_DAILY_MESSAGES_STORED = 5_000;
 const MAX_SOUVENIRS_STORED = 500;
@@ -356,6 +366,12 @@ const SLASH_COMMANDS = [
   new SlashCommandBuilder().setName('besty').setDescription('Recevoir une phrase good vibes de la Besty'),
   new SlashCommandBuilder().setName('classement').setDescription('Afficher le classement des cerveaux'),
   new SlashCommandBuilder()
+    .setName('bumps')
+    .setDescription('Voir ton nombre de bumps et ta place ce mois-ci'),
+  new SlashCommandBuilder()
+    .setName('classementbump')
+    .setDescription('Afficher le classement des bumps du mois'),
+  new SlashCommandBuilder()
     .setName('imageenigme')
     .setDescription('Lancer immédiatement une énigme-image (modération)')
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
@@ -490,6 +506,31 @@ let scores = loadJSON(SCORES_FILE, null);
 if (!scores || typeof scores !== 'object' || Array.isArray(scores)) {
   scores = loadJSON(LEGACY_SCORES_FILE, {});
   saveJSON(SCORES_FILE, scores);
+}
+
+function createEmptyBumpStats() {
+  return {
+    month: getParisMonthKey(),
+    users: {},
+    lastRewardedMonth: null,
+  };
+}
+
+function validBumpStats(value) {
+  return Boolean(
+    value &&
+      typeof value === 'object' &&
+      typeof value.month === 'string' &&
+      value.users &&
+      typeof value.users === 'object' &&
+      !Array.isArray(value.users)
+  );
+}
+
+let bumpStats = loadJSON(BUMP_STATS_FILE, createEmptyBumpStats());
+if (!validBumpStats(bumpStats)) {
+  bumpStats = createEmptyBumpStats();
+  saveJSON(BUMP_STATS_FILE, bumpStats);
 }
 
 function createDailyActivity() {
@@ -737,6 +778,199 @@ function getParisDateKey() {
 
   const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
   return `${values.year}-${values.month}-${values.day}`;
+}
+
+function getParisMonthKey() {
+  const parts = new Intl.DateTimeFormat('fr-FR', {
+    timeZone: 'Europe/Paris',
+    year: 'numeric',
+    month: '2-digit',
+  }).formatToParts(new Date());
+
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${values.year}-${values.month}`;
+}
+
+function formatBumpMonth(monthKey) {
+  const [year, month] = String(monthKey).split('-').map(Number);
+  if (!year || !month) return monthKey;
+  return new Intl.DateTimeFormat('fr-FR', {
+    timeZone: 'Europe/Paris',
+    month: 'long',
+    year: 'numeric',
+  }).format(new Date(Date.UTC(year, month - 1, 15, 12)));
+}
+
+function sortedBumpEntries() {
+  return Object.entries(bumpStats.users)
+    .map(([id, count]) => [id, Number(count) || 0])
+    .filter(([, count]) => count > 0)
+    .sort((a, b) => b[1] - a[1]);
+}
+
+function bumpRankForUser(userId) {
+  const count = Number(bumpStats.users[userId]) || 0;
+  if (count <= 0) return null;
+  return 1 + sortedBumpEntries().filter(([, otherCount]) => otherCount > count).length;
+}
+
+async function bumpLeaderboardText() {
+  const sorted = sortedBumpEntries();
+  if (!sorted.length) {
+    return `📣 Aucun bump comptabilisé pour **${formatBumpMonth(bumpStats.month)}**.`;
+  }
+
+  const lines = await Promise.all(
+    sorted.slice(0, 10).map(async ([id, count], index) => {
+      const user = await client.users.fetch(id).catch(() => null);
+      const label = user ? user.username : `<@${id}>`;
+      return `${index + 1}. ${label} — **${count} bump${count > 1 ? 's' : ''}**`;
+    })
+  );
+
+  return `# 📣 Classement des bumps\n*${formatBumpMonth(bumpStats.month)}*\n\n${lines.join('\n')}`;
+}
+
+function disboardMessageText(message) {
+  const embedText = message.embeds.flatMap((embed) => [
+    embed.title,
+    embed.description,
+    embed.footer?.text,
+    ...(embed.fields || []).flatMap((field) => [field.name, field.value]),
+  ]);
+  return [message.content, ...embedText]
+    .filter(Boolean)
+    .join(' ')
+    .toLocaleLowerCase('fr-FR');
+}
+
+function successfulDisboardBump(message) {
+  if (
+    message.author.id !== DISBOARD_BOT_ID ||
+    message.channel.id !== BUMP_CHANNEL_ID
+  ) {
+    return false;
+  }
+
+  const text = disboardMessageText(message);
+  return [
+    'bump effectué',
+    'bump effectue',
+    'bump done',
+    'server bumped',
+    'serveur bumpé',
+    'bump successful',
+  ].some((marker) => text.includes(marker));
+}
+
+function disboardBumperId(message) {
+  const metadata = message.interactionMetadata || message.interaction;
+  const commandName = metadata?.name || metadata?.commandName;
+  if (commandName && commandName !== 'bump') return null;
+  return metadata?.user?.id || message.mentions.users.first()?.id || null;
+}
+
+async function applyMonthlyBumpReward(guild) {
+  const currentMonth = getParisMonthKey();
+  if (bumpStats.month === currentMonth) return false;
+
+  const finishedMonth = bumpStats.month;
+  const finishedEntries = sortedBumpEntries();
+  const bestCount = finishedEntries[0]?.[1] || 0;
+  const winnerIds = finishedEntries
+    .filter(([, count]) => count === bestCount)
+    .map(([id]) => id);
+
+  // Le changement de mois est sauvegardé avant les actions Discord afin que
+  // deux événements simultanés ne distribuent jamais deux fois les 100 XP.
+  bumpStats = {
+    month: currentMonth,
+    users: {},
+    lastRewardedMonth: finishedMonth,
+  };
+  saveJSON(BUMP_STATS_FILE, bumpStats);
+
+  const role = await guild.roles.fetch(BUMP_REWARD_ROLE_ID).catch(() => null);
+  await guild.members.fetch().catch(() => null);
+
+  if (role) {
+    for (const member of role.members.values()) {
+      if (!winnerIds.includes(member.id)) {
+        await member.roles.remove(role).catch((error) => {
+          console.error(`Impossible de retirer le rôle Queen du bump à ${member.user.tag} :`, error);
+        });
+      }
+    }
+  } else {
+    console.warn(`Le rôle Queen du bump ${BUMP_REWARD_ROLE_ID} est introuvable.`);
+  }
+
+  for (const userId of winnerIds) {
+    scores[userId] = (Number(scores[userId]) || 0) + XP_MONTHLY_BUMP_WINNER;
+    recordXpGain(userId, XP_MONTHLY_BUMP_WINNER, 'recompense-bump-mensuelle');
+    const member = guild.members.cache.get(userId);
+    if (role && member && !member.roles.cache.has(role.id)) {
+      await member.roles.add(role).catch((error) => {
+        console.error(`Impossible d'ajouter le rôle Queen du bump à ${member.user.tag} :`, error);
+      });
+    }
+  }
+
+  if (winnerIds.length) {
+    saveJSON(SCORES_FILE, scores);
+    await updateBrainRole(guild);
+  }
+
+  const channel = await client.channels.fetch(BUMP_CHANNEL_ID).catch(() => null);
+  if (channel?.isTextBased()) {
+    if (winnerIds.length) {
+      const mentions = winnerIds.map((id) => `<@${id}>`).join(', ');
+      await channel.send({
+        content:
+          `# 👑 Résultat des bumps de ${formatBumpMonth(finishedMonth)}\n\n` +
+          `${mentions} ${winnerIds.length > 1 ? 'remportent' : 'remporte'} le rôle <@&${BUMP_REWARD_ROLE_ID}> avec **${bestCount} bump${bestCount > 1 ? 's' : ''}** !\n` +
+          `Chaque personne gagnante reçoit également **${XP_MONTHLY_BUMP_WINNER} XP**. Bravo les icônes ! ✨`,
+        allowedMentions: { users: winnerIds, roles: [BUMP_REWARD_ROLE_ID] },
+      });
+    } else {
+      await channel.send(
+        `📣 Aucun bump n’a été comptabilisé en ${formatBumpMonth(finishedMonth)}. Le trône reste à conquérir ce mois-ci !`
+      );
+    }
+  }
+
+  return true;
+}
+
+async function handleSuccessfulDisboardBump(message) {
+  if (!successfulDisboardBump(message) || !message.guild) return false;
+
+  const userId = disboardBumperId(message);
+  if (!userId) {
+    console.warn("Bump DISBOARD détecté, mais l'identité de la personne est introuvable.");
+    return true;
+  }
+
+  await applyMonthlyBumpReward(message.guild);
+
+  bumpStats.users[userId] = (Number(bumpStats.users[userId]) || 0) + 1;
+  scores[userId] = (Number(scores[userId]) || 0) + XP_PER_BUMP;
+  saveJSON(BUMP_STATS_FILE, bumpStats);
+  saveJSON(SCORES_FILE, scores);
+  recordXpGain(userId, XP_PER_BUMP, 'bump');
+
+  const count = bumpStats.users[userId];
+  const rank = bumpRankForUser(userId);
+  await message.channel.send({
+    content:
+      `📣 Merci <@${userId}> ! C’est ton **${count}${count === 1 ? 'er' : 'e'} bump du mois**. ` +
+      `Tu gagnes **${XP_PER_BUMP} XP** et tu occupes actuellement la **${rank}${rank === 1 ? 're' : 'e'} place** du classement !\n` +
+      `*Le prochain /bump sera disponible dans 2 heures.*`,
+    allowedMentions: { users: [userId] },
+  });
+
+  await updateBrainRole(message.guild);
+  return true;
 }
 
 function createEmptyEnigmaUsage() {
@@ -2149,6 +2383,25 @@ async function handleSlashCommand(interaction) {
     return;
   }
 
+  if (name === 'bumps') {
+    await applyMonthlyBumpReward(interaction.guild);
+    const count = Number(bumpStats.users[interaction.user.id]) || 0;
+    const rank = bumpRankForUser(interaction.user.id);
+    await interaction.reply({
+      content: count
+        ? `📣 Tu as effectué **${count} bump${count > 1 ? 's' : ''}** en ${formatBumpMonth(bumpStats.month)}. Tu occupes actuellement la **${rank}${rank === 1 ? 're' : 'e'} place**.`
+        : `📣 Tu n’as encore effectué aucun bump en ${formatBumpMonth(bumpStats.month)}. Le trône t’attend !`,
+      flags: MessageFlags.Ephemeral,
+    });
+    return;
+  }
+
+  if (name === 'classementbump') {
+    await applyMonthlyBumpReward(interaction.guild);
+    await interaction.reply(await bumpLeaderboardText());
+    return;
+  }
+
   if (name === 'resetclassement') {
     if (!interaction.memberPermissions?.has(PermissionFlagsBits.Administrator)) {
       await slashError(interaction, '⛔ Seuls les administrateurs peuvent remettre le classement à zéro.');
@@ -2592,6 +2845,20 @@ client.on(Events.MessageReactionAdd, async (reaction, user) => {
 
 // --- Écoute des messages du salon quiz ---
 client.on(Events.MessageCreate, async (message) => {
+  // Exception volontaire : les messages des bots sont normalement ignorés,
+  // mais la confirmation officielle de DISBOARD sert à compter le /bump.
+  if (
+    message.author.id === DISBOARD_BOT_ID &&
+    message.channel.id === BUMP_CHANNEL_ID
+  ) {
+    try {
+      await handleSuccessfulDisboardBump(message);
+    } catch (error) {
+      console.error('Impossible de comptabiliser le bump DISBOARD :', error);
+    }
+    return;
+  }
+
   if (message.author.bot) return;
 
   recordDailyMessage(message);
@@ -2779,9 +3046,19 @@ client.once(Events.ClientReady, async (readyClient) => {
 
   if (currentQuestion?.type === 'image-enigme') scheduleImageEnigmaEnd();
 
+  const bumpChannel = await readyClient.channels.fetch(BUMP_CHANNEL_ID).catch(() => null);
+  if (bumpChannel?.guild) {
+    await applyMonthlyBumpReward(bumpChannel.guild).catch((error) => {
+      console.error('Impossible de finaliser le classement mensuel des bumps :', error);
+    });
+  }
+
   console.log(`Énigmes-image automatiques programmées à : ${DAILY_TIMES.join('h, ')}h`);
   console.log(
-    'Commandes / activées : enigme, cassetete, imageenigme, besty, classement, resetclassement, questiondujour, verdict, match, humeur, roast, confession, duel, souvenir, ttsjoin, ttsleave, ttsskip, ttsclear'
+    'Commandes / activées : enigme, cassetete, imageenigme, besty, classement, bumps, classementbump, resetclassement, questiondujour, verdict, match, humeur, roast, confession, duel, souvenir, ttsjoin, ttsleave, ttsskip, ttsclear'
+  );
+  console.log(
+    `Compteur DISBOARD actif dans ${BUMP_CHANNEL_ID} : ${XP_PER_BUMP} XP par bump, ${XP_MONTHLY_BUMP_WINNER} XP au classement mensuel.`
   );
   console.log(`Lecture vocale reliée au salon texte ${TTS_TEXT_CHANNEL_ID}.`);
   console.log(`Données sauvegardées dans : ${DATA_DIR}`);
@@ -2824,6 +3101,19 @@ client.once(Events.ClientReady, async (readyClient) => {
     );
   });
 
+  // À 00 h 05 le premier jour de chaque mois, heure de Paris.
+  cron.schedule(
+    '5 0 1 * *',
+    async () => {
+      const channel = await readyClient.channels.fetch(BUMP_CHANNEL_ID).catch(() => null);
+      if (!channel?.guild) return;
+      await applyMonthlyBumpReward(channel.guild).catch((error) => {
+        console.error('Récompense mensuelle des bumps impossible :', error);
+      });
+    },
+    { timezone: 'Europe/Paris' }
+  );
+
 });
 
 client.on(Events.Error, (error) => {
@@ -2841,6 +3131,7 @@ function shutdown(signal) {
   for (const guildId of ttsSessions.keys()) stopTtsSession(guildId);
   saveJSON(DAILY_ACTIVITY_FILE, dailyActivity);
   saveJSON(SOUVENIRS_FILE, souvenirs);
+  saveJSON(BUMP_STATS_FILE, bumpStats);
   client.destroy();
   process.exit(0);
 }
@@ -2861,4 +3152,8 @@ module.exports = {
   isEstyUser,
   memberHasBestyRole,
   personaForUser,
+  getParisMonthKey,
+  formatBumpMonth,
+  successfulDisboardBump,
+  disboardBumperId,
 };
