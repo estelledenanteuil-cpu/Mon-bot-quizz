@@ -2157,9 +2157,29 @@ async function handleTtsTextMessage(message) {
 
   const session = ttsSessions.get(message.guild.id);
   if (!session) return true;
-  const voiceState = message.member?.voice;
-  if (voiceState?.channelId !== session.voiceChannelId) return true;
-  if (!voiceState.selfMute && !voiceState.serverMute) return true;
+
+  // On lit l'état vocal le plus récent directement dans le cache du serveur.
+  // Le repli sur message.member.voice évite de bloquer si le cache n'est pas
+  // encore complètement initialisé au moment où le message arrive.
+  const voiceState =
+    message.guild.voiceStates.cache.get(message.author.id) ||
+    message.member?.voice;
+
+  if (voiceState?.channelId !== session.voiceChannelId) {
+    console.log(
+      `TTS ignoré pour ${message.author.tag} : personne absente du vocal de la Pouf.`
+    );
+    return true;
+  }
+
+  // Condition obligatoire : la personne doit avoir coupé elle-même son micro
+  // ou avoir été rendue muette par le serveur.
+  if (!voiceState.selfMute && !voiceState.serverMute) {
+    console.log(
+      `TTS ignoré pour ${message.author.tag} : micro non coupé.`
+    );
+    return true;
+  }
   if (message.content.trim().startsWith('/') || message.content.trim().startsWith('!')) {
     return true;
   }
