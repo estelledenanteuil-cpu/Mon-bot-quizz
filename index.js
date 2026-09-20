@@ -77,13 +77,10 @@ const PRESENTATION_CHANNEL_ID = process.env.PRESENTATION_CHANNEL_ID;
 const ANNOUNCEMENTS_CHANNEL_ID = process.env.ANNOUNCEMENTS_CHANNEL_ID;
 const ESTY_USER_ID = process.env.ESTY_USER_ID;
 const BESTY_ROLE_NAME = process.env.BESTY_ROLE_NAME || 'Les drôles de pouf';
-const TTS_TEXT_CHANNEL_ID =
-  process.env.TTS_TEXT_CHANNEL_ID || '1295375514223251571';
-const TTS_SECOND_TEXT_CHANNEL_ID =
-  process.env.TTS_SECOND_TEXT_CHANNEL_ID || '1551281262193410058';
-const TTS_TEXT_CHANNEL_IDS = new Set(
-  [TTS_TEXT_CHANNEL_ID, TTS_SECOND_TEXT_CHANNEL_ID].filter(Boolean)
-);
+// Seul ce salon textuel séparé est lu par le TTS.
+// Le chat intégré au salon vocal n'est volontairement pas surveillé.
+const TTS_NO_MICRO_CHANNEL_ID = '1551281262193410058';
+const TTS_TEXT_CHANNEL_IDS = new Set([TTS_NO_MICRO_CHANNEL_ID]);
 const CONFESSION_CHANNEL_ID = process.env.CONFESSION_CHANNEL_ID;
 const STAFF_LOG_CHANNEL_ID = process.env.STAFF_LOG_CHANNEL_ID;
 const BUMP_CHANNEL_ID =
