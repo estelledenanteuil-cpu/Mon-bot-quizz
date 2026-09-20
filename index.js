@@ -79,6 +79,11 @@ const ESTY_USER_ID = process.env.ESTY_USER_ID;
 const BESTY_ROLE_NAME = process.env.BESTY_ROLE_NAME || 'Les drôles de pouf';
 const TTS_TEXT_CHANNEL_ID =
   process.env.TTS_TEXT_CHANNEL_ID || '1295375514223251571';
+const TTS_SECOND_TEXT_CHANNEL_ID =
+  process.env.TTS_SECOND_TEXT_CHANNEL_ID || '1551281262193410058';
+const TTS_TEXT_CHANNEL_IDS = new Set(
+  [TTS_TEXT_CHANNEL_ID, TTS_SECOND_TEXT_CHANNEL_ID].filter(Boolean)
+);
 const CONFESSION_CHANNEL_ID = process.env.CONFESSION_CHANNEL_ID;
 const STAFF_LOG_CHANNEL_ID = process.env.STAFF_LOG_CHANNEL_ID;
 const BUMP_CHANNEL_ID =
@@ -2148,7 +2153,7 @@ client.on(Events.VoiceStateUpdate, (oldState, newState) => {
 });
 
 async function handleTtsTextMessage(message) {
-  if (!message.guild || message.channel.id !== TTS_TEXT_CHANNEL_ID) return false;
+  if (!message.guild || !TTS_TEXT_CHANNEL_IDS.has(message.channel.id)) return false;
 
   const session = ttsSessions.get(message.guild.id);
   if (!session) return true;
@@ -2256,8 +2261,11 @@ async function handleSlashCommand(interaction) {
 
     await interaction.deferReply({ flags: MessageFlags.Ephemeral });
     await startTtsSession(interaction, voiceChannel);
+    const ttsChannelMentions = [...TTS_TEXT_CHANNEL_IDS]
+      .map((channelId) => `<#${channelId}>`)
+      .join(' et ');
     await interaction.editReply(
-      `🔊 Je suis dans **${voiceChannel.name}** ! J’attends les messages dans <#${TTS_TEXT_CHANNEL_ID}>.`
+      `🔊 Je suis dans **${voiceChannel.name}** ! J’attends les messages dans ${ttsChannelMentions}.`
     );
     return;
   }
@@ -3060,7 +3068,9 @@ client.once(Events.ClientReady, async (readyClient) => {
   console.log(
     `Compteur DISBOARD actif dans ${BUMP_CHANNEL_ID} : ${XP_PER_BUMP} XP par bump, ${XP_MONTHLY_BUMP_WINNER} XP au classement mensuel.`
   );
-  console.log(`Lecture vocale reliée au salon texte ${TTS_TEXT_CHANNEL_ID}.`);
+  console.log(
+    `Lecture vocale reliée aux salons texte : ${[...TTS_TEXT_CHANNEL_IDS].join(', ')}.`
+  );
   console.log(`Données sauvegardées dans : ${DATA_DIR}`);
   console.log(
     ESTY_USER_ID
