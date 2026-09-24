@@ -2141,6 +2141,20 @@ function updateTtsEmptyChannelTimer(guildId) {
 client.on(Events.VoiceStateUpdate, (oldState, newState) => {
   const session = ttsSessions.get(oldState.guild.id);
   if (!session) return;
+
+  // Si la Pouf est expulsée, déplacée ou déconnectée sans passer par
+  // /ttsleave, on supprime immédiatement la session et sa file d'attente.
+  // Cela empêche les messages de continuer à s'accumuler hors vocal.
+  if (oldState.id === client.user.id || newState.id === client.user.id) {
+    if (newState.channelId !== session.voiceChannelId) {
+      console.log(
+        `Connexion TTS perdue sur le serveur ${oldState.guild.id} : nettoyage de la session.`
+      );
+      stopTtsSession(oldState.guild.id);
+    }
+    return;
+  }
+
   if (
     oldState.channelId === session.voiceChannelId ||
     newState.channelId === session.voiceChannelId
@@ -2154,6 +2168,24 @@ async function handleTtsTextMessage(message) {
 
   const session = ttsSessions.get(message.guild.id);
   if (!session) return true;
+
+  // Une session mémorisée ne suffit pas : la Pouf doit être réellement
+  // présente dans le vocal et sa connexion audio doit être prête.
+  const botVoiceState = message.guild.voiceStates.cache.get(client.user.id);
+  if (botVoiceState?.channelId !== session.voiceChannelId) {
+    console.log(
+      `TTS ignoré sur ${message.guild.name} : la Pouf n'est plus dans le vocal.`
+    );
+    stopTtsSession(message.guild.id);
+    return true;
+  }
+
+  if (session.connection.state.status !== VoiceConnectionStatus.Ready) {
+    console.log(
+      `TTS ignoré sur ${message.guild.name} : connexion vocale non prête.`
+    );
+    return true;
+  }
 
   // On lit l'état vocal le plus récent directement dans le cache du serveur.
   // Le repli sur message.member.voice évite de bloquer si le cache n'est pas
