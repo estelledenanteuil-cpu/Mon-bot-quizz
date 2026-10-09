@@ -2,7 +2,7 @@
 // BOT QUIZ QUOTIDIEN — Discord.js v14
 // ============================================
 // Ce bot :
-// 1. Poste plusieurs questions/énigmes chaque jour aux heures de DAILY_TIMES
+// 1. Les énigmes sont lancées uniquement à la demande avec les commandes prévues
 // 2. Permet de déclencher une énigme avec !enigme
 // 3. Détecte la première bonne réponse dans le salon du quiz
 // 4. Conserve les scores ET la question en cours après un redémarrage Railway
@@ -77,10 +77,13 @@ const PRESENTATION_CHANNEL_ID = process.env.PRESENTATION_CHANNEL_ID;
 const ANNOUNCEMENTS_CHANNEL_ID = process.env.ANNOUNCEMENTS_CHANNEL_ID;
 const ESTY_USER_ID = process.env.ESTY_USER_ID;
 const BESTY_ROLE_NAME = process.env.BESTY_ROLE_NAME || 'Les drôles de pouf';
-// Seul ce salon textuel séparé est lu par le TTS.
-// Le chat intégré au salon vocal n'est volontairement pas surveillé.
-const TTS_NO_MICRO_CHANNEL_ID = '1551281262193410058';
-const TTS_TEXT_CHANNEL_IDS = new Set([TTS_NO_MICRO_CHANNEL_ID]);
+const TTS_TEXT_CHANNEL_ID =
+  process.env.TTS_TEXT_CHANNEL_ID || '1295375514223251571';
+const TTS_SECOND_TEXT_CHANNEL_ID =
+  process.env.TTS_SECOND_TEXT_CHANNEL_ID || '1551281262193410058';
+const TTS_TEXT_CHANNEL_IDS = new Set(
+  [TTS_TEXT_CHANNEL_ID, TTS_SECOND_TEXT_CHANNEL_ID].filter(Boolean)
+);
 const CONFESSION_CHANNEL_ID = process.env.CONFESSION_CHANNEL_ID;
 const STAFF_LOG_CHANNEL_ID = process.env.STAFF_LOG_CHANNEL_ID;
 const BUMP_CHANNEL_ID =
@@ -93,7 +96,7 @@ const DISBOARD_BOT_ID =
 const DAILY_SUMMARY_CHANNEL_ID =
   process.env.DAILY_SUMMARY_CHANNEL_ID || GENERAL_CHANNEL_ID;
 // Le résumé automatique de 20h est volontairement désactivé dans cette version.
-// La question du quiz programmée à 20h reste bien active via DAILY_TIMES.
+// Les publications automatiques d'énigmes sont désactivées dans cette version.
 const DAILY_SUMMARY_ENABLED = false;
 const DUEL_CHANNEL_ID = process.env.DUEL_CHANNEL_ID || null;
 const SUMMARY_SOURCE_CHANNEL_IDS = new Set(
@@ -456,21 +459,12 @@ const ttsUserCooldowns = new Map();
 let imageEnigmaTimer = null;
 let imageEnigmesCache = null;
 
-const DAILY_TIMES = (process.env.DAILY_TIMES || '10,14,18,20,23')
-  .split(',')
-  .map((hour) => Number.parseInt(hour.trim(), 10))
-  .filter((hour) => Number.isInteger(hour) && hour >= 0 && hour <= 23);
-
 if (!process.env.DISCORD_TOKEN) {
   throw new Error('La variable DISCORD_TOKEN est manquante.');
 }
 
 if (!QUIZ_CHANNEL_ID) {
   throw new Error('La variable QUIZ_CHANNEL_ID est manquante.');
-}
-
-if (DAILY_TIMES.length === 0) {
-  throw new Error('DAILY_TIMES ne contient aucune heure valide.');
 }
 
 // --- Client Discord ---
@@ -515,6 +509,9 @@ function createEmptyBumpStats() {
     month: getParisMonthKey(),
     users: {},
     lastRewardedMonth: null,
+    lastAnnouncedMonth: null,
+    lastWinnerIds: [],
+    lastWinnerCount: 0,
   };
 }
 
@@ -872,9 +869,63 @@ function disboardBumperId(message) {
   return metadata?.user?.id || message.mentions.users.first()?.id || null;
 }
 
+async function announcePendingMonthlyBumpResult(guild) {
+  const finishedMonth = bumpStats.lastRewardedMonth;
+  if (!finishedMonth || bumpStats.lastAnnouncedMonth === finishedMonth) return false;
+
+  let winnerIds = Array.isArray(bumpStats.lastWinnerIds)
+    ? bumpStats.lastWinnerIds.filter(Boolean)
+    : [];
+  const bestCount = Number(bumpStats.lastWinnerCount) || 0;
+
+  // Compatibilité avec l'ancien fichier : si le mois avait déjà été remis à
+  // zéro avant l'annonce, on retrouve la personne gagnante grâce au rôle.
+  if (!winnerIds.length) {
+    const role = await guild.roles.fetch(BUMP_REWARD_ROLE_ID).catch(() => null);
+    await guild.members.fetch().catch(() => null);
+    if (role) winnerIds = [...role.members.keys()];
+  }
+
+  const channel = await client.channels.fetch(BUMP_CHANNEL_ID).catch(() => null);
+  if (!channel?.isTextBased()) {
+    console.error(`Annonce mensuelle impossible : salon bump ${BUMP_CHANNEL_ID} introuvable.`);
+    return false;
+  }
+
+  if (winnerIds.length) {
+    const mentions = winnerIds.map((id) => `<@${id}>`).join(', ');
+    const bumpTotal = bestCount > 0
+      ? ` avec **${bestCount} bump${bestCount > 1 ? 's' : ''}**`
+      : '';
+    await channel.send({
+      content:
+        `# 👑 Résultat des bumps de ${formatBumpMonth(finishedMonth)}\n\n` +
+        `${mentions} ${winnerIds.length > 1 ? 'remportent' : 'remporte'} le rôle <@&${BUMP_REWARD_ROLE_ID}>${bumpTotal} !\n` +
+        `Chaque personne gagnante reçoit également **${XP_MONTHLY_BUMP_WINNER} XP**. Bravo les icônes ! ✨`,
+      allowedMentions: { users: winnerIds, roles: [BUMP_REWARD_ROLE_ID] },
+    });
+  } else if (bestCount === 0) {
+    await channel.send(
+      `📣 Aucun bump n’a été comptabilisé en ${formatBumpMonth(finishedMonth)}. Le trône reste à conquérir ce mois-ci !`
+    );
+  } else {
+    console.error(`Annonce mensuelle de ${finishedMonth} en attente : gagnant introuvable.`);
+    return false;
+  }
+
+  bumpStats.lastAnnouncedMonth = finishedMonth;
+  saveJSON(BUMP_STATS_FILE, bumpStats);
+  return true;
+}
+
 async function applyMonthlyBumpReward(guild) {
   const currentMonth = getParisMonthKey();
-  if (bumpStats.month === currentMonth) return false;
+
+  // Même après une veille ou un redémarrage Railway, une annonce qui n'a pas
+  // pu partir est retentée sans redonner une deuxième fois les 100 XP.
+  if (bumpStats.month === currentMonth) {
+    return announcePendingMonthlyBumpResult(guild);
+  }
 
   const finishedMonth = bumpStats.month;
   const finishedEntries = sortedBumpEntries();
@@ -883,12 +934,15 @@ async function applyMonthlyBumpReward(guild) {
     .filter(([, count]) => count === bestCount)
     .map(([id]) => id);
 
-  // Le changement de mois est sauvegardé avant les actions Discord afin que
-  // deux événements simultanés ne distribuent jamais deux fois les 100 XP.
+  // On conserve le résultat du mois terminé afin de pouvoir retenter
+  // l'annonce plus tard si Discord ou Railway rencontre un problème.
   bumpStats = {
     month: currentMonth,
     users: {},
     lastRewardedMonth: finishedMonth,
+    lastAnnouncedMonth: bumpStats.lastAnnouncedMonth || null,
+    lastWinnerIds: winnerIds,
+    lastWinnerCount: bestCount,
   };
   saveJSON(BUMP_STATS_FILE, bumpStats);
 
@@ -920,27 +974,12 @@ async function applyMonthlyBumpReward(guild) {
 
   if (winnerIds.length) {
     saveJSON(SCORES_FILE, scores);
-    await updateBrainRole(guild);
+    await updateBrainRole(guild).catch((error) => {
+      console.error('Impossible de mettre à jour le rôle Cerveau du serveur :', error);
+    });
   }
 
-  const channel = await client.channels.fetch(BUMP_CHANNEL_ID).catch(() => null);
-  if (channel?.isTextBased()) {
-    if (winnerIds.length) {
-      const mentions = winnerIds.map((id) => `<@${id}>`).join(', ');
-      await channel.send({
-        content:
-          `# 👑 Résultat des bumps de ${formatBumpMonth(finishedMonth)}\n\n` +
-          `${mentions} ${winnerIds.length > 1 ? 'remportent' : 'remporte'} le rôle <@&${BUMP_REWARD_ROLE_ID}> avec **${bestCount} bump${bestCount > 1 ? 's' : ''}** !\n` +
-          `Chaque personne gagnante reçoit également **${XP_MONTHLY_BUMP_WINNER} XP**. Bravo les icônes ! ✨`,
-        allowedMentions: { users: winnerIds, roles: [BUMP_REWARD_ROLE_ID] },
-      });
-    } else {
-      await channel.send(
-        `📣 Aucun bump n’a été comptabilisé en ${formatBumpMonth(finishedMonth)}. Le trône reste à conquérir ce mois-ci !`
-      );
-    }
-  }
-
+  await announcePendingMonthlyBumpResult(guild);
   return true;
 }
 
@@ -2141,20 +2180,6 @@ function updateTtsEmptyChannelTimer(guildId) {
 client.on(Events.VoiceStateUpdate, (oldState, newState) => {
   const session = ttsSessions.get(oldState.guild.id);
   if (!session) return;
-
-  // Si la Pouf est expulsée, déplacée ou déconnectée sans passer par
-  // /ttsleave, on supprime immédiatement la session et sa file d'attente.
-  // Cela empêche les messages de continuer à s'accumuler hors vocal.
-  if (oldState.id === client.user.id || newState.id === client.user.id) {
-    if (newState.channelId !== session.voiceChannelId) {
-      console.log(
-        `Connexion TTS perdue sur le serveur ${oldState.guild.id} : nettoyage de la session.`
-      );
-      stopTtsSession(oldState.guild.id);
-    }
-    return;
-  }
-
   if (
     oldState.channelId === session.voiceChannelId ||
     newState.channelId === session.voiceChannelId
@@ -2168,47 +2193,9 @@ async function handleTtsTextMessage(message) {
 
   const session = ttsSessions.get(message.guild.id);
   if (!session) return true;
-
-  // Une session mémorisée ne suffit pas : la Pouf doit être réellement
-  // présente dans le vocal et sa connexion audio doit être prête.
-  const botVoiceState = message.guild.voiceStates.cache.get(client.user.id);
-  if (botVoiceState?.channelId !== session.voiceChannelId) {
-    console.log(
-      `TTS ignoré sur ${message.guild.name} : la Pouf n'est plus dans le vocal.`
-    );
-    stopTtsSession(message.guild.id);
-    return true;
-  }
-
-  if (session.connection.state.status !== VoiceConnectionStatus.Ready) {
-    console.log(
-      `TTS ignoré sur ${message.guild.name} : connexion vocale non prête.`
-    );
-    return true;
-  }
-
-  // On lit l'état vocal le plus récent directement dans le cache du serveur.
-  // Le repli sur message.member.voice évite de bloquer si le cache n'est pas
-  // encore complètement initialisé au moment où le message arrive.
-  const voiceState =
-    message.guild.voiceStates.cache.get(message.author.id) ||
-    message.member?.voice;
-
-  if (voiceState?.channelId !== session.voiceChannelId) {
-    console.log(
-      `TTS ignoré pour ${message.author.tag} : personne absente du vocal de la Pouf.`
-    );
-    return true;
-  }
-
-  // Condition obligatoire : la personne doit avoir coupé elle-même son micro
-  // ou avoir été rendue muette par le serveur.
-  if (!voiceState.selfMute && !voiceState.serverMute) {
-    console.log(
-      `TTS ignoré pour ${message.author.tag} : micro non coupé.`
-    );
-    return true;
-  }
+  const voiceState = message.member?.voice;
+  if (voiceState?.channelId !== session.voiceChannelId) return true;
+  if (!voiceState.selfMute && !voiceState.serverMute) return true;
   if (message.content.trim().startsWith('/') || message.content.trim().startsWith('!')) {
     return true;
   }
@@ -3110,7 +3097,7 @@ client.once(Events.ClientReady, async (readyClient) => {
     });
   }
 
-  console.log(`Énigmes-image automatiques programmées à : ${DAILY_TIMES.join('h, ')}h`);
+  console.log('Énigmes automatiques désactivées : lancement uniquement avec les commandes manuelles.');
   console.log(
     'Commandes / activées : enigme, cassetete, imageenigme, besty, classement, bumps, classementbump, resetclassement, questiondujour, verdict, match, humeur, roast, confession, duel, souvenir, ttsjoin, ttsleave, ttsskip, ttsclear'
   );
@@ -3147,18 +3134,6 @@ client.once(Events.ClientReady, async (readyClient) => {
       `Accueil automatique en attente. Variables manquantes : ${missingWelcomeVariables.join(', ')}`
     );
   }
-
-  DAILY_TIMES.forEach((hour) => {
-    cron.schedule(
-      `0 ${hour} * * *`,
-      () => {
-        postScheduledImageEnigma().catch((error) => {
-          console.error("Impossible de publier l'énigme-image automatique :", error);
-        });
-      },
-      { timezone: 'Europe/Paris' }
-    );
-  });
 
   // À 00 h 05 le premier jour de chaque mois, heure de Paris.
   cron.schedule(
