@@ -66,6 +66,7 @@ const CASSE_TETE_USAGE_FILE = path.join(DATA_DIR, 'casse-tete-usage.json');
 const DAILY_ACTIVITY_FILE = path.join(DATA_DIR, 'daily-activity.json');
 const SOUVENIRS_FILE = path.join(DATA_DIR, 'souvenirs.json');
 const BUMP_STATS_FILE = path.join(DATA_DIR, 'bump-stats.json');
+const BIRTHDAYS_FILE = path.join(DATA_DIR, 'birthdays.json');
 const LEGACY_SCORES_FILE = path.join(__dirname, 'scores.json');
 
 const QUIZ_CHANNEL_ID = process.env.QUIZ_CHANNEL_ID;
@@ -90,6 +91,11 @@ const BUMP_CHANNEL_ID =
   process.env.BUMP_CHANNEL_ID || '1511096490318364713';
 const BUMP_REWARD_ROLE_ID =
   process.env.BUMP_REWARD_ROLE_ID || '1550151559512461332';
+const BIRTHDAY_CHANNEL_ID =
+  process.env.BIRTHDAY_CHANNEL_ID || '1295471861521449032';
+const BIRTHDAY_ROLE_ID =
+  process.env.BIRTHDAY_ROLE_ID || '1567107704869232722';
+const BIRTHDAY_ANNOUNCEMENT_HOUR = 9;
 // Identifiant officiel du bot DISBOARD. La variable permet de le remplacer si besoin.
 const DISBOARD_BOT_ID =
   process.env.DISBOARD_BOT_ID || '302050872383242240';
@@ -377,6 +383,40 @@ const SLASH_COMMANDS = [
     .setName('classementbump')
     .setDescription('Afficher le classement des bumps du mois'),
   new SlashCommandBuilder()
+    .setName('anniversaire')
+    .setDescription('Enregistrer ou gérer ta date d’anniversaire')
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName('enregistrer')
+        .setDescription('Enregistrer ou modifier ta date d’anniversaire')
+        .addIntegerOption((option) =>
+          option
+            .setName('jour')
+            .setDescription('Ton jour de naissance')
+            .setRequired(true)
+            .setMinValue(1)
+            .setMaxValue(31)
+        )
+        .addIntegerOption((option) =>
+          option
+            .setName('mois')
+            .setDescription('Ton mois de naissance')
+            .setRequired(true)
+            .setMinValue(1)
+            .setMaxValue(12)
+        )
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName('voir')
+        .setDescription('Voir la date d’anniversaire que tu as enregistrée')
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName('supprimer')
+        .setDescription('Supprimer ta date d’anniversaire enregistrée')
+    ),
+  new SlashCommandBuilder()
     .setName('imageenigme')
     .setDescription('Lancer immédiatement une énigme-image (modération)')
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
@@ -556,6 +596,49 @@ if (!validDailyActivity(dailyActivity)) dailyActivity = createDailyActivity();
 
 let souvenirs = loadJSON(SOUVENIRS_FILE, []);
 if (!Array.isArray(souvenirs)) souvenirs = [];
+
+function createBirthdayStore() {
+  return { version: 1, guilds: {} };
+}
+
+function validBirthdayStore(value) {
+  return Boolean(
+    value &&
+      typeof value === 'object' &&
+      value.guilds &&
+      typeof value.guilds === 'object' &&
+      !Array.isArray(value.guilds)
+  );
+}
+
+let birthdayStore = loadJSON(BIRTHDAYS_FILE, createBirthdayStore());
+if (!validBirthdayStore(birthdayStore)) {
+  birthdayStore = createBirthdayStore();
+  saveJSON(BIRTHDAYS_FILE, birthdayStore);
+}
+
+function birthdayGuildState(guildId) {
+  if (!birthdayStore.guilds[guildId] || typeof birthdayStore.guilds[guildId] !== 'object') {
+    birthdayStore.guilds[guildId] = { users: {}, announcements: {} };
+  }
+
+  const state = birthdayStore.guilds[guildId];
+  if (!state.users || typeof state.users !== 'object' || Array.isArray(state.users)) {
+    state.users = {};
+  }
+  if (
+    !state.announcements ||
+    typeof state.announcements !== 'object' ||
+    Array.isArray(state.announcements)
+  ) {
+    state.announcements = {};
+  }
+  return state;
+}
+
+function saveBirthdayStore() {
+  saveJSON(BIRTHDAYS_FILE, birthdayStore);
+}
 
 let activitySaveTimer = null;
 function scheduleActivitySave() {
@@ -767,16 +850,199 @@ async function postDailySummary() {
 }
 
 // --- Limite quotidienne des énigmes déclenchées avec !enigme ---
-function getParisDateKey() {
+function getParisDateParts(date = new Date()) {
   const parts = new Intl.DateTimeFormat('fr-FR', {
     timeZone: 'Europe/Paris',
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
-  }).formatToParts(new Date());
+    hour: '2-digit',
+    hourCycle: 'h23',
+  }).formatToParts(date);
 
   const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
-  return `${values.year}-${values.month}-${values.day}`;
+  return {
+    year: Number(values.year),
+    month: Number(values.month),
+    day: Number(values.day),
+    hour: Number(values.hour),
+    dateKey: `${values.year}-${values.month}-${values.day}`,
+  };
+}
+
+function getParisDateKey() {
+  return getParisDateParts().dateKey;
+}
+
+function isLeapYear(year) {
+  return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+}
+
+function isValidBirthday(day, month) {
+  const maximumDays = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  return (
+    Number.isInteger(day) &&
+    Number.isInteger(month) &&
+    month >= 1 &&
+    month <= 12 &&
+    day >= 1 &&
+    day <= maximumDays[month - 1]
+  );
+}
+
+function formatBirthday(day, month) {
+  return new Intl.DateTimeFormat('fr-FR', {
+    timeZone: 'Europe/Paris',
+    day: 'numeric',
+    month: 'long',
+  }).format(new Date(Date.UTC(2024, month - 1, day, 12)));
+}
+
+function birthdayMatchesDate(birthday, dateParts) {
+  if (!birthday || !isValidBirthday(Number(birthday.day), Number(birthday.month))) {
+    return false;
+  }
+
+  const day = Number(birthday.day);
+  const month = Number(birthday.month);
+  if (day === dateParts.day && month === dateParts.month) return true;
+
+  return (
+    day === 29 &&
+    month === 2 &&
+    dateParts.day === 28 &&
+    dateParts.month === 2 &&
+    !isLeapYear(dateParts.year)
+  );
+}
+
+function birthdayUserIdsForDate(guildId, dateParts = getParisDateParts()) {
+  const state = birthdayGuildState(guildId);
+  return Object.entries(state.users)
+    .filter(([, birthday]) => birthdayMatchesDate(birthday, dateParts))
+    .map(([userId]) => userId);
+}
+
+function pruneBirthdayAnnouncements(state, currentDateKey) {
+  for (const dateKey of Object.keys(state.announcements)) {
+    if (dateKey !== currentDateKey) delete state.announcements[dateKey];
+  }
+}
+
+async function birthdayGuild() {
+  const channel = await client.channels.fetch(BIRTHDAY_CHANNEL_ID).catch(() => null);
+  if (!channel?.isTextBased() || !channel.guild) return null;
+  return channel.guild;
+}
+
+async function syncBirthdayRole(guild) {
+  if (!guild) return [];
+  const role = await guild.roles.fetch(BIRTHDAY_ROLE_ID).catch(() => null);
+  if (!role) {
+    console.error(`Rôle anniversaire ${BIRTHDAY_ROLE_ID} introuvable sur ${guild.name}.`);
+    return [];
+  }
+
+  await guild.members.fetch().catch((error) => {
+    console.error(`Impossible de charger les membres de ${guild.name} pour les anniversaires :`, error);
+  });
+
+  const birthdayIds = birthdayUserIdsForDate(guild.id);
+  const targetIds = new Set(
+    birthdayIds.filter((userId) => guild.members.cache.has(userId))
+  );
+
+  for (const member of role.members.values()) {
+    if (!targetIds.has(member.id)) {
+      await member.roles.remove(role, 'Fin de la journée d’anniversaire').catch((error) => {
+        console.error(`Impossible de retirer le rôle anniversaire à ${member.user.tag} :`, error);
+      });
+    }
+  }
+
+  for (const userId of targetIds) {
+    const member = guild.members.cache.get(userId);
+    if (member && !member.roles.cache.has(role.id)) {
+      await member.roles.add(role, 'Anniversaire du membre').catch((error) => {
+        console.error(`Impossible d’ajouter le rôle anniversaire à ${member.user.tag} :`, error);
+      });
+    }
+  }
+
+  return [...targetIds];
+}
+
+function birthdayAnnouncementText(userIds) {
+  const mentions = userIds.map((userId) => `<@${userId}>`).join(', ');
+  if (userIds.length === 1) {
+    return (
+      `# 🎂 ALERTE ANNIVERSAIRE 🎂\n\n` +
+      `@everyone, posez vos énigmes deux secondes : aujourd’hui, on célèbre une star du serveur ! 💅🏻✨\n\n` +
+      `C’est l’anniversaire de ${mentions} ! 🥳🎁\n\n` +
+      `Alors on lui envoie une avalanche de messages, d’amour, de GIF, de compliments et de bonnes ondes pour rendre sa journée aussi incroyable qu’elle le mérite ! 🫶🏻\n\n` +
+      `Aujourd’hui, cette personne a officiellement le droit d’être encore plus insupportable que d’habitude… C’est son jour, on ne discute pas. 💜\n\n` +
+      `**Joyeux anniversaire de la part de toute la famille des Drôles d’Humains !** 🎉🎈\n\n` +
+      `— *La Pouf du savoir a parlé, et elle attend vos messages.* 🧠`
+    );
+  }
+
+  return (
+    `# 🎂 ALERTE ANNIVERSAIRES 🎂\n\n` +
+    `@everyone, posez vos énigmes deux secondes : aujourd’hui, on célèbre plusieurs stars du serveur ! 💅🏻✨\n\n` +
+    `C’est l’anniversaire de ${mentions} ! 🥳🎁\n\n` +
+    `Alors on leur envoie une avalanche de messages, d’amour, de GIF, de compliments et de bonnes ondes pour rendre leur journée aussi incroyable qu’elles le méritent ! 🫶🏻\n\n` +
+    `Aujourd’hui, ces icônes ont officiellement le droit d’être encore plus insupportables que d’habitude… C’est leur jour, on ne discute pas. 💜\n\n` +
+    `**Joyeux anniversaire de la part de toute la famille des Drôles d’Humains !** 🎉🎈\n\n` +
+    `— *La Pouf du savoir a parlé, et elle attend vos messages.* 🧠`
+  );
+}
+
+async function announceBirthdaysIfDue(guild) {
+  if (!guild) return false;
+  const dateParts = getParisDateParts();
+  if (dateParts.hour < BIRTHDAY_ANNOUNCEMENT_HOUR) return false;
+
+  const state = birthdayGuildState(guild.id);
+  pruneBirthdayAnnouncements(state, dateParts.dateKey);
+  const announcementRecord = state.announcements[dateParts.dateKey];
+  const alreadyAnnounced = Array.isArray(announcementRecord)
+    ? announcementRecord.length > 0
+    : Boolean(announcementRecord);
+  if (alreadyAnnounced) return false;
+
+  const birthdayIds = birthdayUserIdsForDate(guild.id, dateParts).filter((userId) =>
+    guild.members.cache.has(userId)
+  );
+  if (!birthdayIds.length) {
+    saveBirthdayStore();
+    return false;
+  }
+
+  const channel = await client.channels.fetch(BIRTHDAY_CHANNEL_ID).catch(() => null);
+  if (!channel?.isTextBased() || channel.guildId !== guild.id) {
+    console.error(`Salon anniversaire ${BIRTHDAY_CHANNEL_ID} introuvable.`);
+    return false;
+  }
+
+  await channel.send({
+    content: birthdayAnnouncementText(birthdayIds),
+    allowedMentions: { parse: ['everyone'], users: birthdayIds },
+  });
+
+  state.announcements[dateParts.dateKey] = birthdayIds;
+  saveBirthdayStore();
+  console.log(`Annonce anniversaire publiée pour ${birthdayIds.join(', ')}.`);
+  return true;
+}
+
+async function runBirthdayTasks() {
+  const guild = await birthdayGuild();
+  if (!guild) {
+    console.error(`Configuration anniversaire incomplète : salon ${BIRTHDAY_CHANNEL_ID} introuvable.`);
+    return;
+  }
+  await syncBirthdayRole(guild);
+  await announceBirthdaysIfDue(guild);
 }
 
 function getParisMonthKey() {
@@ -2232,6 +2498,83 @@ async function handleSlashCommand(interaction) {
   }
   recordSlashCooldown(interaction.user.id, name);
 
+  if (name === 'anniversaire') {
+    if (!interaction.inGuild()) {
+      await slashError(interaction, 'Cette commande fonctionne uniquement sur le serveur.');
+      return;
+    }
+
+    const configuredGuild = await birthdayGuild();
+    if (!configuredGuild || configuredGuild.id !== interaction.guildId) {
+      await slashError(
+        interaction,
+        'Le système d’anniversaires n’est pas configuré sur ce serveur.'
+      );
+      return;
+    }
+
+    const subcommand = interaction.options.getSubcommand();
+    const state = birthdayGuildState(interaction.guildId);
+
+    if (subcommand === 'voir') {
+      const birthday = state.users[interaction.user.id];
+      await interaction.reply({
+        content: birthday
+          ? `🎂 Ton anniversaire est enregistré au **${formatBirthday(birthday.day, birthday.month)}**.`
+          : '🎂 Tu n’as encore enregistré aucune date. Utilise `/anniversaire enregistrer`.',
+        flags: MessageFlags.Ephemeral,
+      });
+      return;
+    }
+
+    if (subcommand === 'supprimer') {
+      if (!state.users[interaction.user.id]) {
+        await interaction.reply({
+          content: '🎂 Tu n’avais aucune date d’anniversaire enregistrée.',
+          flags: MessageFlags.Ephemeral,
+        });
+        return;
+      }
+
+      delete state.users[interaction.user.id];
+      saveBirthdayStore();
+      await interaction.reply({
+        content: '🗑️ Ta date d’anniversaire a bien été supprimée.',
+        flags: MessageFlags.Ephemeral,
+      });
+      await syncBirthdayRole(interaction.guild);
+      return;
+    }
+
+    const day = interaction.options.getInteger('jour', true);
+    const month = interaction.options.getInteger('mois', true);
+    if (!isValidBirthday(day, month)) {
+      await slashError(
+        interaction,
+        'Cette date n’existe pas. Même une Queen ne peut pas inventer un 31 avril. 💅🏻'
+      );
+      return;
+    }
+
+    state.users[interaction.user.id] = {
+      day,
+      month,
+      updatedAt: new Date().toISOString(),
+    };
+    saveBirthdayStore();
+
+    await interaction.reply({
+      content:
+        `🎂 C’est enregistré ma boT : ton anniversaire est le **${formatBirthday(day, month)}** !\n` +
+        `Le jour J, je sortirai le rôle, les confettis et le @everyone. 💅🏻✨`,
+      flags: MessageFlags.Ephemeral,
+    });
+
+    await syncBirthdayRole(interaction.guild);
+    await announceBirthdaysIfDue(interaction.guild);
+    return;
+  }
+
   if (name === 'enigme' || name === 'cassetete') {
     await runSlashQuizCommand(interaction, name);
     return;
@@ -3097,15 +3440,22 @@ client.once(Events.ClientReady, async (readyClient) => {
     });
   }
 
+  await runBirthdayTasks().catch((error) => {
+    console.error('Initialisation du système d’anniversaires impossible :', error);
+  });
+
   console.log('Énigmes automatiques désactivées : lancement uniquement avec les commandes manuelles.');
   console.log(
-    'Commandes / activées : enigme, cassetete, imageenigme, besty, classement, bumps, classementbump, resetclassement, questiondujour, verdict, match, humeur, roast, confession, duel, souvenir, ttsjoin, ttsleave, ttsskip, ttsclear'
+    'Commandes / activées : enigme, cassetete, imageenigme, besty, classement, bumps, classementbump, anniversaire, resetclassement, questiondujour, verdict, match, humeur, roast, confession, duel, souvenir, ttsjoin, ttsleave, ttsskip, ttsclear'
   );
   console.log(
     `Compteur DISBOARD actif dans ${BUMP_CHANNEL_ID} : ${XP_PER_BUMP} XP par bump, ${XP_MONTHLY_BUMP_WINNER} XP au classement mensuel.`
   );
   console.log(
     `Lecture vocale reliée aux salons texte : ${[...TTS_TEXT_CHANNEL_IDS].join(', ')}.`
+  );
+  console.log(
+    `Anniversaires actifs : annonce à ${BIRTHDAY_ANNOUNCEMENT_HOUR} h dans ${BIRTHDAY_CHANNEL_ID}, rôle ${BIRTHDAY_ROLE_ID}.`
   );
   console.log(`Données sauvegardées dans : ${DATA_DIR}`);
   console.log(
@@ -3148,6 +3498,30 @@ client.once(Events.ClientReady, async (readyClient) => {
     { timezone: 'Europe/Paris' }
   );
 
+  // À minuit, le rôle de la veille est retiré et celui du jour est attribué.
+  cron.schedule(
+    '0 0 * * *',
+    async () => {
+      const guild = await birthdayGuild();
+      await syncBirthdayRole(guild).catch((error) => {
+        console.error('Mise à jour nocturne du rôle anniversaire impossible :', error);
+      });
+    },
+    { timezone: 'Europe/Paris' }
+  );
+
+  // 9 h est l'heure officielle. Les passages suivants servent uniquement de
+  // filet de sécurité : le fichier empêche toute annonce en double.
+  cron.schedule(
+    '0 9,10,11,12 * * *',
+    async () => {
+      await runBirthdayTasks().catch((error) => {
+        console.error('Publication anniversaire impossible :', error);
+      });
+    },
+    { timezone: 'Europe/Paris' }
+  );
+
 });
 
 client.on(Events.Error, (error) => {
@@ -3166,6 +3540,7 @@ function shutdown(signal) {
   saveJSON(DAILY_ACTIVITY_FILE, dailyActivity);
   saveJSON(SOUVENIRS_FILE, souvenirs);
   saveJSON(BUMP_STATS_FILE, bumpStats);
+  saveBirthdayStore();
   client.destroy();
   process.exit(0);
 }
@@ -3190,4 +3565,8 @@ module.exports = {
   formatBumpMonth,
   successfulDisboardBump,
   disboardBumperId,
+  getParisDateParts,
+  isValidBirthday,
+  birthdayMatchesDate,
+  birthdayAnnouncementText,
 };
