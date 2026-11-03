@@ -1,0 +1,56 @@
+LA POUF DU SAVOIR — MODULE ANNIVERSAIRES
+=========================================
+
+VERSION VALIDÉE
+---------------
+- Salon des annonces : 1295471861521449032
+- Rôle Anniversaire : 1567107704869232722
+- Heure de l'annonce : 9 h, heure de Paris
+- Le rôle reste pendant toute la journée et est retiré à minuit.
+- Plusieurs anniversaires le même jour sont regroupés dans une seule annonce.
+- Le 29 février est célébré le 28 février les années non bissextiles.
+
+COMMANDES POUR LES MEMBRES
+--------------------------
+/anniversaire enregistrer jour: mois:
+  Enregistre une date ou remplace la date précédente.
+
+/anniversaire voir
+  Affiche uniquement à la personne sa date enregistrée.
+
+/anniversaire supprimer
+  Supprime la date enregistrée.
+
+INSTALLATION CONSEILLÉE DEPUIS LE TÉLÉPHONE
+-------------------------------------------
+1. Garde le conteneur eCloudServ actuel et sa variable MAIN_FILE = launcher.ts.
+2. Sur GitHub, dans estelledenanteuil-cpu/Mon-bot-quizz, remplace uniquement
+   index.js par le nouveau index.js présent dans ce ZIP.
+3. Ne supprime pas launcher.ts et ne modifie pas package.json.
+4. Laisse eCloudServ récupérer la nouvelle version, puis redémarre le conteneur
+   si le déploiement automatique est désactivé.
+5. Dans la console, vérifie la présence des messages :
+   - "Connecté en tant que La pouf du savoir..."
+   - "22 commandes / enregistrées..."
+   - "Anniversaires actifs..."
+
+PERMISSIONS DISCORD À VÉRIFIER
+------------------------------
+- Le bot doit avoir la permission Gérer les rôles.
+- Le bot doit avoir la permission Mentionner @everyone, @here et tous les rôles.
+- Le rôle du bot doit être placé au-dessus du rôle Anniversaire.
+- Le bot doit pouvoir Voir le salon et Envoyer des messages dans le salon
+  1295471861521449032.
+
+SAUVEGARDE
+----------
+Le fichier birthdays.json est créé automatiquement dans le même dossier
+persistant que les scores et les statistiques de bumps. Il ne faut pas le
+créer manuellement et il ne faut pas supprimer le dossier data.
+
+IMPORTANT
+---------
+- Le ZIP ne contient aucun token Discord ni autre secret.
+- Les anciennes fonctions sont conservées.
+- launcher.ts reste inchangé.
+- Aucune nouvelle dépendance n'est nécessaire.
