@@ -415,6 +415,11 @@ const SLASH_COMMANDS = [
       subcommand
         .setName('supprimer')
         .setDescription('Supprimer ta date d’anniversaire enregistrée')
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName('liste')
+        .setDescription('Afficher les anniversaires enregistrés (Esty uniquement)')
     ),
   new SlashCommandBuilder()
     .setName('imageenigme')
@@ -2515,6 +2520,66 @@ async function handleSlashCommand(interaction) {
 
     const subcommand = interaction.options.getSubcommand();
     const state = birthdayGuildState(interaction.guildId);
+
+    if (subcommand === 'liste') {
+      if (!isEstyUser(interaction.user.id)) {
+        await slashError(
+          interaction,
+          '⛔ Cette liste est privée et réservée à Esty.'
+        );
+        return;
+      }
+
+      await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+      await interaction.guild.members.fetch().catch((error) => {
+        console.error('Impossible de charger les membres pour la liste des anniversaires :', error);
+      });
+
+      const birthdays = Object.entries(state.users)
+        .filter(([, birthday]) =>
+          isValidBirthday(Number(birthday?.day), Number(birthday?.month))
+        )
+        .sort(([, first], [, second]) =>
+          Number(first.month) - Number(second.month) ||
+          Number(first.day) - Number(second.day)
+        );
+
+      if (birthdays.length === 0) {
+        await interaction.editReply('🎂 Aucun anniversaire n’est encore enregistré.');
+        return;
+      }
+
+      const lines = birthdays.map(([userId, birthday]) => {
+        const member = interaction.guild.members.cache.get(userId);
+        const displayName = member?.displayName || `Membre parti — ID ${userId}`;
+        return `• **${formatBirthday(birthday.day, birthday.month)}** — ${displayName}`;
+      });
+
+      const chunks = [];
+      let currentChunk = `# 🎂 Anniversaires enregistrés — ${birthdays.length} membre${birthdays.length > 1 ? 's' : ''}\n\n`;
+      for (const line of lines) {
+        if (`${currentChunk}${line}\n`.length > 1_900) {
+          chunks.push(currentChunk.trimEnd());
+          currentChunk = `${line}\n`;
+        } else {
+          currentChunk += `${line}\n`;
+        }
+      }
+      if (currentChunk.trim()) chunks.push(currentChunk.trimEnd());
+
+      await interaction.editReply({
+        content: chunks.shift(),
+        allowedMentions: { parse: [] },
+      });
+      for (const chunk of chunks) {
+        await interaction.followUp({
+          content: chunk,
+          flags: MessageFlags.Ephemeral,
+          allowedMentions: { parse: [] },
+        });
+      }
+      return;
+    }
 
     if (subcommand === 'voir') {
       const birthday = state.users[interaction.user.id];
